@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.DataCalibrationRuleMapper" >
+  <resultMap id="DataCalibrationResultMap" type="com.capinfo.framework.web.pojo.DataCalibrationRule" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="max" property="max" jdbcType="REAL" />
+    <result column="min" property="min" jdbcType="REAL" />
+    <result column="calibration_factor" property="calibrationFactor" jdbcType="REAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="DataCalibrationListMap" type="com.capinfo.framework.web.pojo.DataCalibrationRule" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="dev_name" property="deviceName" jdbcType="VARCHAR" />
+    <result column="dev_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="max" property="max" jdbcType="REAL" />
+    <result column="min" property="min" jdbcType="REAL" />
+    <result column="calibration_factor" property="calibrationFactor" jdbcType="REAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="dev_type" property="deviceType" jdbcType="INTEGER" />
+  </resultMap>
+  <!--根据ID获得一条规则-->
+  <select id="findDataCalibrationRuleById" resultMap="DataCalibrationListMap" parameterType="java.lang.Integer" >
+    select dcr.id,md.id AS device_id,md.dev_code AS dev_code,md.dev_name AS dev_name,min,max,calibration_factor,type,dev_type
+    from ibs_data_calibration_rule dcr,ibs_monitoring_device md
+    where dcr.id = #{id,jdbcType=INTEGER} AND md.id = dcr.device_id
+  </select>
+  <!--查询规则列表-->
+  <select id="findDataCalibrationPage" parameterType="java.util.Map" resultMap="DataCalibrationListMap">
+    SELECT dcr.id,md.id AS device_id,md.dev_code AS dev_code,md.dev_name AS dev_name,min,max,calibration_factor,status,type,dcr.create_time
+    FROM ibs_monitoring_device md, ibs_data_calibration_rule dcr
+    WHERE md.id = dcr.device_id
+    <if test="query.deviceCodeForLike!=null and query.deviceCodeForLike!='' ">
+      AND dev_code like CONCAT('%',trim(#{query.deviceCodeForLike}),'%')
+    </if>
+    <if test="query.deviceId!=null and query.deviceId!='' ">
+      AND device_id like CONCAT('%',trim(#{query.deviceId}),'%')
+    </if>
+    ORDER BY dcr.create_time desc
+    LIMIT #{pageNum},#{pageSize}
+  </select>
+  <!--查询规则总数-->
+  <select id="findDataCalibrationRuleCount"
+          parameterType="com.capinfo.framework.web.vo.DataCalibrationQueryBean" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM ibs_data_calibration_rule dcr
+    WHERE dcr.device_id=#{deviceId}
+
+  </select>
+<!--新增规则-->
+  <insert id="saveDataCalibrationRule" useGeneratedKeys="true" keyProperty="id"
+          parameterType="com.capinfo.framework.web.pojo.DataCalibrationRule">
+    INSERT INTO ibs_data_calibration_rule(device_id,max,min,calibration_factor,create_time,type)
+    VALUES(#{deviceId},#{max},#{min},#{calibrationFactor},#{createTime},#{type})
+  </insert>
+  <!--更新规则-->
+  <update id="updateDataCalibrationRule" parameterType="com.capinfo.framework.web.pojo.DataCalibrationRule">
+    UPDATE ibs_data_calibration_rule
+    SET max=#{max},min=#{min},calibration_factor=#{calibrationFactor},type=#{type}
+    WHERE id=#{id}
+  </update>
+<!--查询设备列表-->
+  <select id="findMonitoringDeviceList" parameterType="com.capinfo.framework.web.vo.DataCalibrationQueryBean" resultType="com.capinfo.framework.web.pojo.MonitoringDevice">
+    SELECT id,dev_code AS devCode,dev_name AS devName,dev_type AS devType
+    FROM ibs_monitoring_device
+    <if test="deviceCodeForLike!=null and deviceCodeForLike!='' ">
+      WHERE dev_code like CONCAT('%',trim(#{deviceCodeForLike}),'%')
+    </if>
+  </select>
+  <!--根据ID删除rule-->
+  <delete id="deleteDataCalibrationRuleById" parameterType="java.lang.Integer" >
+    delete from ibs_data_calibration_rule
+    where id = #{id}
+  </delete>
+  <!--//规则启用or停用-->
+  <update id="updateDataCalibrationRuleStatus">
+    UPDATE ibs_data_calibration_rule
+    SET status=#{status}
+    WHERE id=#{id}
+  </update>
+  <select id="findDataCalibrationRuleList" parameterType="java.lang.Integer" resultMap="DataCalibrationResultMap">
+    SELECT *
+    FROM ibs_data_calibration_rule
+    WHERE device_id = #{id}
+  </select>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.UserRoleReleMapper">
+
+	<resultMap id="UserRoleReleResult" type="com.capinfo.framework.web.pojo.UserRoleRele">
+		<id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="creater" property="creater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="updater" property="updater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="create_time" property="createTime" javaType="java.util.Date"/>
+		<result column="update_time" property="updateTime" javaType="java.util.Date"/>
+		<result column="version" property="version" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<association column="user_id" property="user" javaType="com.capinfo.framework.web.pojo.User" select="com.capinfo.framework.web.mapper.UserMapper.findUserById"/>
+		<association column="role_id" property="role" javaType="com.capinfo.framework.web.pojo.Role" select="com.capinfo.framework.web.mapper.RoleMapper.findRoleById"/>
+	</resultMap>
+	
+	<!-- SAVE UserRoleRele -->
+	<insert id="saveUserRoleRele" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.UserRoleRele">
+		INSERT INTO ibs_user_role_rele(user_id,role_id,create_time,creater) VALUES(#{user.id},#{role.id},#{createTime},#{creater})
+	</insert>
+	<!-- DELETE UserRoleRele -->
+	<delete id="deleteUserRoleRele" parameterType="java.lang.Integer">
+		DELETE FROM ibs_user_role_rele WHERE id=#{id}
+	</delete>
+	<!-- UPDATE UserRoleRele -->
+	<update id="updateUserRoleRele" parameterType="com.capinfo.framework.web.pojo.UserRoleRele">
+		UPDATE ibs_user_role_rele SET user_id=#{user.id},role_id=#{role.id},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
+	</update>
+	<!-- BATCH SAVE UserRoleRele -->
+	<insert id="saveUserRoleReleBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+		INSERT INTO ibs_user_role_rele(user_id,role_id,create_time,creater) VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.user.id},#{item.role.id},#{item.createTime},#{item.creater})
+		</foreach>
+	</insert>
+	<!-- BATCH DELETE UserRoleRele -->
+	<delete id="deleteUserRoleReleBatch" parameterType="java.util.List">
+		DELETE FROM ibs_user_role_rele WHERE id IN
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!-- 查询用户角色关系列表 -->
+	<sql id="query_user_role_where">
+		<if test="userId!=null">
+			AND user_id=#{userId} 
+		</if>
+		<if test="roleId!=null">
+			AND role_id=#{roleId} 
+		</if>
+	</sql>
+	<select id="findUserRoleReleList" parameterType="com.capinfo.framework.web.vo.UserRoleReleQueryBean" resultMap="UserRoleReleResult">
+    	SELECT * FROM ibs_user_role_rele
+    	<where>
+    		<include refid="query_user_role_where"></include>
+    	</where>
+        ORDER BY create_time DESC
+	</select>
+	
+	<!-- 查询用户角色关系分页列表 -->
+	<sql id="query_user_role_page_where">
+		<if test="query.userId!=null">
+			AND user_id=#{query.userId} 
+		</if>
+		<if test="query.roleId!=null">
+			AND role_id=#{query.roleId} 
+		</if>
+	</sql>
+	<select id="findUserRoleRelePage" parameterType="java.util.Map" resultMap="UserRoleReleResult">
+    	SELECT * FROM ibs_user_role_rele
+    	<where>
+    		<include refid="query_user_role_page_where"></include>
+    	</where>
+    	LIMIT #{pageNum},#{pageSize}
+	</select>
+	
+	<!-- 查询用户角色系总数 -->
+	<sql id="query_user_role_count_where">
+		<if test="userId!=null">
+			AND user_id=#{userId} 
+		</if>
+		<if test="roleId!=null">
+			AND role_id=#{roleId} 
+		</if>
+	</sql>
+	<select id="findUserRoleReleCount" parameterType="com.capinfo.framework.web.vo.UserRoleReleQueryBean" resultType="java.lang.Integer">
+    	SELECT COUNT(1) FROM ibs_user_role_rele
+    	<where>
+    		<include refid="query_user_role_count_where"></include>
+    	</where>
+	</select>
+	
+	<!-- 根据id查询用户角色关系数据 -->
+	<select id="findUserRoleReleById" parameterType="java.lang.Integer" resultMap="UserRoleReleResult">
+    	SELECT * FROM ibs_user_role_rele
+    	<where>
+    		id=#{value}
+    	</where>
+	</select>
+	
+	<!-- 根据角色id查询用户角色关系数据 -->
+	<select id="findUserRoleReleByRoleId" parameterType="java.lang.Integer" resultMap="UserRoleReleResult">
+    	SELECT * FROM ibs_user_role_rele
+    	<where>
+    		role_id=#{value}
+    	</where>
+	</select>
+	
+	<!-- 根据用户id查询用户角色关系数据 -->
+	<select id="findUserRoleReleByUserId" parameterType="java.lang.Integer" resultMap="UserRoleReleResult">
+    	SELECT * FROM ibs_user_role_rele
+    	<where>
+    		user_id=#{value}
+    	</where>
+	</select>
+	
+</mapper>

@@ -1,0 +1,127 @@
+* { margin:0px; padding:0px; }
+body { font-family:Arial,ËÎÌו; font-size:12px; line-height:20px;  overflow:hidden; }
+ul,li { list-style-type:none; }
+.top { height:27px; line-height:27px; font-size:12px; font-weight:bold; color:#fff; background:url(../images/main/top.gif) left top repeat-x; position:relative; }
+.loginName { position:absolute; width:185px; background:url(../images/main/line.png) right 3px no-repeat; padding-left:15px; }
+.showMethod { position:absolute; left:225px; } 
+.showMethod b { float:left; }
+.showMethod a { width:20px; margin-top:3px; line-height:20px; display:block; border-radius:4px;  -moz-border-radius:4px;  -webkit-border-radius:4px; color:#edeaea;text-align:center; margin-right:5px; float:left; text-decoration:none; background:#858282; border:1px solid #747171; font-weight:normal; }
+.showMethod a.actived { color:#fff; background:#3388c9; border:1px solid #438dc5; }
+
+.btnLoginOut { float:right; margin-top:2px; margin-right:10px; }
+.btnLoginOut a { display:block; padding-left:6px; padding-right:6px; height:20px; line-height:20px; display:block; border-radius:4px;  -moz-border-radius:4px;  -webkit-border-radius:4px;  border:1px solid #000; background:#333; color:#fff; font-weight:bold; text-align:center; text-decoration:none;  }
+.MainContent { clear:both; border-top:1px solid #b6b2b2; }
+.leftContent { float:left; width:183px; background:#e5e5e5; border-right:1px solid #b6b2b2; height:auto; padding:0px 8px 0px 8px; }
+.msgBox {  }
+.msgBox h2 { font-size:13px; color:#fff; font-weight:bold; background:url(../images/main/bg-title.gif) left top repeat-x; padding-left:10px; line-height:29px; margin-top:6px; }
+.innerCon { border:1px solid #abbfcd; padding:8px; background:#fff; overflow-y:auto;
+scrollbar-arrow-color: #fff; 
+scrollbar-face-color: #808080;
+scrollbar-3dlight-color: #c7c7c7;
+scrollbar-highlight-color: #d3d1d1; 
+scrollbar-track-color: #d3d1d1;
+::-webkit-scrollbar:red;
+
+
+ }
+ 
+ /* Turn on a 16x16 scrollbar */
+::-webkit-scrollbar {
+width: 10px;
+height: 8px;
+}
+/* Turn on single button up on top, and down on bottom */
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+display: block;
+}
+/* Turn off the down area up on top, and up area on bottom */
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement {
+display: none;
+}
+/* Place The scroll down button at the bottom */
+::-webkit-scrollbar-button:end:increment {
+background: url(../images/main/scroll_cntrl_dwn.png) right bottom no-repeat;
+height:8px;
+}
+/* Place The scroll up button at the up */
+::-webkit-scrollbar-button:start:decrement {
+background: url(../images/main/scroll_cntrl_up.png) right top no-repeat;
+height:8px;
+}
+/* Top area above thumb and below up button */
+::-webkit-scrollbar-track-piece:vertical:start {
+background: url(../images/main/scroll_gutter_mid.png) right top repeat-y;
+}
+/* Bottom area below thumb and down button */
+::-webkit-scrollbar-track-piece:vertical:end {
+background: url(../images/main/scroll_gutter_mid.png) right bottom repeat-y;
+}
+/* The thumb itself */
+::-webkit-scrollbar-thumb:vertical {
+border-width:0;
+height:57px;
+
+background:#808080;
+width:5px;
+overflow:hidden;
+border:1px solid #d3d1d1;
+border-left-width:2px;
+} 
+
+ 
+.height1 { height:320px; }
+.rightContent { float:left; background:#fff; }
+
+.scrollBar { height:29px; background:url(../images/main/bg-title.gif) left top repeat-x; position:relative;  }
+.scrollBar i { position:absolute; left:500px; }
+.scrollBar a { width:20px; height:20px; background:url(../images/main/arrow01.png) left top no-repeat; display:inline; float:left; margin-left:10px; margin-top:5px; cursor:pointer;  }
+.scrollBar a.down { background:url(../images/main/arrow02.png); }
+.videoFrame { position:relative; clear:both; }
+.bottomButton {height:30px;border:2px;}
+.videoButton { float:left; bottom:0px; left:5px; height:30px; float:left;}
+.videoButton li { width:103px; height:20px; background:url(../images/main/btn01.png) left top no-repeat; float:left; list-style-type:none; text-align:center; line-height:25px; margin-right:5px; font-weight:bold; color:#262424; cursor:pointer; }
+.videoButton li.actived { background:url(../images/main/btn01-actived.png); color:#fff; }
+.viewForm {float:left; bottom:1px;  height:29px; }
+.viewForm li { float:left; width:40px; height:20px; padding-top:3px; line-height:20px; border:1px solid #499bc9; background:#5e9cbf; text-align:center; margin-right:5px; cursor:pointer;}
+.viewForm li.selected { background:#2077c4; }
+.controlInput  {float:left; bottom:1px;  }
+.controlInput input[type="text"] { width:50px; border:1px solid #ccc; }
+
+.controlBox {float:left; width:185px; position:absolute; right:0px; border:1px solid #dad6d6; }
+.controlBox2 { width:216px;height:100%; position:absolute; right:0px; border:1px solid #dad6d6; }
+.hotLink { padding:3px 30px; line-height:21px; font-weight:bold; background:#e5e5e5; border-bottom:1px solid #dad6d6; }
+.hotLink a { padding-right:5px; text-decoration:none; color:#126aa5;  }
+.controlSwitch { position:relative; height:117px; }
+.controlSwitch2 { position:relative; height:160px; }
+.controlSwitch .btnVideo { position:absolute; left:35px; top:10px; }
+
+.scrollControl { position:absolute; right:10px; top:10px; }
+.scrollControl2 { position:absolute; right:10px; top:5px; }
+.scrollControl span { background:url(../images/main/btn06.png) left top no-repeat; width:12px; height:12px;  color:#fff; position:relative; right:20px; display:block; line-height:10px; padding-left:2px;  }
+.scrollControl span.btnRaise {top:0px; }
+.scrollControl span.btnRaise2 {top:-5px; }
+.scrollControl .btnScroll { width:12px; height:70px; background:url(../images/main/scrolling.png) center top no-repeat; position:relative; right:20px; top:-10px; }
+.scrollControl .btnScroll2 { width:12px; height:45px; background:url(../images/main/scrolling.png) center top no-repeat; position:relative; right:20px; top:-15px; }
+.ScrollBlock { position:absolute; left:0px; top:20px; background:url(../images/main/btnBar.png) left top no-repeat; width:12px; height:12px; } 
+.scrollControl span.btnReduce  { top:75px; padding-left:4px; }
+.scrollControl span.btnReduce2  { top:45px; padding-left:4px; }
+.presetting { padding-left:15px; }
+.presetting select { width:50px; border:1px solid #aaaaac;  }
+.presetting input { width:19px; height:18px; background:url(../images/main/go.png) left top no-repeat; border:0px; } 
+.btnSize { margin-left:20px; }
+.btnSize li { height:37px; }
+.btnSize li img { line-height:25px; vertical-align:middle; margin-left:5px; margin-right:5px;  }
+.btnSize2 { margin-left:50px; }
+.btnSize2 li { height:37px; }
+.btnSize2 li img { line-height:25px; vertical-align:middle; margin-left:2px; margin-right:2px;  }
+.videoBox { position:absolute; }
+.videoBox li { float:left; position:relative; }
+.videoBox li span { display:block; height:17px; position:absolute; top:0px; right:0px; background:url(../images/main/vbg.png) right top no-repeat; width:200px; text-align:right; } 
+.videoBox li span img { margin-right:4px; margin-top:2px; }
+.switchButton1 .hotLink { padding:10px 30px; }
+
+.switchButton1 .controlSwitch { height:130px; }
+.switchButton1 .presetting { margin-top:0px; margin-bottom:12px; }
+.switchButton1 .btnSize li  { height:45px; }

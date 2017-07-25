@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+			 xmlns:beans="http://www.springframework.org/schema/beans"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
+
+<http security="none" pattern="/static/**" />
+    <http security="none" pattern="/jsp/**/*.jsp" />
+	<http>
+        <!-- 不拦截login.jsp -->
+		<intercept-url pattern="/WEB-INF/views/jsp/login.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <!--仅拦截到manager下面的内容，具备access对应权限的-->
+		<intercept-url pattern="/com/capinfo/framework/web/controller/**" access="ROLE_ADMIN,ROLE_UPDATE_FILM,ROLE_DELETE_FILM,ROLE_ADD_FILM" />
+        <!-- 登录表单设置 -->
+		<form-login login-page="/WEB-INF/views/jsp/login.jsp" default-target-url="/manager/films.jsp" authentication-failure-url="/WEB-INF/views/jsp/login.jsp?error=true" />
+        	<!-- 登出操作后跳转到该页面 -->
+			<logout logout-success-url="/WEB-INF/views/jsp/login.jsp" delete-cookies="JSESSIONID" />
+			<remember-me />
+        <!-- SESSION超时后跳转到该页面 -->
+		<session-management invalid-session-url="/WEB-INF/views/jsp/login.jsp"></session-management>
+	</http>
+
+</beans:beans>

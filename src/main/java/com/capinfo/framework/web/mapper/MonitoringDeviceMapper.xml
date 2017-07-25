@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.MonitoringDeviceMapper" >
+	
+	<resultMap id="MonitoringDeviceResult" type="com.capinfo.framework.web.pojo.MonitoringDevice">
+		<id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="dev_code" property="devCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="pro_code" property="proCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="vendor_code" property="vendorCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="dev_name" property="devName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="dev_type" property="devType" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="longitude" property="longitude" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="latitude" property="latitude" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="ip_addr" property="ipAddr" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="mac_addr" property="macAddr" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="dev_port" property="devPort" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="dev_version" property="devVersion" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="dev_status" property="devStatus" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="video_url" property="videoUrl" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="paramstr" property="paramstr" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="serial" property="serial" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="start_time" property="startTime" javaType="java.util.Date"/>
+		<result column="end_time" property="endTime" javaType="java.util.Date"/>
+		<result column="install_time" property="installTime" javaType="java.util.Date"/>
+		<result column="creater" property="creater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="updater" property="updater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="create_time" property="createTime" javaType="java.util.Date"/>
+		<result column="update_time" property="updateTime" javaType="java.util.Date"/>
+		<result column="version" property="version" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="platform_id" property="platformId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="platform_mn" property="platformMN" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="camera_id" property="cameraId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="video_user" property="videoUser" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="password" property="password" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="camera_index_code" property="cameraIndexCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="longitude" property="longitude" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="latitude" property="latitude" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="phone_card" property="phoneCard" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="forward_type" property="forwardType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="forward_frequency" property="forwardFrequency" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<association column="company_id" property="monitoringCompany" javaType="com.capinfo.framework.web.pojo.MonitoringCompany" select="com.capinfo.framework.web.mapper.MonitoringCompanyMapper.findMonitoringCompanyById"/>
+		<association column="project_id" property="monitoringProject" javaType="com.capinfo.framework.web.pojo.MonitoringProject" select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringProjectById"/>
+		<collection column="id" property="belongGroups" javaType="java.util.ArrayList"
+					select="com.capinfo.framework.web.mapper.MonitoringDeviceGroupMapper.findMonitoringDeviceGroupByDeviceId"/>
+		<!--<association column="device_group_id" property="monitoringDeviceGroup" javaType="com.capinfo.framework.web.pojo.MonitoringDeviceGroup" select="com.capinfo.framework.web.mapper.MonitoringDeviceGroupMapper.findMonitoringDeviceGroupById"/>-->
+		<!--<collection property="monitoringDatas" column="id" javaType="java.util.ArrayList" select="com.capinfo.framework.web.mapper.MonitoringDataMapper.findMonitoringDataByDeviceId" />-->
+	</resultMap>
+	<resultMap id="MonitoringProjectResult" type="com.capinfo.framework.web.pojo.MonitoringProject">
+		<id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="pro_code" property="proCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="pro_name" property="proName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	</resultMap>
+
+    <!--<resultMap id="DeviceRecentDataResult" type="com.capinfo.framework.web.pojo.DeviceRecentData">
+        <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="dev_code" property="devCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="dev_name" property="devName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="dev_status" property="devStatus" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="device_group_id" property="devGroupId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="dev_group_code" property="devGroupCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="dev_group_name" property="devGroupName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="data_id" property="dataId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+    </resultMap>-->
+
+    <!-- SAVE Monitoring Device -->
+	<insert id="saveMonitoringDevice" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean">
+        INSERT INTO
+        ibs_monitoring_device(dev_code,pro_code,vendor_code,dev_name,dev_type,longitude,latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,company_id,platform_id,platform_mn,creater,create_time,camera_id,video_user,password,camera_index_code,phone_card,forward_type,forward_frequency)
+        VALUES(#{devCode},#{devCode},#{vendorCode},#{devName},#{devType},#{longitude},#{latitude},#{ipAddr},#{macAddr},#{devPort},#{devVersion},#{devStatus},#{videoUrl},#{monitoringCompany.id},#{companyIds},#{platformMN},#{creater},#{createTime},#{cameraId},#{videoUser},#{password},#{cameraIndexCode},#{phoneCard},#{forwardType},#{forwardFrequency})
+	</insert>
+	<!-- DELETE Monitoring Device -->
+	<delete id="deleteMonitoringDevice" parameterType="java.lang.Integer">
+		DELETE FROM ibs_monitoring_device WHERE id=#{id}
+	</delete>
+	<!-- UPDATE Monitoring Device -->
+	<update id="updateMonitoringDevice" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean">
+        UPDATE ibs_monitoring_device
+        SET dev_code=#{devCode},dev_name=#{devName},dev_type=#{devType},
+        longitude=#{longitude},latitude=#{latitude},ip_addr=#{ipAddr},
+        mac_addr=#{macAddr},dev_port=#{devPort},dev_version=#{devVersion},
+        dev_status=#{devStatus},video_url=#{videoUrl},company_id=#{monitoringCompany.id},
+        platform_id=#{companyIds},platform_mn=#{platformMN},update_time=#{updateTime},
+        updater=#{updater},version=version+1,camera_id=#{cameraId},phone_card=#{phoneCard},
+        forward_type=#{forwardType},forward_frequency=#{forwardFrequency},
+        video_user=#{videoUser}, password=#{password},camera_index_code=#{cameraIndexCode}
+        WHERE id=#{id}
+
+	</update>
+	<!-- BATCH SAVE Monitoring Device -->
+	<insert id="saveMonitoringDeviceBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+		INSERT INTO ibs_monitoring_device(dev_code,pro_code,vendor_code,dev_name,dev_type,longitude,latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,paramstr,serial,start_time,end_time,install_time,project_id,company_id,platform_id,platform_mn,device_group_id,creater,create_time)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.devCode},#{item.proCode},#{item.vendorCode},#{item.devName},#{item.devType},#{item.longitude},#{item.latitude},#{item.ipAddr},#{item.macAddr},#{item.devPort},#{item.devVersion},#{item.devStatus},#{item.videoUrl},#{item.paramstr},#{item.serial},#{item.startTime},#{item.endTime},#{item.installTime},#{item.monitoringProject.id},#{item.monitoringCompany.id},#{item.platformId},#{item.platformMN},#{monitoringDeviceGroup.id},#{item.creater},#{item.createTime})
+		</foreach>
+	</insert>
+	<!-- BATCH DELETE Monitoring Device -->
+	<delete id="deleteMonitoringDeviceBatch" parameterType="java.util.List">
+		DELETE FROM ibs_monitoring_device WHERE id IN
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 查询传感器列表 -->
+	<sql id="query_device_where">
+		<if test="devCode!=null and devCode!=''">
+			AND dev_code=#{devCode} 
+		</if>
+		<if test="devCodeForLike!=null and devCodeForLike!=''">
+			AND dev_code LIKE "%"#{devCodeForLike}"%" 
+		</if>
+		<if test="devStatus!=null and devStatus!=''">
+			AND dev_status=#{devStatus} 
+		</if>
+		<if test="proCode!=null and proCode!=''">
+			AND pro_code=#{proCode} 
+		</if>
+		<if test="vendorCode!=null and vendorCode!=''">
+			AND vendor_code=#{vendorCode} 
+		</if>
+		<if test="devName!=null and devName!=''">
+			AND dev_name=#{devName} 
+		</if>
+		<if test="devNameForLike!=null and devNameForLike!=''">
+			AND dev_name LIKE "%"#{devNameForLike}"%" 
+		</if>
+		<if test="projectId!=null and projectId!=0">
+			AND project_id=#{projectId} 
+		</if>
+		<if test="deviceGroupId!=null and deviceGroupId!=0">
+			AND device_group_id=#{deviceGroupId} 
+		</if>
+		<if test="deviceGroupIdForNotNull!=null and deviceGroupIdForNotNull!=0">
+			AND device_group_id IS NOT NULL 
+		</if>
+		<if test="deviceGroupIdForNull!=null and deviceGroupIdForNull!=0">
+			AND device_group_id IS NULL 
+		</if>
+		<if test="deviceGroupIdForIn!=null and deviceGroupIdForIn.length>0">
+			AND device_group_id IN
+			<foreach collection="deviceGroupIdForIn" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="deviceGroupIdForOr!=null and deviceGroupIdForOr!=0">
+			OR device_group_id=#{deviceGroupIdForOr}
+		</if>
+		<if test="devType!=null">
+			AND dev_type=#{devType} 
+		</if>
+		<if test="devTypeForIn!=null">
+			AND dev_type IN 
+			<foreach collection="devTypeForIn" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</sql>
+	<select id="findMonitoringDeviceList" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultMap="MonitoringDeviceResult">
+        SELECT * FROM ibs_monitoring_device
+        <where>
+            <include refid="query_device_where"></include>
+        </where>
+		order BY create_time DESC
+	</select>
+
+    <!--<select id="findMonitoringDeviceRecentDataList"
+            parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultMap="DeviceRecentDataResult">
+        SELECT device.id,device.dev_code,device.dev_name,device.dev_status,device_group.id as device_group_id,
+        device_group.dev_group_code,device_group.dev_group_name,
+        (select data_copy.id from ibs_monitoring_data_copy data_copy where data_copy.device_id = device.id and
+        data_copy.col_time>(NOW() - INTERVAL 10 MINUTE ) limit 1) data_id
+        FROM ibs_monitoring_device device,ibs_monitoring_device_group device_group
+        where device.device_group_id = device_group.id
+        order BY device.create_time DESC
+    </select>
+-->
+    <select id="findMonitoringDeviceShList" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultMap="MonitoringDeviceResult">
+    	SELECT d.id id,d.dev_code devCode,d.pro_code proCode,d.vendor_code vendorCode FROM ibs_monitoring_project p,ibs_monitoring_device d
+    	<where>
+    		p.id=d.project_id AND p.city="上海" 
+    	</where>
+	</select>
+	
+	<!-- 查询传感器分页列表 -->
+	<sql id="query_device_page_where">
+		<if test="query.devCodeForLike!=null and query.devCodeForLike!=''">
+			AND dev_code LIKE "%"#{query.devCodeForLike}"%" 
+		</if>
+		<if test="query.devStatus!=null and query.devStatus!=''">
+			AND dev_status=#{query.devStatus}
+		</if>
+		<if test="query.devNameForLike!=null and query.devNameForLike!=''">
+			AND dev_name LIKE "%"#{query.devNameForLike}"%"
+		</if>
+		<if test="query.devGroupNameForLike!=null and query.devGroupNameForLike!=''">
+			AND group_dev_name LIKE "%"#{query.devGroupNameForLike}"%"
+		</if>
+
+	</sql>
+	<select id="findMonitoringDevicePage" parameterType="java.util.Map" resultMap="MonitoringDeviceResult">
+    	SELECT md.id AS id,dev_code,pro_code,vendor_code,dev_name,dev_type,longitude,latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,paramstr,serial,start_time,end_time,install_time,creater,updater,md.create_time AS create_time,update_time,version,project_id,platform_id,platform_mn,camera_id,video_user,password,camera_index_code,phone_card,forward_type,forward_frequency,company_id
+		FROM ((ibs_group_device_rele gdr LEFT JOIN ibs_group_device gd ON gdr.group_id = gd.id)
+		RIGHT JOIN ibs_monitoring_device md ON md.id = gdr.device_id)
+		<where>
+			<include refid="query_device_page_where"></include>
+		</where>
+		GROUP BY md.id
+		ORDER BY md.create_time desc
+		LIMIT #{pageNum},#{pageSize}
+	</select>
+	
+	<!-- 查询传感器总数 -->
+	<sql id="query_device_count_where">
+		<if test="devCodeForLike!=null and devCodeForLike!=''">
+			AND dev_code LIKE "%"#{devCodeForLike}"%"
+		</if>
+		<if test="devStatus!=null and devStatus!=''">
+			AND dev_status=#{devStatus}
+		</if>
+		<if test="devNameForLike!=null and devNameForLike!=''">
+			AND dev_name LIKE "%"#{devNameForLike}"%"
+		</if>
+		<if test="devGroupNameForLike!=null and devGroupNameForLike!=''">
+			AND group_dev_name LIKE "%"#{devGroupNameForLike}"%"
+		</if>
+
+	</sql>
+	<select id="findMonitoringDeviceCount" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultType="java.lang.Integer">
+		SELECT COUNT(1)
+		FROM (
+		(SELECT md.id
+			FROM ((ibs_group_device_rele gdr LEFT JOIN ibs_group_device gd ON gdr.group_id = gd.id)
+			RIGHT JOIN ibs_monitoring_device md ON md.id = gdr.device_id)
+			<where>
+				<include refid="query_device_count_where"></include>
+			</where>
+			GROUP BY md.id)AS tempTable
+		)
+	</select>
+	
+	<!-- 根据id查询传感器 -->
+	<!--2017/1/9 新思 彭佳佳 开始-->
+	<select id="findMonitoringDeviceById" parameterType="java.lang.Integer" resultMap="MonitoringDeviceResult">
+		SELECT * FROM ibs_monitoring_device
+		<where>
+			id=#{value}
+		</where>
+	</select>
+
+	<!--<select id="findMonitoringDeviceById" parameterType="java.lang.Integer" resultMap="MonitoringDeviceResult">
+		SELECT
+		dev_code,d.pro_code,vendor_code,dev_name,dev_type,d.longitude,d.latitude,ip_addr,mac_addr,dev_port,
+		dev_version,dev_status,video_url,paramstr,serial,start_time,end_time,install_time, p.id as
+		project_id,d.company_id,d.platform_id,platform_mn,device_group_id,d.creater,d.create_time
+		FROM ibs_monitoring_device d
+		left join ibs_monitoring_device_group g on g.id = d.device_group_id
+		left join ibs_monitoring_project p on p.id = g.project_id
+    	<where>
+			d.id=#{value}
+    	</where>
+	</select>-->
+	<!--2017/1/9 新思 彭佳佳 结束-->
+	
+	<!-- 根据条件查询传感器 -->
+	<sql id="query_device_unique_where">
+		<if test="devCode!=null and devCode!=''">
+			AND dev_code=#{devCode} 
+		</if>
+		<if test="vendorCode!=null and vendorCode!=''">
+			AND vendor_code=#{vendorCode} 
+		</if>
+		<if test="devName!=null and devName!=''">
+			AND dev_name=#{devName} 
+		</if>
+		<if test="devType!=null">
+			AND dev_type=#{devType} 
+		</if>
+	</sql>
+	<select id="findMonitoringDeviceUnique" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultMap="MonitoringDeviceResult">
+    	SELECT * FROM ibs_monitoring_device
+    	<where>
+    		<include refid="query_device_unique_where"></include>
+    	</where>
+    	LIMIT 1 
+	</select>
+	
+	<!-- 根据工地id查询设备数据 -->
+	<select id="findMonitoringDeviceByProjectId" parameterType="java.lang.Integer" resultMap="MonitoringDeviceResult">
+    	SELECT * FROM ibs_monitoring_device
+    	<where>
+    		project_id=#{value}
+    	</where>
+	</select>
+	
+	<!-- 根据厂商id查询设备数据 -->
+	<select id="findMonitoringDeviceByCompanyId" parameterType="java.lang.Integer" resultMap="MonitoringDeviceResult">
+    	SELECT * FROM ibs_monitoring_device
+    	<where>
+    		company_id=#{value}
+    	</where>
+	</select>
+	
+	<!-- 根据设备杆id查询设备数据 -->
+	<select id="findMonitoringDeviceByDeviceGroupId" parameterType="java.lang.Integer" resultMap="MonitoringDeviceResult">
+    	SELECT * FROM ibs_monitoring_device
+    	<where>
+    		device_group_id=#{value}
+    	</where>
+	</select>
+
+	<!-- 下載设备杆数据 -->
+	<sql id="all_download_fileds">id,dev_code,pro_code,vendor_code,dev_name,longitude,latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,start_time,end_time,install_time,create_time,update_time,creater,updater,version,project_id,company_id,device_group_id,dev_type,paramstr,serial</sql>
+	<select id="downloadMonitoringDeviceList" resultType="java.util.Map">
+		SELECT <include refid="all_download_fileds"></include> FROM ibs_monitoring_device
+		<where>
+			id IN
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</where>
+	</select>
+
+	<!--<insert id="insertMonitoringDeviceList"  parameterType="java.util.List"
+			flushCache="true">
+		INSERT INTO ibs_monitoring_device(<include refid="all_download_fileds"/>)
+		VALUES
+		<foreach collection="list" item="item" open="(" separator="),(" close=")">
+			#{item.id},
+			#{item.dev_code},
+			#{item.pro_code},
+			#{item.vendor_code},
+			#{item.dev_name},
+			#{item.longitude},
+			#{item.latitude},
+			#{item.ip_addr},
+			#{item.mac_addr},
+			#{item.dev_port},
+			#{item.dev_version},
+			#{item.dev_status},
+			#{item.video_url},
+			#{item.start_time},
+			#{item.end_time},
+			#{item.install_time},
+			#{item.create_time},
+			#{item.update_time},
+			#{item.creater},
+			#{item.updater},
+			#{item.version},
+			#{item.project_id},
+			#{item.company_id},
+			#{item.device_group_id},
+			#{item.dev_type},
+			#{item.paramstr},
+			#{item.serial}
+		</foreach>
+	</insert>
+	-->
+	<!--根据ID查询站点信息-->
+	<select id="findMonitoringProjectById" parameterType="java.lang.Integer" resultMap="MonitoringProjectResult">
+		SELECT id,pro_code,pro_name FROM ibs_monitoring_project
+		<where>
+			id=#{value}
+		</where>
+	</select>
+</mapper>

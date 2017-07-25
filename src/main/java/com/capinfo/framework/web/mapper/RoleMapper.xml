@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.RoleMapper" >
+	
+	<resultMap id="RoleResult" type="com.capinfo.framework.web.pojo.Role">
+		<id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="role_desc" property="roleDesc" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="creater" property="creater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="updater" property="updater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="create_time" property="createTime" javaType="java.util.Date"/>
+		<result column="update_time" property="updateTime" javaType="java.util.Date"/>
+		<result column="version" property="version" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<collection property="roleUsers" column="id" javaType="java.util.ArrayList" select="com.capinfo.framework.web.mapper.UserRoleReleMapper.findUserRoleReleByRoleId" />
+		<collection property="roleMenus" column="id" javaType="java.util.ArrayList" select="com.capinfo.framework.web.mapper.RoleMenuReleMapper.findRoleMenuReleByRoleId" />
+	</resultMap>
+	
+	<!-- SAVE ROLE -->
+	<insert id="saveRole" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.Role">
+		INSERT INTO ibs_role(role_name,role_desc,role_level,create_time,creater) VALUES(#{roleName},#{roleDesc},#{roleLevel},#{createTime},#{creater})
+	</insert>
+	<!-- DELETE ROLE -->
+	<delete id="deleteRole" parameterType="java.lang.Integer">
+		DELETE FROM ibs_role WHERE id=#{id}
+	</delete>
+	<!-- UPDATE ROLE -->
+	<update id="updateRole" parameterType="com.capinfo.framework.web.pojo.Role">
+		UPDATE ibs_role SET role_name=#{roleName},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
+	</update>
+	<!-- BATCH SAVE ROLE -->
+	<insert id="saveRoleBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+		INSERT INTO ibs_role(role_name,role_desc,role_level,create_time,creater) VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.roleName},#{item.roleDesc},#{item.roleLevel},#{item.createTime},#{item.creater})
+		</foreach>
+	</insert>
+	<!-- BATCH DELETE ROLE -->
+	<insert id="deleteRoleBatch" parameterType="java.util.List">
+		DELETE FROM ibs_role WHERE id IN
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</insert>
+	
+	<sql id="query_role_where">
+		<if test="roleName!=null and roleName!=''">
+			AND role_name=#{roleName} 
+		</if>
+		<if test="roleDesc!=null and roleDesc!=''">
+			AND role_desc=#{roleDesc} 
+		</if>
+		<if test="version!=null and version!=''">
+			AND version=#{version} 
+		</if>
+	</sql>
+	<select id="findRoleList" parameterType="com.capinfo.framework.web.vo.RoleQueryBean" resultMap="RoleResult">
+    	SELECT * FROM ibs_role
+    	<where>
+    		<include refid="query_role_where"></include>
+    	</where>
+	</select>
+	
+	<sql id="query_role_page_where">
+		<if test="query.roleName!=null and query.roleName!=''">
+			AND role_name=#{query.roleName} 
+		</if>
+		<if test="query.roleDesc!=null and query.roleDesc!=''">
+			AND role_desc=#{query.roleDesc} 
+		</if>
+		<if test="query.version!=null and query.version!=''">
+			AND version=#{query.version} 
+		</if>
+		<if test="query.roleNameForLike!=null and query.roleNameForLike!=''">
+			AND role_name LIKE  "%"#{query.roleNameForLike}"%"
+		</if>
+	</sql>
+	<select id="findRolePage" parameterType="java.util.Map" resultMap="RoleResult">
+    	SELECT * FROM ibs_role
+    	<where>
+    		<include refid="query_role_page_where"></include>
+    	</where>
+    	LIMIT #{pageNum},#{pageSize}
+	</select>
+	
+	<sql id="query_role_count_where">
+		<if test="roleName!=null and roleName!=''">
+			AND role_name=#{roleName} 
+		</if>
+		<if test="roleDesc!=null and roleDesc!=''">
+			AND role_desc=#{roleDesc} 
+		</if>
+		<if test="version!=null and version!=''">
+			AND version=#{version} 
+		</if>
+	</sql>
+	<select id="findRoleCount" parameterType="com.capinfo.framework.web.vo.RoleQueryBean" resultType="java.lang.Integer">
+    	SELECT COUNT(1) FROM ibs_role
+    	<where>
+    		<include refid="query_role_count_where"></include>
+    	</where>
+	</select>
+	
+	<select id="findRoleById" parameterType="java.lang.Integer" resultMap="RoleResult">
+    	SELECT * FROM ibs_role
+    	<where>
+    		id=#{value}
+    	</where>
+	</select>
+	<select id="findRoleByName" parameterType="java.lang.String" resultMap="RoleResult">
+    	SELECT * FROM ibs_role
+    	<where>
+    		role_name=#{value}
+    	</where>
+	</select>
+	
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.MenuMapper">
+	
+	<resultMap id="MenuResult" type="com.capinfo.framework.web.pojo.Menu">
+		<id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="menu_name" property="menuName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="menu_code" property="menuCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="menu_type" property="menuType" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="menu_url" property="menuUrl" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="menu_level" property="menuLevel" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="menu_last" property="menuLast" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="creater" property="creater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="updater" property="updater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="create_time" property="createTime" javaType="java.util.Date"/>
+		<result column="update_time" property="updateTime" javaType="java.util.Date"/>
+		<result column="version" property="version" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<association column="menu_parent_id" property="pMenu" javaType="com.capinfo.framework.web.pojo.Menu" select="com.capinfo.framework.web.mapper.MenuMapper.findMenuById"/>
+		<collection property="roleMenus" column="id" javaType="java.util.ArrayList" select="com.capinfo.framework.web.mapper.RoleMenuReleMapper.findRoleMenuReleByMenuId" />
+	</resultMap>
+	
+	<!-- SAVE MENU -->
+	<insert id="saveMenu" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.Menu">
+		INSERT INTO ibs_menu(menu_name,menu_code,menu_type,menu_url,menu_level,menu_last,create_timem,creater) VALUES(#{menuName},#{menuCode},#{menuType},#{menuUrl},#{menuLevel},#{menuLast},#{createTime},,#{creater})
+	</insert>
+	<!-- DELETE MENU -->
+	<delete id="deleteMenu" parameterType="java.lang.Integer">
+		DELETE FROM ibs_menu WHERE id=#{id}
+	</delete>
+	<!-- UPDATE MENU -->
+	<update id="updateMenu" parameterType="com.capinfo.framework.web.pojo.Menu">
+		UPDATE ibs_menu SET menu_name=#{menuName},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
+	</update>
+	<!-- BATCH SAVE MENU -->
+	<insert id="saveMenuBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+		INSERT INTO ibs_menu(menu_name,menu_code,menu_type,menu_url,menu_level,menu_last,create_time,creater) VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.menuName},#{item.menuCode},#{item.menuType},#{item.menuUrl},#{item.menuLevel},#{item.menuLast},#{item.createTime},#{item.creater})
+		</foreach>
+	</insert>
+	<!-- BATCH DELETE MENU -->
+	<delete id="deleteMenuBatch" parameterType="java.util.List">
+		DELETE FROM ibs_menu WHERE id IN
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<sql id="query_menu_where">
+		<if test="menuName!=null and menuName!=''">
+			AND menu_name=#{menuName} 
+		</if>
+		<if test="menuCode!=null and menuCode!=''">
+			AND menu_code=#{menuCode} 
+		</if>
+		<if test="version!=null and version!=''">
+			AND version=#{version} 
+		</if>
+	</sql>
+	<select id="findMenuList" parameterType="com.capinfo.framework.web.vo.MenuQueryBean" resultMap="MenuResult">
+    	SELECT * FROM ibs_menu
+    	<where>
+    		<include refid="query_menu_where"></include>
+    	</where>
+	</select>
+	
+	<sql id="query_menu_page_where">
+		<if test="query.menuName!=null and query.menuName!=''">
+			AND menu_name=#{query.menuName} 
+		</if>
+		<if test="query.menuCode!=null and query.menuCode!=''">
+			AND menu_code=#{query.menuCode} 
+		</if>
+		<if test="query.version!=null and query.version!=''">
+			AND version=#{query.version} 
+		</if>
+	</sql>
+	<select id="findMenuPage" parameterType="java.util.Map" resultMap="MenuResult">
+    	SELECT * FROM ibs_menu
+    	<where>
+    		<include refid="query_menu_page_where"></include>
+    	</where>
+    	LIMIT #{pageNum},#{pageSize}
+	</select>
+	
+	<sql id="query_menu_count_where">
+		<if test="menuName!=null and menuName!=''">
+			AND menu_name=#{menuName} 
+		</if>
+		<if test="menuCode!=null and menuCode!=''">
+			AND menu_code=#{menuCode} 
+		</if>
+		<if test="version!=null and version!=''">
+			AND version=#{version} 
+		</if>
+	</sql>
+	<select id="findMenuCount" parameterType="com.capinfo.framework.web.vo.MenuQueryBean" resultType="java.lang.Integer">
+    	SELECT COUNT(1) FROM ibs_menu
+    	<where>
+    		<include refid="query_menu_count_where"></include>
+    	</where>
+	</select>
+	
+	<select id="findMenuById" parameterType="java.lang.Integer" resultMap="MenuResult">
+    	SELECT * FROM ibs_menu
+    	<where>
+    		id=#{value}
+    	</where>
+	</select>
+	
+	<sql id="query_menu_unique_where">
+		<if test="menuName!=null and menuName!=''">
+			AND menu_name=#{menuName} 
+		</if>
+		<if test="menuCode!=null and menuCode!=''">
+			AND menu_code=#{menuCode} 
+		</if>
+	</sql>
+	<select id="findMenuUnique" parameterType="com.capinfo.framework.web.vo.MenuQueryBean" resultMap="MenuResult">
+    	SELECT * FROM ibs_menu 
+    	<where>
+    		<include refid="query_menu_unique_where"></include>
+    	</where>
+    	LIMIT 1 
+	</select>
+
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.RoleMenuReleMapper">
+
+	<resultMap id="RoleMenuReleResult" type="com.capinfo.framework.web.pojo.RoleMenuRele">
+		<id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="creater" property="creater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="updater" property="updater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="create_time" property="createTime" javaType="java.util.Date"/>
+		<result column="update_time" property="updateTime" javaType="java.util.Date"/>
+		<result column="version" property="version" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<association column="role_id" property="role" javaType="com.capinfo.framework.web.pojo.Role" select="com.capinfo.framework.web.mapper.RoleMapper.findRoleById"/>
+		<association column="menu_id" property="menu" javaType="com.capinfo.framework.web.pojo.Menu" select="com.capinfo.framework.web.mapper.MenuMapper.findMenuById"/>
+	</resultMap>
+	
+	<!-- SAVE RoleMenuRele -->
+	<insert id="saveRoleMenuRele" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.RoleMenuRele">
+		INSERT INTO ibs_role_menu_rele(role_id,menu_id,create_time,creater) VALUES(#{role.id},#{menu.id},#{createTime},#{creater})
+	</insert>
+	<!-- DELETE RoleMenuRele -->
+	<delete id="deleteRoleMenuRele" parameterType="java.lang.Integer">
+		DELETE FROM ibs_role_menu_rele WHERE id=#{id}
+	</delete>
+	<!-- UPDATE RoleMenuRele -->
+	<update id="updateRoleMenuRele" parameterType="com.capinfo.framework.web.pojo.RoleMenuRele">
+		UPDATE ibs_role_menu_rele SET role_id=#{role.id},menu_id=#{menu.id},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
+	</update>
+	<!-- BATCH SAVE RoleMenuRele -->
+	<insert id="saveRoleMenuReleBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+		INSERT INTO ibs_role_menu_rele(role_id,menu_id,create_time,creater) VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.role.id},#{item.menu.id},#{item.createTime},#{item.creater})
+		</foreach>
+	</insert>
+	<!-- BATCH DELETE RoleMenuRele -->
+	<delete id="deleteRoleMenuReleBatch" parameterType="java.util.List">
+		DELETE FROM ibs_role_menu_rele WHERE id IN
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!-- 查询角色菜单关系列表 -->
+	<sql id="query_role_menu_where">
+		<if test="roleId!=null">
+			AND role_id=#{roleId} 
+		</if>
+		<if test="menuId!=null">
+			AND menu_id=#{menuId} 
+		</if>
+	</sql>
+	<select id="findRoleMenuReleList" parameterType="com.capinfo.framework.web.vo.RoleMenuReleQueryBean" resultMap="RoleMenuReleResult">
+    	SELECT * FROM ibs_role_menu_rele
+    	<where>
+    		<include refid="query_role_menu_where"></include>
+    	</where>
+    	ORDER BY menu_id ASC
+	</select>
+	
+	<!-- 查询角色菜单关系分页列表 -->
+	<sql id="query_role_menu_page_where">
+		<if test="query.roleId!=null">
+			AND role_id=#{query.roleId} 
+		</if>
+		<if test="query.menuId!=null">
+			AND menu_id=#{query.menuId} 
+		</if>
+	</sql>
+	<select id="findRoleMenuRelePage" parameterType="java.util.Map" resultMap="RoleMenuReleResult">
+    	SELECT * FROM ibs_role_menu_rele
+    	<where>
+    		<include refid="query_role_menu_page_where"></include>
+    	</where>
+    	LIMIT #{pageNum},#{pageSize}
+	</select>
+	
+	<!-- 查询角色菜单关系总数 -->
+	<sql id="query_role_menu_count_where">
+		<if test="roleId!=null">
+			AND rm.role_id=#{roleId} 
+		</if>
+		<if test="menuId!=null">
+			AND rm.menu_id=#{menuId} 
+		</if>
+		<if test="menuUrl!=null and menuUrl!=''">
+			AND m.id=rm.menu_id AND m.menu_url LIKE "%"#{menuUrl}"%" 
+		</if>
+		<if test="roleIdForIn!=null and roleIdForIn.length>0">
+			AND rm.role_id IN
+			<foreach collection="roleIdForIn" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="menuIdForIn!=null and menuIdForIn.length>0">
+			AND rm.menu_id IN
+			<foreach collection="menuIdForIn" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</sql>
+	<select id="findRoleMenuReleCount" parameterType="com.capinfo.framework.web.vo.RoleMenuReleQueryBean" resultType="java.lang.Integer">
+    	SELECT COUNT(1) FROM ibs_role_menu_rele rm 
+    	<if test="menuUrl!=null and menuUrl!=''">
+			,ibs_menu m  
+		</if>
+    	<where>
+    		<include refid="query_role_menu_count_where"></include>
+    	</where>
+	</select>
+	
+	<!-- 根据id查询角色菜单关系数据 -->
+	<select id="findRoleMenuReleById" parameterType="java.lang.Integer" resultMap="RoleMenuReleResult">
+    	SELECT * FROM ibs_role_menu_rele
+    	<where>
+    		id=#{value}
+    	</where>
+	</select>
+	
+	<!-- 根据角色id查询角色菜单关系数据 -->
+	<select id="findRoleMenuReleByRoleId" parameterType="java.lang.Integer" resultMap="RoleMenuReleResult">
+    	SELECT * FROM ibs_role_menu_rele
+    	<where>
+    		role_id=#{value}
+    	</where>
+    	ORDER BY menu_id ASC
+	</select>
+	
+	<!-- 根据菜单id查询角色菜单关系数据 -->
+	<select id="findRoleMenuReleByMenuId" parameterType="java.lang.Integer" resultMap="RoleMenuReleResult">
+    	SELECT * FROM ibs_role_menu_rele
+    	<where>
+    		menu_id=#{value}
+    	</where>
+    	ORDER BY role_id ASC
+	</select>
+	<!--删除现有的关联roleId-->
+
+	<delete id="deleteRoleMenuReleByRoleId" parameterType="java.lang.Integer">
+		DELETE FROM ibs_role_menu_rele WHERE role_id =#{value}
+	</delete>
+
+	<select id="findRoleMenuReleListByRoleId" parameterType="java.lang.Integer" resultMap="RoleMenuReleResult">
+		SELECT * FROM ibs_role_menu_rele
+		WHERE role_id =#{value}
+		ORDER BY menu_id ASC
+	</select>
+</mapper>

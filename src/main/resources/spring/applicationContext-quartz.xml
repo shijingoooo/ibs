@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+    <context:component-scan base-package="com.capinfo.framework.web.common.job"/>
+
+    <bean id="pushData" class="com.capinfo.framework.web.common.job.PushDataJob"></bean>
+    <bean id="pushDataJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="pushData"/>
+        </property>
+        <property name="targetMethod">
+            <value>pushDataToSH</value>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="pushDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="pushDataJob"/>
+        <property name="cronExpression">
+            <value>0 0/5 * * * ?</value>
+        </property>
+        <!-- 容器启动后 延时 0毫秒 后 定时器开始启动 -->
+        <property name="startDelay">
+            <value>30000</value>
+        </property>
+    </bean>
+
+    <bean id="message" class="com.capinfo.framework.web.common.job.MessageJob"></bean>
+    <bean id="messageJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="message"/>
+        </property>
+        <property name="targetMethod">
+            <value>send</value>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="messageTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="messageJob"/>
+        <property name="cronExpression">
+            <value>0 0/1 * * * ?</value>
+        </property>
+        <!-- 容器启动后 延时 0毫秒 后 定时器开始启动 -->
+        <property name="startDelay">
+            <value>30000</value>
+        </property>
+    </bean>
+
+    <bean id="statusScan" class="com.capinfo.framework.web.common.job.StatusScanJob"></bean>
+    <bean id="statusScanJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="statusScan"/>
+        </property>
+        <property name="targetMethod">
+            <value>scan</value>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="statusScanTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="statusScanJob"/>
+        <property name="cronExpression">
+            <value>0 /2 * * * ?</value>
+        </property>
+        <!-- 容器启动后 延时 0毫秒 后 定时器开始启动 -->
+        <property name="startDelay">
+            <value>30000</value>
+        </property>
+    </bean>
+    <!--2017/1/18 新思 彭  开始-->
+    <bean id="moveDatabases" class="com.capinfo.framework.web.common.job.DataBaseJob"></bean>
+    <bean id="dataBaseJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="moveDatabases"/>
+        </property>
+        <property name="targetMethod">
+            <value>moveDate</value>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="dataBaseTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="dataBaseJob"/>
+        <property name="cronExpression">
+            <value>0 0 1 * * ?</value>
+        </property>
+        <!-- 容器启动后 延时 0毫秒 后 定时器开始启动 -->
+        <property name="startDelay">
+            <value>30000</value>
+        </property>
+    </bean>
+    <!--2017/1/18 新思 彭  结束-->
+
+    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  -->
+    <bean id="startQuertz" lazy-init="false" autowire="no"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--<ref bean="pushDataTrigger" /> -->
+                <!--新思 彭  开始-->
+                <!--<ref bean="messageTrigger" />-->
+                <!--新思 彭  结束-->
+                <!--2017/1/18 新思 彭  开始-->
+                <!-- <ref bean="dataBaseTrigger"/>-->
+                <!--2017/1/18 新思 彭  结束-->
+                <ref bean="statusScanTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>

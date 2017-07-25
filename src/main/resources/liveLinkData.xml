@@ -1,0 +1,26 @@
+<?xml version='1.0'?>
+<Parament>
+    <MatrixCode>0</MatrixCode>
+    <MonitorID>151</MonitorID>
+    <CameraID>151</CameraID>
+    <CameraName></CameraName>
+    <DeviceIP>192.168.2.64</DeviceIP>
+    <DevicePort>7302</DevicePort>
+    <DeviceType>60001</DeviceType>
+    <User>ehome</User>
+    <Password>201603260002</Password>
+    <ChannelNum>0</ChannelNum>
+    <ProtocolType>0</ProtocolType>
+    <StreamType>1</StreamType>
+    <Transmits>
+        <Transmit>
+            <SrvIp>111.207.18.18:59915/</SrvIp>
+            <Port>0</Port>
+        </Transmit>
+    </Transmits>
+    <CascadeType>0</CascadeType>
+    <CameraIndexCode>YCCS2017041200001</CameraIndexCode>
+    <RegionIndexCode>160505100419096990</RegionIndexCode>
+    <PagIP>192.168.2.64</PagIP>
+    <PagPort>7302</PagPort>
+</Parament>

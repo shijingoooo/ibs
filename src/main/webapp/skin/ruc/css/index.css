@@ -1,0 +1,103 @@
+ 
+/* CSS Document */
+/* ============================ 重置css样式 ============================ */	
+/* 清除内外边距 */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, fieldset, lengend, button, input, textarea, th, td {
+	margin: 0;
+	padding: 0;
+}
+/* 设置默认字体 */
+body, button, input, select, textarea { font: 12px/1 "微软雅黑", Tahoma, Helvetica, Arial, sans-serif; }
+h1 { font-size: 18px; }
+h2 { font-size: 16px; }
+h3 { font-size: 14px; }
+h4, h5, h6 { font-size: 100%; }
+cite, em { font-style: normal; }
+/* 重置列表元素 */
+ul, ol { list-style: none; }
+/* 重置文本格式元素 */
+a {
+	text-decoration: none;
+	cursor:pointer;
+	outline:none;
+}
+/* 重置表单元素 */
+legend { color: #000; }
+fieldset, img { border: none; }
+img{vertical-align:middle;}
+/* 重置表格元素 */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+button, input, select, textarea { font-size: 100%; }
+/* ========================= 页面常用样式 CSS样式 =========================== */	
+/*清除浮动*/
+.clearfix:after{
+	display:block;
+	clear:both;
+	height:0;
+	visibility:hidden;
+	content:" ";
+}
+.clearfix{_zoom:1;}
+.fl{float:left;}
+.fr{float:right;}
+
+
+
+
+
+/*页面样式str*/
+.header{ background:#ac0b2c;overflow:hidden;font-size:0px; padding:15px 0px }
+	.header_left{width:45%;text-align:center;display:inline-block; vertical-align:middle}
+	.header_left img{ width:80%; max-width:170px;}
+	.header_right{display:inline-block;vertical-align:middle; width:55%; color:#FFFFFF;font-size:14px;border-left:1px solid #FFFFFF;
+	text-align:center;box-sizing:border-box; padding:2px 0px}
+	.header_title{ background:#fcf7e3; padding:10px 0px 6px 0px}
+	.header_title p img{width:12px;height:19px; display:inline-block; vertical-align:middle; margin-right:5px}
+	.header_title p{ text-align:center;font-size:14px; font-weight:bold;color:#000000}
+	.header_title span{ color:#6d6d6d; font-size:12px; font-weight:bold; padding-left:15px;}
+	.list{ overflow:hidden}
+	.list li{ width:50%;  background:#57383a;  float:left; padding:15px 0px;box-sizing:border-box;}
+    .list li.bg2{ background:#513335;}	
+	.list { color:#b89881;text-align:center;}
+	.list .icon{ display:inline-block; vertical-align:middle; text-align:center; padding-right:5px}
+	 .nav{  height:45px; box-sizing:border-box;}
+	.list .icon p{ display:block;font-size:12px; margin-top:4px}
+	.section{display:inline-block; vertical-align:middle}
+	.section em{ font-size:22px; font-weight:bold; margin-right:4px}
+	.section span{ font-size:12px; pading-left:10px}
+	.icon1{ width:20px; height:auto;}
+	.icon2{ width:12px; height:auto;}
+	.icon3{ width:20px; height:auto;}
+	.icon4{ width:12px; height:auto;}
+	.br{ border-right:1px solid #705b5a}
+	.bb{ border-bottom:1px solid #705b5a}
+	.title{ font-size:14px; font-weight:bold; color:#4f3133; padding:10px; width:100%; box-sizing:border-box; background:#fcf7e3}
+	.map{ width:100%; margin:0 auto; min-height:300px; background:#dddddd}
+	.footer{ background:#000000; padding:15px 0px; color:#FFFFFF; font-size:12px; text-align:center; line-height:18px} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

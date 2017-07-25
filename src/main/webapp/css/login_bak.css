@@ -1,0 +1,70 @@
+#userlogin_body {
+	PADDING-RIGHT: 0px;
+	PADDING-LEFT: 0px;
+	BACKGROUND: url(../images/login/bg.gif) #226cc5 repeat-x 50% top;
+	PADDING-BOTTOM: 0px;
+	MARGIN: 110px 0px 0px;
+	FONT: 14px/150% Arial, "ËÎÌו", Helvetica, sans-serif;
+	PADDING-TOP: 0px;
+	TEXT-DECORATION: none
+}
+
+.user_text {
+	BORDER-TOP-WIDTH: 0px;
+	PADDING-LEFT: 25px;
+	BORDER-LEFT-WIDTH: 0px;
+	BACKGROUND: url(../images/login/user3.gif) no-repeat;
+	BORDER-BOTTOM-WIDTH: 0px;
+	WIDTH: 155px;
+	LINE-HEIGHT: 24px;
+	HEIGHT: 26px;
+	BORDER-RIGHT-WIDTH: 0px
+}
+
+.user_text2 {
+	BORDER-TOP-WIDTH: 0px;
+	PADDING-LEFT: 25px;
+	BORDER-LEFT-WIDTH: 0px;
+	BACKGROUND: url(../images/login/user.gif) no-repeat;
+	BORDER-BOTTOM-WIDTH: 0px;
+	WIDTH: 155px;
+	LINE-HEIGHT: 24px;
+	HEIGHT: 26px;
+	BORDER-RIGHT-WIDTH: 0px
+}
+
+.pass_text {
+	BORDER-TOP-WIDTH: 0px;
+	PADDING-LEFT: 25px;
+	BORDER-LEFT-WIDTH: 0px;
+	BACKGROUND: url(../images/login/pass3.gif) no-repeat;
+	BORDER-BOTTOM-WIDTH: 0px;
+	WIDTH: 155px;
+	LINE-HEIGHT: 24px;
+	HEIGHT: 26px;
+	BORDER-RIGHT-WIDTH: 0px
+}
+
+.pass_text2 {
+	BORDER-TOP-WIDTH: 0px;
+	PADDING-LEFT: 25px;
+	BORDER-LEFT-WIDTH: 0px;
+	BACKGROUND: url(../images/login/pass.gif) no-repeat;
+	BORDER-BOTTOM-WIDTH: 0px;
+	WIDTH: 155px;
+	LINE-HEIGHT: 24px;
+	HEIGHT: 26px;
+	BORDER-RIGHT-WIDTH: 0px
+}
+
+.btn1 {
+	BACKGROUND: url(../images/login/Login_btn1.gif) no-repeat;
+	WIDTH: 83px;
+	HEIGHT: 83px;
+}
+
+.btn2 {
+	BACKGROUND: url(../images/login/Login_btn2.gif) no-repeat;
+	WIDTH: 83px;
+	HEIGHT: 83px;
+}

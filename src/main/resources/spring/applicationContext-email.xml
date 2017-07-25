@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+	   	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   	xmlns:p="http://www.springframework.org/schema/p"
+	   	xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans  
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+   			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd ">
+	
+	<bean name="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="username" value="greenlive@greenlivebj.com"/>
+        <property name="password" value="1234qwer@"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.host">smtp.mxhichina.com</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.socketFactory.port">25</prop>
+            </props>
+        </property>
+    </bean>
+	
+	<bean id="accountEmailService" class="com.capinfo.framework.common.mail.impl.AccountEmailServiceImpl">
+		<property name="javaMailSender" ref="javaMailSender"></property>
+		<property name="systemMail" value="greenlive@greenlivebj.com"></property>
+	</bean>
+	
+</beans>

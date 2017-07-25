@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.MonitoringCompanyMapper">
+
+	<resultMap id="MonitoringCompanyResult" type="com.capinfo.framework.web.pojo.MonitoringCompany">
+		<id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="company_name" property="companyName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="company_code" property="companyCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="city" property="city" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="district" property="district" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="street" property="street" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="longitude" property="longitude" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="latitude" property="latitude" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="contacts" property="contacts" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="telephone" property="telephone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="creater" property="creater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="updater" property="updater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="create_time" property="createTime" javaType="java.util.Date"/>
+		<result column="update_time" property="updateTime" javaType="java.util.Date"/>
+		<result column="version" property="version" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="type" property="type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="protocol" property="protocol" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<collection property="monitoringDevices" column="id" javaType="java.util.ArrayList" select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringDeviceByCompanyId" />
+		<!--<collection property="monitoringProjects" column="id" javaType="java.util.ArrayList" select="com.capinfo.framework.web.mapper.MonitoringProjectMapper.findMonitoringProjectByCompanyId" />-->
+	</resultMap>
+	
+	<!-- SAVE USER -->
+	<insert id="saveMonitoringCompany" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.MonitoringCompany">
+		INSERT INTO ibs_monitoring_company(company_name,company_code,province,city,district,street,longitude,latitude,contacts,telephone,create_time,creater,type,protocol)
+		VALUES(#{companyName},#{companyCode},#{province},#{city},#{district},#{street},#{longitude},#{latitude},#{contacts},#{telephone},#{createTime},#{creater},#{type},#{protocol})
+	</insert>
+	<!-- DELETE USER -->
+	<delete id="deleteMonitoringCompany" parameterType="java.lang.Integer">
+		DELETE FROM ibs_monitoring_company WHERE id=#{id}
+	</delete>
+	<!-- UPDATE USER -->
+	<update id="updateMonitoringCompany" parameterType="com.capinfo.framework.web.pojo.MonitoringCompany">
+		UPDATE ibs_monitoring_company SET company_name=#{companyName},company_code=#{companyCode}, province=#{province},city=#{city},district=#{district},street=#{street},longitude=#{longitude},latitude=#{latitude},contacts=#{contacts},telephone=#{telephone},update_time=#{updateTime},updater=#{updater},type=#{type},protocol=#{protocol},version=version+1 WHERE id=#{id} AND version=#{version}
+	</update>
+	<!-- BATCH SAVE USER -->
+	<insert id="saveMonitoringCompanyBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+		INSERT INTO ibs_monitoring_company(company_name,company_code,province,city,district,street,longitude,latitude,contacts,telephone,create_time,creater,type,protocol)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.companyName},#{item.companyCode},#{item.province},#{item.city},#{item.district},#{item.street},#{item.longitude},#{item.latitude},#{item.contacts},#{item.telephone},#{item.createTime},#{item.creater},#{item.type},#{item.protocol})
+		</foreach>
+	</insert>
+	<!-- BATCH DELETE USER -->
+	<delete id="deleteMonitoringCompanyBatch" parameterType="java.util.List">
+		DELETE FROM ibs_monitoring_company WHERE id IN
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<sql id="query_company_where">
+		<if test="companyName!=null and companyName!=''">
+			AND company_name=#{companyName} 
+		</if>
+		<if test="companyCode!=null and companyCode!=''">
+			AND company_code=#{companyCode} 
+		</if>
+		<if test="companyNameForLike!=null and companyNameForLike!=''">
+			AND company_name LIKE "%"#{companyNameForLike}"%" 
+		</if>
+	</sql>
+	<select id="findMonitoringCompanyList" parameterType="com.capinfo.framework.web.vo.MonitoringCompanyQueryBean" resultMap="MonitoringCompanyResult">
+    	SELECT * FROM ibs_monitoring_company 
+    	<where>
+    		<include refid="query_company_where"></include>
+    	</where>
+		ORDER BY create_time DESC
+	</select>
+	
+	<sql id="query_company_page_where">
+		<if test="query.companyName!=null and query.companyName!=''">
+			AND company_name=#{query.companyName} 
+		</if>
+		<if test="query.companyCode!=null and query.companyCode!=''">
+			AND company_code=#{query.companyCode} 
+		</if>
+		<if test="query.companyNameForLike!=null and query.companyNameForLike!=''">
+			AND company_name LIKE "%"#{query.companyNameForLike}"%" 
+		</if>
+	</sql>
+	<select id="findMonitoringCompanyPage" parameterType="java.util.Map" resultMap="MonitoringCompanyResult">
+    	SELECT * FROM ibs_monitoring_company
+    	<where>
+    		<include refid="query_company_page_where"></include>
+    	</where>
+		ORDER  BY  create_time DESC
+    	LIMIT #{pageNum},#{pageSize}
+	</select>
+	
+	<sql id="query_company_count_where">
+		<if test="companyName!=null and companyName!=''">
+			AND company_name=#{companyName} 
+		</if>
+		<if test="companyCode!=null and companyCode!=''">
+			AND company_code=#{companyCode} 
+		</if>
+		<if test="companyNameForLike!=null and companyNameForLike!=''">
+			AND company_name LIKE "%"#{companyNameForLike}"%" 
+		</if>
+	</sql>
+	<select id="findMonitoringCompanyCount" parameterType="com.capinfo.framework.web.vo.MonitoringCompanyQueryBean" resultType="java.lang.Integer">
+    	SELECT COUNT(1) FROM ibs_monitoring_company
+    	<where>
+    		<include refid="query_company_count_where"></include>
+    	</where>
+	</select>
+	
+	<select id="findMonitoringCompanyById" parameterType="java.lang.Integer" resultMap="MonitoringCompanyResult">
+    	SELECT * FROM ibs_monitoring_company
+    	<where>
+    		id=#{value}
+    	</where>
+	</select>
+	
+	<!-- 根据条件查询厂商 -->
+	<sql id="query_company_unique_where">
+		<if test="companyCode!=null and companyCode!=''">
+			AND company_code=#{companyCode} 
+		</if>
+		<if test="companyName!=null and companyName!=''">
+			AND company_name=#{companyName} 
+		</if>
+	</sql>
+	<select id="findMonitoringCompanyUnique" parameterType="com.capinfo.framework.web.vo.MonitoringCompanyQueryBean" resultMap="MonitoringCompanyResult">
+    	SELECT * FROM ibs_monitoring_company
+    	<where>
+    		<include refid="query_company_unique_where"></include>
+    	</where>
+    	LIMIT 1 
+	</select>
+
+    <select id="findCompanyListByIds" resultMap="MonitoringCompanyResult">
+        SELECT * FROM ibs_monitoring_company
+        <where>
+            id IN
+            <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+	
+</mapper>

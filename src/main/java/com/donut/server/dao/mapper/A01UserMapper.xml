@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.donut.server.dao.mapper.A01UserMapper" >
+	<resultMap id="BaseResultMap" type="com.donut.server.dao.model.A01User" >
+		<id column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="reg_phone" property="regPhone" jdbcType="VARCHAR" />
+		<result column="passwd" property="passwd" jdbcType="VARCHAR" />
+		<result column="reg_plaform" property="regPlaform" jdbcType="INTEGER" />
+		<result column="os" property="os" jdbcType="INTEGER" />
+		<result column="third_tag" property="thirdTag" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="mail" property="mail" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="first_area_code" property="firstAreaCode" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="birth" property="birth" jdbcType="DATE" />
+		<result column="star" property="star" jdbcType="INTEGER" />
+		<result column="job" property="job" jdbcType="VARCHAR" />
+		<result column="member_status" property="memberStatus" jdbcType="INTEGER" />
+		<result column="balance" property="balance" jdbcType="REAL" />
+		<result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+		<result column="has_received_reward" property="hasReceivedReward" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="token" property="token" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="UserInfoMap" type="com.donut.server.model.UserInfoModel" >
+		<id column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+		<result column="reg_plaform" property="regPlaform" jdbcType="INTEGER" />
+		<result column="os" property="os" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="reg_phone" property="regPhone" jdbcType="VARCHAR" />
+		<result column="mail" property="mail" jdbcType="VARCHAR" />
+		<result column="member_status" property="memberStatus" jdbcType="INTEGER" />
+		<result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+		<result column="consumption_amount" property="consumptionAmount" jdbcType="FLOAT" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+
+	</resultMap>
+
+
+	<sql id="Base_Column_List" >
+		uuid, reg_phone, passwd, reg_plaform, os, third_tag, type, head_pic, nick_name, mail,
+		sex, first_area_code, city, birth, star, job, member_status, balance, expire_time,
+		has_received_reward, status, token, create_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		select
+		<include refid="Base_Column_List" />
+		from A01_USER
+		where uuid = #{uuid,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+		delete from A01_USER
+		where uuid = #{uuid,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.donut.server.dao.model.A01User" >
+		insert into A01_USER (uuid, reg_phone, passwd,
+		reg_plaform, os, third_tag,
+		type, head_pic, nick_name,
+		mail, sex, first_area_code,
+		city, birth, star, job,
+		member_status, balance, expire_time,
+		has_received_reward, status, token,
+		create_time)
+		values (#{uuid,jdbcType=VARCHAR}, #{regPhone,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},
+		#{regPlaform,jdbcType=INTEGER}, #{os,jdbcType=INTEGER}, #{thirdTag,jdbcType=VARCHAR},
+		#{type,jdbcType=INTEGER}, #{headPic,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
+		#{mail,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{firstAreaCode,jdbcType=VARCHAR},
+		#{city,jdbcType=VARCHAR}, #{birth,jdbcType=DATE}, #{star,jdbcType=INTEGER}, #{job,jdbcType=VARCHAR},
+		#{memberStatus,jdbcType=INTEGER}, #{balance,jdbcType=REAL}, #{expireTime,jdbcType=TIMESTAMP},
+		#{hasReceivedReward,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{token,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.donut.server.dao.model.A01User" >
+		insert into A01_USER
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="uuid != null" >
+				uuid,
+			</if>
+			<if test="regPhone != null" >
+				reg_phone,
+			</if>
+			<if test="passwd != null" >
+				passwd,
+			</if>
+			<if test="regPlaform != null" >
+				reg_plaform,
+			</if>
+			<if test="os != null" >
+				os,
+			</if>
+			<if test="thirdTag != null" >
+				third_tag,
+			</if>
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="headPic != null" >
+				head_pic,
+			</if>
+			<if test="nickName != null" >
+				nick_name,
+			</if>
+			<if test="mail != null" >
+				mail,
+			</if>
+			<if test="sex != null" >
+				sex,
+			</if>
+			<if test="firstAreaCode != null" >
+				first_area_code,
+			</if>
+			<if test="city != null" >
+				city,
+			</if>
+			<if test="birth != null" >
+				birth,
+			</if>
+			<if test="star != null" >
+				star,
+			</if>
+			<if test="job != null" >
+				job,
+			</if>
+			<if test="memberStatus != null" >
+				member_status,
+			</if>
+			<if test="balance != null" >
+				balance,
+			</if>
+			<if test="expireTime != null" >
+				expire_time,
+			</if>
+			<if test="hasReceivedReward != null" >
+				has_received_reward,
+			</if>
+			<if test="status != null" >
+				status,
+			</if>
+			<if test="token != null" >
+				token,
+			</if>
+			<if test="createTime != null" >
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="uuid != null" >
+				#{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="regPhone != null" >
+				#{regPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="passwd != null" >
+				#{passwd,jdbcType=VARCHAR},
+			</if>
+			<if test="regPlaform != null" >
+				#{regPlaform,jdbcType=INTEGER},
+			</if>
+			<if test="os != null" >
+				#{os,jdbcType=INTEGER},
+			</if>
+			<if test="thirdTag != null" >
+				#{thirdTag,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="headPic != null" >
+				#{headPic,jdbcType=VARCHAR},
+			</if>
+			<if test="nickName != null" >
+				#{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="mail != null" >
+				#{mail,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null" >
+				#{sex,jdbcType=INTEGER},
+			</if>
+			<if test="firstAreaCode != null" >
+				#{firstAreaCode,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null" >
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="birth != null" >
+				#{birth,jdbcType=DATE},
+			</if>
+			<if test="star != null" >
+				#{star,jdbcType=INTEGER},
+			</if>
+			<if test="job != null" >
+				#{job,jdbcType=VARCHAR},
+			</if>
+			<if test="memberStatus != null" >
+				#{memberStatus,jdbcType=INTEGER},
+			</if>
+			<if test="balance != null" >
+				#{balance,jdbcType=REAL},
+			</if>
+			<if test="expireTime != null" >
+				#{expireTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="hasReceivedReward != null" >
+				#{hasReceivedReward,jdbcType=INTEGER},
+			</if>
+			<if test="status != null" >
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="token != null" >
+				#{token,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null" >
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.donut.server.dao.model.A01User" >
+		update A01_USER
+		<set >
+			<if test="regPhone != null" >
+				reg_phone = #{regPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="passwd != null" >
+				passwd = #{passwd,jdbcType=VARCHAR},
+			</if>
+			<if test="regPlaform != null" >
+				reg_plaform = #{regPlaform,jdbcType=INTEGER},
+			</if>
+			<if test="os != null" >
+				os = #{os,jdbcType=INTEGER},
+			</if>
+			<if test="thirdTag != null" >
+				third_tag = #{thirdTag,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="headPic != null" >
+				head_pic = #{headPic,jdbcType=VARCHAR},
+			</if>
+			<if test="nickName != null" >
+				nick_name = #{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="mail != null" >
+				mail = #{mail,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null" >
+				sex = #{sex,jdbcType=INTEGER},
+			</if>
+			<if test="firstAreaCode != null" >
+				first_area_code = #{firstAreaCode,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null" >
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="birth != null" >
+				birth = #{birth,jdbcType=DATE},
+			</if>
+			<if test="star != null" >
+				star = #{star,jdbcType=INTEGER},
+			</if>
+			<if test="job != null" >
+				job = #{job,jdbcType=VARCHAR},
+			</if>
+			<if test="memberStatus != null" >
+				member_status = #{memberStatus,jdbcType=INTEGER},
+			</if>
+			<if test="balance != null" >
+				balance = #{balance,jdbcType=REAL},
+			</if>
+			<if test="expireTime != null" >
+				expire_time = #{expireTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="hasReceivedReward != null" >
+				has_received_reward = #{hasReceivedReward,jdbcType=INTEGER},
+			</if>
+			<if test="status != null" >
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="token != null" >
+				token = #{token,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null" >
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where uuid = #{uuid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.donut.server.dao.model.A01User" >
+		update A01_USER
+		set reg_phone = #{regPhone,jdbcType=VARCHAR},
+		passwd = #{passwd,jdbcType=VARCHAR},
+		reg_plaform = #{regPlaform,jdbcType=INTEGER},
+		os = #{os,jdbcType=INTEGER},
+		third_tag = #{thirdTag,jdbcType=VARCHAR},
+		type = #{type,jdbcType=INTEGER},
+		head_pic = #{headPic,jdbcType=VARCHAR},
+		nick_name = #{nickName,jdbcType=VARCHAR},
+		mail = #{mail,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=INTEGER},
+		first_area_code = #{firstAreaCode,jdbcType=VARCHAR},
+		city = #{city,jdbcType=VARCHAR},
+		birth = #{birth,jdbcType=DATE},
+		star = #{star,jdbcType=INTEGER},
+		job = #{job,jdbcType=VARCHAR},
+		member_status = #{memberStatus,jdbcType=INTEGER},
+		balance = #{balance,jdbcType=REAL},
+		expire_time = #{expireTime,jdbcType=TIMESTAMP},
+		has_received_reward = #{hasReceivedReward,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		token = #{token,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP}
+		where uuid = #{uuid,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectUserTotals" parameterType="com.donut.server.model.UserMgModel"
+			resultType="java.lang.Long" >
+		select
+		count(a01.uuid)
+		FROM
+		A01_USER AS a01
+		where 1=1
+		<if test="searchNickName != null and searchNickName != ''">
+			AND a01.nick_name like CONCAT('%',trim(#{searchNickName}),'%')
+		</if>
+		<if test="searchRegPhone != null and searchRegPhone != ''">
+			AND a01.reg_phone like CONCAT('%',trim(#{searchRegPhone}),'%')
+		</if>
+		<!-- 粉丝，明星的搜索查询 -->
+		<if test="searchType != null and searchType != '' and searchType == 1 ">
+			AND a01.type = #{searchType}
+		</if>
+		<if test="searchType != null and searchType != '' and searchType == 0 ">
+			AND (a01.type = #{searchType} or a01.type is null )
+		</if>
+		<!-- 粉丝，明星的搜索查询 结束-->
+		<!-- 会员非会员-->
+
+		<if test="searchMemberStatus != null and searchMemberStatus != '' and searchMemberStatus == 0">
+			AND ( a01.member_status = #{searchMemberStatus} or  a01.member_status is null)
+		</if>
+		<if test="searchMemberStatus != null and searchMemberStatus != '' and searchMemberStatus ==  1">
+			AND a01.member_status = #{searchMemberStatus}
+		</if>
+		<!-- 会员非会员-->
+
+		<if test="searchStatus != null and searchStatus != ''">
+			AND a01.status = #{searchStatus}
+		</if>
+		<if test="searchRegPlaform != null and searchRegPlaform != ''">
+			AND a01.reg_plaform = #{searchRegPlaform}
+		</if>
+		<if test="searchOs != null ">
+			AND a01.os = #{searchOs}
+		</if>
+	</select>
+
+	<!-- 作者李华洞，Pc甜麦圈账号管理 -->
+	<select id="selectUserList" parameterType="com.donut.server.model.UserMgModel"
+			resultMap="UserInfoMap">
+		select
+		a01.uuid,
+		a01.reg_phone,
+		a01.reg_plaform,
+		a01.os,
+		a01.type,
+		a01.head_pic,
+		a01.nick_name,
+		a01.mail,
+		a01.member_status,
+		a01.expire_time,
+		a01.status,
+		T.sum_money as consumption_amount
+		FROM
+		A01_USER AS a01 left join (select SUM(pay_money) as sum_money,fk_a01 from D06_PAY_DETAIL where pay_status in( 1,3) and (source_type in (1,2,7) or source_type like '3_' ) group by fk_a01) as T
+		on a01.uuid = T.fk_a01
+		where 1=1
+		<if test="searchNickName != null and searchNickName != ''">
+			AND a01.nick_name like CONCAT('%',trim(#{searchNickName}),'%')
+		</if>
+		<if test="searchRegPhone != null and searchRegPhone != ''">
+			AND a01.reg_phone like CONCAT('%',trim(#{searchRegPhone}),'%')
+		</if>
+		<!-- 粉丝，明星的搜索查询 -->
+		<if test="searchType != null and searchType != '' and searchType == 1 ">
+			AND a01.type = #{searchType}
+		</if>
+		<if test="searchType != null and searchType != '' and searchType == 0 ">
+			AND (a01.type = #{searchType} or a01.type is null )
+		</if>
+		<!-- 粉丝，明星的搜索查询 结束-->
+		<!-- 会员非会员-->
+
+		<if test="searchMemberStatus != null and searchMemberStatus != '' and searchMemberStatus == 0">
+			AND ( a01.member_status = #{searchMemberStatus} or  a01.member_status is null)
+		</if>
+		<if test="searchMemberStatus != null and searchMemberStatus != '' and searchMemberStatus ==  1">
+			AND a01.member_status = #{searchMemberStatus}
+		</if>
+		<!-- 会员非会员-->
+		<if test="searchStatus != null and searchStatus != ''">
+			AND a01.status = #{searchStatus}
+		</if>
+		<if test="searchRegPlaform != null and searchRegPlaform != ''">
+			AND a01.reg_plaform = #{searchRegPlaform}
+		</if>
+
+		<if test="searchOs != null ">
+			AND a01.os = #{searchOs}
+		</if>
+
+		<if test="searchOrderBy == null  ">
+			ORDER BY a01.create_time desc , consumption_amount DESC
+		</if>
+		<if test="searchStatus != null  and searchOrderBy == 0">
+			ORDER BY consumption_amount asc,a01.create_time desc
+		</if>
+		<if test="searchStatus != null  and searchOrderBy == 1">
+			ORDER BY consumption_amount desc,a01.create_time desc
+		</if>
+		LIMIT #{startIndex},#{recordPerPages}
+	</select>
+</mapper>

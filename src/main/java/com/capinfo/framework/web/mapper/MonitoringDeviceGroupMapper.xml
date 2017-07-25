@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.MonitoringDeviceGroupMapper">
+
+    <resultMap id="MonitoringDeviceGroupResult" type="com.capinfo.framework.web.pojo.MonitoringDeviceGroup">
+        <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="group_dev_name" property="groupDevName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="group_dev_type" property="groupDevType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="group_dev_description" property="groupDevDescription" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="dev_count" property="devCount" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="create_time" property="createTime" javaType="java.util.Date"/>
+    </resultMap>
+
+    <resultMap id="MonitoringDeviceGroupReleResult" type="com.capinfo.framework.web.pojo.MonitoringDeviceGroupRele">
+        <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="devCode" property="devCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="devName" property="devName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="devGroupName" property="devGroupName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="devGroupType" property="devGroupType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="devStatus" property="devStatus" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="devType" property="devType" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <collection property="belongGroups" column="id" javaType="java.util.ArrayList"
+                    select="com.capinfo.framework.web.mapper.MonitoringDeviceGroupMapper.findMonitoringDeviceGroupByDeviceId"/>
+    </resultMap>
+    <!--保存设备组-->
+    <insert id="saveMonitoringDeviceGroup" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean">
+		INSERT INTO ibs_group_device(group_dev_name,group_dev_type,group_dev_description,create_time)
+		VALUES(#{devGroupName},#{devGroupType},#{devDescription},#{createTime})
+	</insert>
+    <!--保存设备组与设备关联-->
+    <insert id="insertMonitoringDeviceGroupRele" useGeneratedKeys="true">
+        INSERT INTO ibs_group_device_rele (group_id, device_id)
+        VALUES(#{groupId},#{deviceId})
+    </insert>
+    <!-- DELETE Monitoring Device -->
+    <delete id="deleteMonitoringDeviceGroup" parameterType="java.lang.Integer">
+		DELETE FROM ibs_monitoring_device_group WHERE id=#{id}
+	</delete>
+    <!-- 删除设备组与设备关联 -->
+    <delete id="deleteMonitoringDeviceGroupReleByGroupId" parameterType="java.lang.Integer">
+		DELETE FROM ibs_group_device_rele WHERE group_id=#{id}
+	</delete>
+
+    <!-- 更新设备组信息 -->
+    <update id="updateMonitoringDeviceGroup" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean">
+		UPDATE ibs_group_device SET group_dev_name=#{devGroupName},group_dev_type=#{devGroupType},group_dev_description=#{devDescription}WHERE id=#{id}
+	</update>
+
+    <!-- 批量删除设备组-->
+    <delete id="deleteMonitoringDeviceGroupBatch" parameterType="java.util.List">
+        DELETE FROM ibs_group_device WHERE id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!--通过ID获取某一组中的设备-->
+    <select id="findMonitoringDeviceByGroupId" parameterType="java.lang.Integer" resultType="com.capinfo.framework.web.pojo.MonitoringDevice">
+        SELECT md.id AS id,md.dev_name AS devName
+        FROM ibs_group_device gd,ibs_group_device_rele gdr,ibs_monitoring_device md
+        WHERE gd.id = gdr.group_id AND md.id = gdr.device_id AND gd.id = #{id}
+    </select>
+
+    <!--查询设备所属设备组-->
+    <select id="findMonitoringDeviceGroupByDeviceId" parameterType="int" resultType="string">
+        SELECT group_dev_name
+        FROM ibs_group_device_rele gdr, ibs_group_device gd
+        WHERE gdr.group_id = gd.id AND gdr.device_id = #{id}
+    </select>
+
+    <!--获取设备列表-->
+    <sql id="query_where">
+        <if test="devCodeForLike!=null and devCodeForLike!=''">
+            AND md.dev_code LIKE "%"#{devCodeForLike}"%"
+        </if>
+        <if test="notBelongTypeForLike!=null and notBelongTypeForLike!=''">
+            AND (group_dev_type NOT LIKE "%"#{notBelongTypeForLike}"%"
+            OR group_dev_type IS NULL)
+        </if>
+        <if test="devGroupNameForLike!=null and devGroupNameForLike!=''">
+            AND group_dev_name LIKE "%"#{devGroupNameForLike}"%"
+        </if>
+    </sql>
+    <select id="findMonitoringDeviceList" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean" resultMap="MonitoringDeviceGroupReleResult">
+        SELECT md.id AS id,md.dev_code AS devCode,md.dev_name AS devName,group_dev_name AS devGroupName,group_dev_type AS devGroupType,md.dev_status AS devStatus,md.dev_type AS devType
+        FROM ((ibs_group_device_rele gdr LEFT JOIN ibs_group_device gd ON gdr.group_id = gd.id)
+        RIGHT JOIN ibs_monitoring_device md ON md.id = gdr.device_id)
+        <where>
+            <include refid="query_where"></include>
+        </where>
+        GROUP BY md.id
+    </select>
+
+    <!--通过组ID获取等于该组ID的所有设备组信息-->
+    <select id="findMonitoringDeviceGroupReleByGroupId" parameterType="java.lang.Integer" resultType="com.capinfo.framework.web.pojo.MonitoringDeviceGroupRele">
+        SELECT *
+        FROM ibs_group_device_rele
+        WHERE group_id = #{groupId}
+    </select>
+
+    <!-- 获取单个页面设备组列表 -->
+    <select id="findMonitoringDeviceGroupPage" parameterType="java.util.Map" resultMap="MonitoringDeviceGroupResult">
+        SELECT gd.id AS id,group_dev_name,group_dev_type,group_dev_description,COUNT(gdr.device_id) as dev_count,create_time
+        FROM ibs_group_device_rele gdr RIGHT JOIN ibs_group_device gd ON gdr.group_id = gd.id
+        <if test="query.devGroupNameForLike!=null and query.devGroupNameForLike!='' ">
+            WHERE gd.group_dev_name like CONCAT('%',trim(#{query.devGroupNameForLike}),'%')
+        </if>
+        GROUP BY gd.group_dev_name
+        ORDER BY gd.create_time desc
+        LIMIT #{pageNum},#{pageSize}
+    </select>
+
+    <!--获取设备组总数-->
+    <select id="findMonitoringDeviceGroupCount"
+            parameterType="com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM ibs_group_device g
+        <if test="devGroupNameForLike!=null and devGroupNameForLike!='' ">
+            WHERE g.group_dev_name like CONCAT('%',trim(#{devGroupNameForLike}),'%')
+        </if>
+    </select>
+
+    <!-- 根据ID获取某一设备组信息 -->
+    <select id="findMonitoringDeviceGroupById" parameterType="java.lang.Integer"
+            resultMap="MonitoringDeviceGroupResult">
+        SELECT * FROM ibs_group_device
+        <where>
+            id=#{value}
+        </where>
+    </select>
+
+    <!--根据分组名称验证名称唯一性-->
+    <select id="findMonitoringDeviceGroupUnique" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean"
+            resultMap="MonitoringDeviceGroupResult">
+        SELECT *
+        FROM ibs_group_device g
+        WHERE g.group_dev_name = #{devGroupName}
+        LIMIT 1
+    </select>
+</mapper>

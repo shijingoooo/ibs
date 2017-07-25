@@ -1,0 +1,108 @@
+*{border:0; padding:0; margin:0; text-decoration:none;}
+body{
+margin: 0px;
+padding: 0px;
+}
+a{ text-decoration:none;}
+/*顶部*/
+.top{width:100%; height:78px; margin:0 auto; background-color:#eeeeee; /*background-image:url(img/logobg.jpg); background-repeat:no-repeat;*/overflow:hidden;}
+.logo{width:990px;height:78px; margin:0 auto; background-image:url(img/logo.png); background-repeat:no-repeat;}
+/*用户名退出*/
+.yonghuming{ float:right; display:block; margin-top:35px;}
+.xingming{float:right; display:block;margin-top:35px; color:#FF0004; font-weight:bold;}
+.tuichu{float:right; display:block;margin-top:35px; margin-left:20px; }
+.tuichu a{ color:#FF0004; text-decoration:underline; }
+/*广告条条*/
+.bannerbig{width:100%; height:175px; margin:0 auto; background-image:url(img/bannerbig.jpg);}
+.bannerlittle{ width:1000px;height:175px; margin:0 auto; background-image:url(img/bannerlittle.jpg);background-repeat:no-repeat;}
+
+/*网站中间大框*/
+.maxmid{width:100%; height:100%; margin:0 auto;  background-color:#eeeeee; /*background-image:url(img/midbg.jpg); background-repeat:no-repeat;*/ /*border:1px  dotted #FF0004;*/ }
+
+/*当前小字条*/
+.dbxxlan{font-size:14px; color:#000000; padding-top:30px; font-weight:600;}
+.hhhtbj{ width:103px; height:26px; background-image:url(img/222.png);  float:left; margin-right:0px; margin-left:10px;}
+.aqi{ float:left;width:50%; height:26px; line-height:26px; color:#FFFFFF; font-size:16px;  text-align:center;}
+.aqis{ float:right;width:49%; height:26px; line-height:26px;  font-size:16px;text-align:center;}
+
+
+/*小中间居中*/
+.minmid{width:1000px; height:100%; margin:0 auto; /*border:1px  dotted #10FD24;*/ }
+
+/*项目列表、方形实时数据、圆形实时数据，3个标题*/
+.h4{ font-size:12px; width:1000px; height:15px; }
+.p{font-size:16px;font-weight:bolder;}
+/*项目列表*/
+.partxm{ width:1000px; height:148px; padding-top:27px;margin:0 auto;  overflow:hidden;}
+
+/*项目列表背景图片加载*/
+.xm1{float:left;display:block;width:246px; height:72px; background-image:url(img/xm1.png); background-repeat:no-repeat;}
+.xm2{float:left;display:block;width:246px; height:72px; background-image:url(img/xm2-1.png); background-repeat:no-repeat;}
+.xm3{float:left;display:block;width:246px; height:72px; background-image:url(img/xm3.png); background-repeat:no-repeat;}
+.xm4{float:left;display:block;width:246px; height:72px; background-image:url(img/xm4-1.png); background-repeat:no-repeat;}
+.xm5{float:left;display:block;width:246px; height:72px; background-image:url(img/xm5-1.png); background-repeat:no-repeat;}
+.xm6{float:left;display:block;width:246px; height:72px; background-image:url(img/xm6-1.png); background-repeat:no-repeat;}
+.xm7{float:left;display:block;width:246px; height:72px; background-image:url(img/xm7-1.png); background-repeat:no-repeat;}
+.xm8{float:left;display:block;width:246px; height:72px; background-image:url(img/xm8-7.png); background-repeat:no-repeat;}
+/*项目列表数字加载*/
+.xm1shang{display:block; padding-top:17px; margin-left:100px; font-size:16px; font-weight:bolder; color:#000000;}
+.xm1xia{display:block; padding-top:5px; margin-left:100px; font-size:16px; font-weight:bolder; color:#000000;}
+.xm2 a{display:block; padding-top:18px; margin-left:156px; font-size:30px; font-weight:bolder; color:#205715; }
+.xm3 a{display:block; padding-top:18px; margin-left:145px; font-size:30px; font-weight:bolder; color:#205715;}
+.xm4shang{display:block; padding-top:3px; margin-left:145px; font-size:24px; font-weight:bolder; color:#205715;}
+.xm4xia{display:block; padding-top:0px; padding-top:0px;margin-left:145px; font-size:24px; font-weight:bolder; color:#205715; color#e8811c;}
+/*天气*/
+.xm5shang{display:block; padding-top:17px; margin-left:80px; font-size:16px; font-weight:bolder; color:#000000;}
+.xm5xia{display:block; padding-top:3px; margin-left:80px; font-size:16px; font-weight:bolder; color:#000000;}
+.xm6 a{display:block; padding-top:18px; margin-left:150px; font-size:30px; font-weight:bolder; color:#205715;}
+.xm7 a{display:block; padding-top:18px; margin-left:155px; font-size:30px; font-weight:bolder; color:#dd000a;}
+
+/*方形实时数据*/
+.partfx{ width:1000px; height:265px;margin:0 auto; /*border:1px  dotted #000000;*/  overflow:hidden;}
+
+/*方形片加载*/
+.fx1{float:left; display:block;width:246px; height:102px; background-image:url(img/fx1.jpg); background-repeat:no-repeat;}
+.fx2{float:left;display:block;width:246px; height:102px; background-image:url(img/fx2.jpg); background-repeat:no-repeat;}
+.fx3{float:left;display:block;width:246px; height:102px; background-image:url(img/fx3.jpg); background-repeat:no-repeat;}
+.fx4{float:left;display:block;width:246px; height:102px; background-image:url(img/fx4.jpg); background-repeat:no-repeat;}
+.fx5{float:left;display:block;width:246px; height:102px; background-image:url(img/fx5.jpg); background-repeat:no-repeat;}
+.fx6{float:left;display:block;width:246px; height:102px; background-image:url(img/fx6.jpg); background-repeat:no-repeat;}
+.fx7{float:left;display:block;width:246px; height:102px; background-image:url(img/fx7.jpg); background-repeat:no-repeat;}
+.fx8{float:left;display:block;width:246px; height:102px; background-image:url(img/fx8.jpg); background-repeat:no-repeat;}
+
+/*方形数字加载*/
+.fx1 a{display:block; padding-top:35px; margin-left:145px; font-size:30px; font-weight:bolder; color:#000000;}
+.fx2 a{display:block; padding-top:35px; margin-left:145px; font-size:30px; font-weight:bolder; color:#000000;}
+.fx3 a{display:block; padding-top:35px; margin-left:125px; font-size:30px; font-weight:bolder; color:#000000;}
+.fx4 a{display:block; padding-top:35px; margin-left:120px; font-size:30px; font-weight:bolder; color:#000000;}
+.fx5 a{display:block; padding-top:35px; margin-left:145px; font-size:30px; font-weight:bolder; color:#000000;}
+.fx6 a{display:block; padding-top:35px; margin-left:145px; font-size:30px; font-weight:bolder; color:#000000;}
+.fx7 a{display:block; padding-top:42px; margin-left:110px; font-size:20px; font-weight:bolder; color:#000000;}
+
+/*圆形实时数据*/
+.partyx{ width:1000px; height:170px; margin:0 auto;/*border:1px  dotted #000000; */ overflow:hidden;}
+.yxbg{width:1000px; height:100px; background-image:url(img/yuanbg.png); background-repeat:no-repeat; overflow:hidden;}
+
+.yk1{ width:140px; height:100px; background-image:url(img/yyyybg.png); background-repeat:no-repeat;float:left; display:block;overflow:hidden;}
+/*圆形实时数据数据加载*/
+.yuana1{ display:block;width:140px; height:40px; text-align:center;margin-top:15px; font-size:30px; font-weight:bolder; color:#000000;/*border:1px  dotted #F4393C;*/}
+.yuana1xia{ display:block;width:140px; height:40px; text-align:center;margin-top:10px; font-size:18px; font-weight:bolder; color:#F4F4F4;/*border:1px  dotted #F4393C;*/}
+
+
+
+.yuana2{ padding-top:15px; margin-left:110px; font-size:30px; font-weight:bolder; color:#000000;}
+.yuana3{float:left;display:block; padding-top:15px; margin-left:105px; font-size:30px; font-weight:bolder; color:#000000;}
+.yuana4{float:left;display:block; padding-top:15px; margin-left:105px; font-size:30px; font-weight:bolder; color:#000000;}
+.yuana5{float:left;display:block; padding-top:15px; margin-left:108px; font-size:30px; font-weight:bolder; color:#000000;}
+.yuana6{float:left;display:block; padding-top:15px; margin-left:100px; font-size:24px; font-weight:bolder; color:#000000;}
+.yuana7{float:left;display:block; padding-top:15px; margin-left:96px; font-size:30px; font-weight:bolder; color:#000000;}
+
+/*10个对比表*/
+.duibibiao{ width:995px; height:100%; margin:0 auto; /*border:1px  dotted #F50004;*/}
+
+
+
+/*底部文字*/
+.foot{width:100%; height:60px; margin:0 auto; background:#1f4c69;}
+.foottxt{width:1000px; height;60px; margin:0 auto; color:#FFFFFF; text-align:center; line-height:60px; font-weight:bold;}
+
