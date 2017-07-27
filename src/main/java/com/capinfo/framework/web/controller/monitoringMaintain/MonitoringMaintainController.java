@@ -2,6 +2,7 @@ package com.capinfo.framework.web.controller.monitoringMaintain;
 
 import com.capinfo.framework.common.controller.BaseController;
 import com.capinfo.framework.web.pojo.MonitoringCompany;
+import com.capinfo.framework.web.pojo.MonitoringDevice;
 import com.capinfo.framework.web.pojo.MonitoringMaintain;
 import com.capinfo.framework.web.service.MonitoringMaintainService;
 import com.capinfo.framework.web.vo.MonitoringMaintainQueryBean;
@@ -56,10 +57,22 @@ public class MonitoringMaintainController extends BaseController {
     //点击新增或修改按钮
     @RequestMapping(value = "/savePage", method = {RequestMethod.GET})
     public String savePage(Model model, Integer recordId) throws Exception {
-        MonitoringMaintain maintain = monitoringMaintainService.findMonitoringMaintainById(recordId);
-        maintain.setId(recordId);
-        model.addAttribute("maintain", maintain);
+        if (recordId != null) {
+            MonitoringMaintain maintain = monitoringMaintainService.findMonitoringMaintainById(recordId);
+            maintain.setId(recordId);
+            model.addAttribute("maintain", maintain);
+        }
         return "monitoringMaintain/save";
+    }
+    //设备列表
+    @RequestMapping(value = "/devSelectListInMaintain", method = {RequestMethod.POST, RequestMethod.GET})
+    public String devSelectListInGroup(Model model, MonitoringMaintainQueryBean maintainQueryBean, Integer deviceGroupId, String deviceId, String deviceName) throws Exception {
+        List<MonitoringDevice> devices = monitoringMaintainService.findMonitoringDeviceList(maintainQueryBean);
+        model.addAttribute("devices", devices);
+        model.addAttribute("deviceQueryBean", maintainQueryBean);
+        model.addAttribute("deviceId", deviceId);
+        model.addAttribute("deviceName", deviceName);
+        return "monitoringMaintain/devSelectListInMaintain";
     }
     //点击保存按钮
     @RequestMapping(value = "/save", method = {RequestMethod.GET, RequestMethod.POST})
@@ -69,6 +82,7 @@ public class MonitoringMaintainController extends BaseController {
             monitoringMaintainService.updateMonitoringMaintianRecord(maintainQueryBean);
         }else {
             //新增
+            monitoringMaintainService.saveMonitoringMaintainRecord(maintainQueryBean);
         }
 //			if(company==null){
 //				JSONObject jo = new JSONObject();
@@ -91,9 +105,9 @@ public class MonitoringMaintainController extends BaseController {
     }
     //点击删除按钮
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public void delete(Model model, HttpServletResponse response, String companyIds, String navTabId, String callbackType, String rel) throws Exception {
+    public void delete(Model model, HttpServletResponse response, String recordIds, String navTabId, String callbackType, String rel) throws Exception {
 
-      /*  if (StringUtils.isEmpty(companyIds)) {
+      if (StringUtils.isEmpty(recordIds)) {
             JSONObject jo = new JSONObject();
             jo.put("navTabId", rel);
             jo.put("callbackType", callbackType);
@@ -104,8 +118,8 @@ public class MonitoringMaintainController extends BaseController {
             return;
         }
         List<String> ids = new ArrayList<String>();
-        ids.addAll(Arrays.asList(companyIds.split(",")));
-        monitoringCompanyService.deleteMonitoringCompanyBatch(ids);
+        ids.addAll(Arrays.asList(recordIds.split(",")));
+        monitoringMaintainService.deleteMaintainRecordBatch(ids);
 
         JSONObject jo = new JSONObject();
         jo.put("navTabId", rel);
@@ -113,59 +127,7 @@ public class MonitoringMaintainController extends BaseController {
         jo.put("rel", rel);
         jo.put("statusCode", "200");
         jo.put("message", "操作成功");
-        super.rendText(response, jo.toString());*/
+        super.rendText(response, jo.toString());
     }
 
-
-    /*@RequestMapping(value = "/selectlist", method = {RequestMethod.POST, RequestMethod.GET})
-    public String selectlist(Model model, MonitoringCompanyQueryBean companyQueryBean, Integer comId) throws Exception {
-
-        List<MonitoringCompany> companys = monitoringCompanyService.findMonitoringCompanyList(companyQueryBean);
-        model.addAttribute("companys", companys);
-        model.addAttribute("companyQueryBean", companyQueryBean);
-        model.addAttribute("id", comId);
-
-        return "monitoringCompany/selectlist";
-    }
-
-    @RequestMapping(value = "/selectplatformlist", method = {RequestMethod.POST, RequestMethod.GET})
-    public String selectplatformlist(Model model, MonitoringCompanyQueryBean companyQueryBean, String companyIds, String companyNames) throws Exception {
-
-        List<MonitoringCompany> companys = monitoringCompanyService.findMonitoringCompanyList(companyQueryBean);
-        model.addAttribute("companys", companys);
-        model.addAttribute("companyQueryBean", companyQueryBean);
-        model.addAttribute("companyIds", companyIds);
-        model.addAttribute("companyNames", companyNames);
-
-        return "monitoringCompany/selectplatformlist";
-    }
-
-
-    @RequestMapping(value = "/showMap", method = {RequestMethod.GET})
-    public String showMap(Model model, HttpServletResponse response) throws Exception {
-
-        return "monitoringCompany/baiduMap";
-    }
-
-    @RequestMapping(value = "/upFile", method = {RequestMethod.POST})
-    public void uploadFile(Model model, @RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) throws Exception {
-
-        String path = request.getSession().getServletContext().getRealPath("upload");
-        String fileName = file.getOriginalFilename();
-
-        File targetFile = new File(path, fileName);
-        if (!targetFile.exists()) {
-            targetFile.mkdirs();
-        }
-
-        //保存  
-        try {
-            file.transferTo(targetFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        model.addAttribute("fileUrl", request.getContextPath() + "/upload/" + fileName);
-    }
-*/
 }

@@ -4,7 +4,7 @@
     $(document).ready(function () {
         $(".delete").click(function () {
             var dateIds = "";
-            $("input[name='maintainIds']").each(function (index, item) {
+            $("input[name='recordIds']").each(function (index, item) {
                 if ($(item).prop("checked")) {
                     dateIds += $(item).val() + ",";
                 }
@@ -13,7 +13,7 @@
             if (hrefVal.indexOf("?") > -1) {
                 hrefVal = hrefVal.substring(0, hrefVal.indexOf("?"));
             }
-            $(this).attr("href", hrefVal + "?maintainIds=" + dateIds.substring(0, dateIds.length - 1) + "&rel=ibs_device_maintain_page");
+            $(this).attr("href", hrefVal + "?recordIds=" + dateIds.substring(0, dateIds.length - 1) + "&rel=ibs_device_maintain_page");
         });
     });
 
@@ -95,7 +95,7 @@
             <tr target="tr_form" rel="${obj.id}">
                 <td>
                     <div>
-                        <input name="companyIds" type="checkbox" value="${obj.id}"/>
+                        <input name="recordIds" type="checkbox" value="${obj.id}"/>
                     </div>
                 </td>
                 <td class="devCode">
@@ -104,7 +104,15 @@
                             mask="true" rel="updateRecord" width="620" height="600"></self:a>
                 </td>
                 <td><fmt:formatDate value="${obj.troubleTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                <td>${obj.troubleType}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${obj.troubleType =='请选择'}">
+                        </c:when>
+                        <c:otherwise>
+                            ${obj.troubleType}
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>${obj.solveWay}</td>
                 <td>${obj.solveMethod}</td>
                 <td>${obj.responsible}</td>

@@ -3,24 +3,33 @@
 <script type="text/javascript">
     $(function () {
         $("#troubleReason").children('option').each(function () {
-            if ($(this).val() == "${maintain.troubleType}")
-                $(this).attr("selected",true);
+            if ($(this).val() == "${maintain.troubleType}") {
+                $(this).attr("selected", true);
+                if("${maintain.troubleType}" == "其他"){
+                    $("#troubleDescription").parent().show();
+                }
+            }
         });
         $("#solveWay").children('option').each(function () {
             if ($(this).val() == "${maintain.solveWay}")
                 $(this).attr("selected",true);
         });
         $("#solveMethod").children('option').each(function () {
-            if ($(this).val() == "${maintain.solveMethod}")
-                $(this).attr("selected",true);
+            if ($(this).val() == "${maintain.solveMethod}") {
+                $(this).attr("selected", true);
+                if("${maintain.solveMethod}" == "其他"){
+                    $("#methodDescription").parent().show();
+                }
+            }
         });
         $("#troubleReason").change(function () {
             var value = $(this).children('option:selected').val();
             if( value == "其他" ){
-                $("#reasonDescription").parent().show();
+                $("#troubleDescription").parent().show();
             }
             else {
-                $("#reasonDescription").parent().hide();
+                $("#troubleDescription").parent().hide();
+                $("#troubleDescription").text("");
             }
         });
         $("#solveMethod").change(function () {
@@ -29,9 +38,12 @@
                 $("#methodDescription").parent().show();
             }else {
                 $("#methodDescription").parent().hide();
+                $("#methodDescription").text("");
             }
         });
-
+        $("input[name='devCode']").click(function () {
+            $(".btnLook").click();
+        });
     });
     function saveProject() {
         $("#maintainRecordForm").submit();
@@ -64,17 +76,18 @@
                     <p class="nowrap">
                         <label style="width: 60px;">选择设备：</label>
                         <input name="devCode" type="text" size="30" readonly="readonly"
-                               class="required" value="${maintain.deviceCode}" style="margin-left: 25px;">
+                               class="required" value="${maintain.deviceCode}" style="margin-left: 25px;"
+                        onclick="select();">
                         <input name="devId" type="hidden" value="${maintain.deviceId}"/>
-                        <a class="btnLook"
-                           href="${ctx}/monitoringDevice/devSelectListInGroup.action?deviceGroupIdForOr=${deviceGroup.id}&deviceIds=${deviceIds}&deviceNames=${deviceNames}"
-                           lookupGroup="" mask="true" width="1000" height="500">选择设备</a>
+                        <a class="btnLook" style="display: none"
+                           href="${ctx}/monitoringMaintain/devSelectListInMaintain.action"
+                           lookupGroup="" mask="true" width="800" height="500">选择设备</a>
                     </p>
                     <p class="nowrap">
                         <label style="width: 60px;">故障时间：</label>
-                        <input type="text" name="troubleTime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;width: 190px;"
+                        <input type="text" name="troubleTime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;"
                                value="<fmt:formatDate value="${maintain.troubleTime}" pattern="yyyy-MM-dd HH:mm:ss" />"/>
-                        <a class="inputDateButton" href="javascript:;">选择</a>
+                        <a class="inputDateButton" href="javascript:;" style="display: none">选择</a>
                     </p>
                     <p class="nowrap">
                         <label style="width: 60px;">故障原因</label>
@@ -91,8 +104,8 @@
                         </select>
                     </p>
                     <p class="nowrap" style="display: none">
-                        <label class="required" for="reasonDescription" style="width: 60px;">原因描述：</label>
-                        <textarea id="reasonDescription" name="reasonDescription" maxlength="512" style="margin-left: 25px;width: 324px;height: 100px;"></textarea>
+                        <label class="required" for="troubleDescription" style="width: 60px;">原因描述：</label>
+                        <textarea id="troubleDescription" name="troubleDescription" maxlength="512" style="margin-left: 25px;width: 324px;height: 100px;">${maintain.troubleDescription}</textarea>
                     </p>
                     <p class="nowrap">
                         <label style="width: 60px;">责任人：</label>
@@ -101,9 +114,9 @@
                     </p>
                     <p class="nowrap">
                         <label style="width: 60px;">解决时间：</label>
-                        <input type="text" name="solveTime" class="date required" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;width: 190px;"
+                        <input type="text" name="solveTime" class="date required" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;"
                                value="<fmt:formatDate value="${maintain.solveTime}" pattern="yyyy-MM-dd HH:mm:ss" />"/>
-                        <a class="inputDateButton" href="javascript:;">选择</a>
+                        <a class="inputDateButton" href="javascript:;" style="display: none;">选择</a>
                     </p>
                     <p class="nowrap">
                         <label style="width: 60px;">解决途径：</label>
@@ -115,7 +128,7 @@
                     <p class="nowrap">
                         <label style="width: 60px;">解决方法：</label>
                         <select class="required" id="solveMethod" name="solveMethod" style="margin-left: 25px;">
-                            <option value="请选择" selected="selected">请选择</option>
+                            <option value="" selected="selected">请选择</option>
                             <option value="重启设备">重启设备</option>
                             <option value="替换SIM卡">替换SIM卡</option>
                             <option value="替换粉尘仪">替换粉尘仪</option>
@@ -128,7 +141,11 @@
                     </p>
                     <p class="nowrap" style="display: none">
                         <label for="methodDescription" style="width: 60px;">方法描述：</label>
-                        <textarea id="methodDescription" name="methodDescription" maxlength="512" style="margin-left: 25px;width: 324px;height: 100px;"></textarea>
+                        <textarea id="methodDescription" name="methodDescription" maxlength="512" style="margin-left: 25px;width: 324px;height: 100px;">${maintain.methodDescription}</textarea>
+                    </p>
+                    <p class="nowrap">
+                        <label for="remark" style="width: 60px;">备注：</label>
+                        <textarea id="remark" name="remark" maxlength="512" style="margin-left: 25px;width: 324px;height: 100px;">${maintain.remark}</textarea>
                     </p>
                 </div>
             </form>

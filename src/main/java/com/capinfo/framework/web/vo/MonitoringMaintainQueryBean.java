@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class MonitoringMaintainQueryBean {
 
-	//记录id
+	// 记录id
 	protected Integer id;
 	// 设备编号查询
 	protected String devCodeForLike;
@@ -14,6 +14,12 @@ public class MonitoringMaintainQueryBean {
 	protected String endTime;
 	// 设备id
 	protected Integer devId;
+	// 设备id查询
+	protected String devIdForLike;
+	// 设备名称
+	protected String devName;
+	// 设备名称查询
+	protected String devNameForLike;
 	// 设备编号
 	protected String devCode;
 	// 故障时间
@@ -163,5 +169,29 @@ public class MonitoringMaintainQueryBean {
 
 	public void setMethodDescription(String methodDescription) {
 		this.methodDescription = methodDescription;
+	}
+
+	public String getDevIdForLike() {
+		return devIdForLike;
+	}
+
+	public void setDevIdForLike(String devIdForLike) {
+		this.devIdForLike = devIdForLike;
+	}
+
+	public String getDevName() {
+		return devName;
+	}
+
+	public void setDevName(String devName) {
+		this.devName = devName;
+	}
+
+	public String getDevNameForLike() {
+		return devNameForLike;
+	}
+
+	public void setDevNameForLike(String devNameForLike) {
+		this.devNameForLike = devNameForLike;
 	}
 }

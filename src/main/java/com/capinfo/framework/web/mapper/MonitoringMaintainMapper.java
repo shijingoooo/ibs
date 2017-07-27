@@ -1,5 +1,6 @@
 package com.capinfo.framework.web.mapper;
 
+import com.capinfo.framework.web.pojo.MonitoringDevice;
 import com.capinfo.framework.web.pojo.MonitoringMaintain;
 import com.capinfo.framework.web.vo.MonitoringMaintainQueryBean;
 
@@ -26,4 +27,10 @@ public interface MonitoringMaintainMapper {
     MonitoringMaintain findMonitoringMaintainById(Integer recordId);
 
     void updateMonitoringMaintianRecord(MonitoringMaintainQueryBean maintainQueryBean);
+
+    void saveMonitoringMaintainRecord(MonitoringMaintainQueryBean maintainQueryBean);
+
+    List<MonitoringDevice> findMonitoringDeviceList(MonitoringMaintainQueryBean maintainQueryBean);
+
+    void deleteMaintainRecordBatch(List<String> ids) throws Exception;
 }

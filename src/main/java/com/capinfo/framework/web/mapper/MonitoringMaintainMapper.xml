@@ -60,9 +60,41 @@
   <!--更新运维记录-->
   <update id="updateMonitoringMaintianRecord" parameterType="com.capinfo.framework.web.vo.MonitoringMaintainQueryBean">
     UPDATE ibs_monitoring_maintain
-    SET device_id=#{devId},trouble_type=#{troubleReason},trouble_description=#{troubleDescription},trouble_time=#{troubleTime},responsible=#{responsible},solve_way=#{solveWay},solve_method=#{solveMethod},solve_time=#{solveTime},method_description=#{methodDescription},remark=#{remark},create_time=#{createTime}
+    SET device_id=#{devId},trouble_type=#{troubleReason},trouble_description=#{troubleDescription},trouble_time=#{troubleTime},responsible=#{responsible},solve_way=#{solveWay},solve_method=#{solveMethod},solve_time=#{solveTime},method_description=#{methodDescription},remark=#{remark}
     WHERE id = #{id}
   </update>
+
+  <!--保存运维记录-->
+  <insert id="saveMonitoringMaintainRecord" useGeneratedKeys="true" keyProperty="id"
+          parameterType="com.capinfo.framework.web.vo.MonitoringMaintainQueryBean">
+    INSERT INTO ibs_monitoring_maintain(device_id,trouble_type,trouble_description,trouble_time,responsible,solve_way,solve_method,solve_time,method_description,remark,create_time)
+    VALUES(#{devId},#{troubleReason},#{troubleDescription},#{troubleTime},#{responsible},#{solveWay},#{solveMethod},#{solveTime},#{methodDescription},#{remark},#{createTime})
+  </insert>
+  
+  <!--获取设备列表-->
+  <sql id="query_where">
+    <if test="devIdForLike!=null and devIdForLike!=''">
+      AND id LIKE "%"#{devIdForLike}"%"
+    </if>
+    <if test="devNameForLike!=null and devNameForLike!=''">
+      AND dev_name LIKE "%"#{devNameForLike}"%"
+    </if>
+  </sql>
+  <select id="findMonitoringDeviceList" parameterType="com.capinfo.framework.web.vo.MonitoringMaintainQueryBean" resultType="com.capinfo.framework.web.pojo.MonitoringDevice">
+    SELECT id,dev_code AS devCode,dev_name AS devName,dev_status AS devStatus,dev_type AS devType
+    FROM ibs_monitoring_device
+    <where>
+      <include refid="query_where"></include>
+    </where>
+</select>
+
+  <!-- 批量删除记录 -->
+  <delete id="deleteMaintainRecordBatch" parameterType="java.util.List">
+    DELETE FROM ibs_monitoring_maintain WHERE id IN
+    <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
   <!--
   <sql id="Base_Column_List" >
     id, device_id, trouble_type, trouble_description, trouble_time, responsible, solve_way, 

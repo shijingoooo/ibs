@@ -3,6 +3,7 @@ package com.capinfo.framework.web.service;
 import com.capinfo.framework.web.mapper.MonitoringCompanyMapper;
 import com.capinfo.framework.web.mapper.MonitoringMaintainMapper;
 import com.capinfo.framework.web.pojo.MonitoringCompany;
+import com.capinfo.framework.web.pojo.MonitoringDevice;
 import com.capinfo.framework.web.pojo.MonitoringMaintain;
 import com.capinfo.framework.web.vo.MonitoringCompanyQueryBean;
 import com.capinfo.framework.web.vo.MonitoringMaintainQueryBean;
@@ -10,10 +11,7 @@ import com.capinfo.modules.orm.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service(value="monitoringMaintainService")
 public class MonitoringMaintainService {
@@ -45,63 +43,22 @@ public class MonitoringMaintainService {
 	}
 
 	public void updateMonitoringMaintianRecord(MonitoringMaintainQueryBean maintainQueryBean) throws Exception{
-		maintainQueryBean.setCreateTime(new Date());
+		//maintainQueryBean.setCreateTime(new Date());
 		maintainMapper.updateMonitoringMaintianRecord(maintainQueryBean);
 	}
-/*
 
-	public MonitoringCompany findMonitoringCompanyUnique(MonitoringCompanyQueryBean companyQueryBean) throws Exception {
-
-		return companyMapper.findMonitoringCompanyUnique(companyQueryBean);
+	public void saveMonitoringMaintainRecord(MonitoringMaintainQueryBean maintainQueryBean) throws Exception{
+		maintainQueryBean.setCreateTime(new Date());
+		maintainMapper.saveMonitoringMaintainRecord(maintainQueryBean);
 	}
 
-
-	public Integer findMonitoringCompanyCount(MonitoringCompanyQueryBean companyQueryBean) throws Exception {
-
-		return companyMapper.findMonitoringCompanyCount(companyQueryBean);
+	public List<MonitoringDevice> findMonitoringDeviceList(MonitoringMaintainQueryBean maintainQueryBean) throws Exception{
+		List result = new ArrayList();
+		result = maintainMapper.findMonitoringDeviceList(maintainQueryBean);
+		return  result;
 	}
-
-
-	public MonitoringCompany saveMonitoringCompany(MonitoringCompany company) throws Exception {
-
-//		PushResourceServiceService service = new PushResourceServiceService();
-//		PushResourceService s = service.getPushResourceServicePort();
-//		String code = s.registerVendor(company.getCompanyName());
-//		if(StringUtils.isNotEmpty(code)){
-//			company.setCompanyCode(code);
-		company.setCreateTime(new Date());
-		companyMapper.saveMonitoringCompany(company);
-		return company;
-//		}
-//		return null;
-	}
-
-
-
-	public void deleteMonitoringCompany(Integer id) throws Exception {
-
-		companyMapper.deleteMonitoringCompany(id);
-	}
-
-
-	public void deleteMonitoringCompanyBatch(List<String> ids)
+	public void deleteMaintainRecordBatch(List<String> ids)
 			throws Exception {
-
-		companyMapper.deleteMonitoringCompanyBatch(ids);
+		maintainMapper.deleteMaintainRecordBatch(ids);
 	}
-
-
-	public List<MonitoringCompany> findCompanyListByIds(String[] ids) throws Exception {
-		return companyMapper.findCompanyListByIds(ids);
-	}
-
-	public MonitoringCompanyMapper getCompanyMapper() {
-		return companyMapper;
-	}
-
-	public void setCompanyMapper(MonitoringCompanyMapper companyMapper) {
-		this.companyMapper = companyMapper;
-	}
-*/
-
 }
