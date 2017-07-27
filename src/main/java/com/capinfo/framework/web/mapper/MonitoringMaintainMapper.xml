@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.MonitoringMaintainMapper" >
+  <resultMap id="BaseResultMap" type="com.capinfo.framework.web.pojo.MonitoringMaintain" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR"/>
+    <result column="trouble_type" property="troubleType" jdbcType="VARCHAR" />
+    <result column="trouble_description" property="troubleDescription" jdbcType="VARCHAR" />
+    <result column="trouble_time" property="troubleTime" jdbcType="TIMESTAMP" />
+    <result column="responsible" property="responsible" jdbcType="VARCHAR" />
+    <result column="solve_way" property="solveWay" jdbcType="VARCHAR" />
+    <result column="solve_method" property="solveMethod" jdbcType="VARCHAR" />
+    <result column="solve_time" property="solveTime" jdbcType="TIMESTAMP" />
+    <result column="method_description" property="methodDescription" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!--查询运维记录列表-->
+  <select id="findMonitoringMaintainPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT mm.id AS id,md.id AS device_id,md.dev_code AS device_code,trouble_type,trouble_description,trouble_time,responsible,solve_way,solve_method,solve_time,method_description,remark,mm.create_time AS create_time
+    FROM ibs_monitoring_device md,ibs_monitoring_maintain mm
+    WHERE md.id = mm.device_id
+    <if test="query.devCodeForLike!=null and query.devCodeForLike!=''">
+      AND md.dev_code LIKE "%"#{query.devCodeForLike}"%"
+    </if>
+    <if test="query.startTime!=null and query.startTime!=''">
+      AND <![CDATA[DATE_FORMAT(trouble_time, '%Y-%m-%d %H:%i:%S')>=#{query.startTime}]]>
+    </if>
+    <if test="query.endTime!=null and query.endTime!=''">
+      AND <![CDATA[DATE_FORMAT(trouble_time, '%Y-%m-%d %H:%i:%S')<=#{query.endTime}]]>
+    </if>
+    ORDER BY mm.create_time desc
+    LIMIT #{pageNum},#{pageSize}
+  </select>
+
+  <!--查询运维记录总数-->
+  <select id="findMonitoringMaintainCount" parameterType="com.capinfo.framework.web.vo.MonitoringMaintainQueryBean" resultType="java.lang.Integer">
+    SELECT COUNT(mm.id)
+    FROM ibs_monitoring_device md,ibs_monitoring_maintain mm
+    WHERE md.id = mm.device_id
+    <if test="devCodeForLike!=null and devCodeForLike!=''">
+      AND md.dev_code LIKE "%"#{devCodeForLike}"%"
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      AND <![CDATA[DATE_FORMAT(trouble_time, '%Y-%m-%d %H:%i:%S')>=#{startTime}]]>
+    </if>
+    <if test="endTime!=null and endTime!=''">
+      AND <![CDATA[DATE_FORMAT(trouble_time, '%Y-%m-%d %H:%i:%S')<=#{endTime}]]>
+    </if>
+  </select>
+
+  <!--查询根据id某一条记录-->
+  <select id="findMonitoringMaintainById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT mm.id AS id,md.id AS device_id,md.dev_code AS device_code,trouble_type,trouble_description,trouble_time,responsible,solve_way,solve_method,solve_time,method_description,remark,mm.create_time AS create_time
+    FROM ibs_monitoring_device md,ibs_monitoring_maintain mm
+    WHERE md.id = mm.device_id AND mm.id = #{recordId}
+  </select>
+
+  <!--更新运维记录-->
+  <update id="updateMonitoringMaintianRecord" parameterType="com.capinfo.framework.web.vo.MonitoringMaintainQueryBean">
+    UPDATE ibs_monitoring_maintain
+    SET device_id=#{devId},trouble_type=#{troubleReason},trouble_description=#{troubleDescription},trouble_time=#{troubleTime},responsible=#{responsible},solve_way=#{solveWay},solve_method=#{solveMethod},solve_time=#{solveTime},method_description=#{methodDescription},remark=#{remark},create_time=#{createTime}
+    WHERE id = #{id}
+  </update>
+  <!--
+  <sql id="Base_Column_List" >
+    id, device_id, trouble_type, trouble_description, trouble_time, responsible, solve_way, 
+    solve_method, solve_time, method_description, remark, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ibs_monitoring_maintain
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ibs_monitoring_maintain
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.plank.server.dao.model.MonitoringMaintain" >
+    insert into ibs_monitoring_maintain (id, device_id, trouble_type, 
+      trouble_description, trouble_time, responsible, 
+      solve_way, solve_method, solve_time, 
+      method_description, remark, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{deviceId,jdbcType=INTEGER}, #{troubleType,jdbcType=VARCHAR}, 
+      #{troubleDescription,jdbcType=VARCHAR}, #{troubleTime,jdbcType=TIMESTAMP}, #{responsible,jdbcType=VARCHAR}, 
+      #{solveWay,jdbcType=VARCHAR}, #{solveMethod,jdbcType=VARCHAR}, #{solveTime,jdbcType=TIMESTAMP}, 
+      #{methodDescription,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.plank.server.dao.model.MonitoringMaintain" >
+    insert into ibs_monitoring_maintain
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="troubleType != null" >
+        trouble_type,
+      </if>
+      <if test="troubleDescription != null" >
+        trouble_description,
+      </if>
+      <if test="troubleTime != null" >
+        trouble_time,
+      </if>
+      <if test="responsible != null" >
+        responsible,
+      </if>
+      <if test="solveWay != null" >
+        solve_way,
+      </if>
+      <if test="solveMethod != null" >
+        solve_method,
+      </if>
+      <if test="solveTime != null" >
+        solve_time,
+      </if>
+      <if test="methodDescription != null" >
+        method_description,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="troubleType != null" >
+        #{troubleType,jdbcType=VARCHAR},
+      </if>
+      <if test="troubleDescription != null" >
+        #{troubleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="troubleTime != null" >
+        #{troubleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="responsible != null" >
+        #{responsible,jdbcType=VARCHAR},
+      </if>
+      <if test="solveWay != null" >
+        #{solveWay,jdbcType=VARCHAR},
+      </if>
+      <if test="solveMethod != null" >
+        #{solveMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="solveTime != null" >
+        #{solveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="methodDescription != null" >
+        #{methodDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.plank.server.dao.model.MonitoringMaintain" >
+    update ibs_monitoring_maintain
+    <set >
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="troubleType != null" >
+        trouble_type = #{troubleType,jdbcType=VARCHAR},
+      </if>
+      <if test="troubleDescription != null" >
+        trouble_description = #{troubleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="troubleTime != null" >
+        trouble_time = #{troubleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="responsible != null" >
+        responsible = #{responsible,jdbcType=VARCHAR},
+      </if>
+      <if test="solveWay != null" >
+        solve_way = #{solveWay,jdbcType=VARCHAR},
+      </if>
+      <if test="solveMethod != null" >
+        solve_method = #{solveMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="solveTime != null" >
+        solve_time = #{solveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="methodDescription != null" >
+        method_description = #{methodDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.plank.server.dao.model.MonitoringMaintain" >
+    update ibs_monitoring_maintain
+    set device_id = #{deviceId,jdbcType=INTEGER},
+      trouble_type = #{troubleType,jdbcType=VARCHAR},
+      trouble_description = #{troubleDescription,jdbcType=VARCHAR},
+      trouble_time = #{troubleTime,jdbcType=TIMESTAMP},
+      responsible = #{responsible,jdbcType=VARCHAR},
+      solve_way = #{solveWay,jdbcType=VARCHAR},
+      solve_method = #{solveMethod,jdbcType=VARCHAR},
+      solve_time = #{solveTime,jdbcType=TIMESTAMP},
+      method_description = #{methodDescription,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>-->
+</mapper>

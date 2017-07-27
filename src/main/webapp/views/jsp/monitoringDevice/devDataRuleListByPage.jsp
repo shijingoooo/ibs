@@ -113,7 +113,6 @@
                     <input type="hidden" name="pageNum" value="1"/>
                     <input type="hidden" name="numPerPage" value="<c:out value="${numPerPage}"></c:out>"/>
                     <input name="deviceId" type="hidden" value="${dataCalibrationQueryBean.deviceId}"/>
-
                         <table class="searchContent">
                             <tr>
                                 <%--<td>设备编号：<input type="text" name="deviceCodeForLike"
@@ -129,7 +128,6 @@
                                 </c:if>--%>
                             </tr>
                         </table>
-                    </div>
                 </form>
             </td>
             <%--暂时注释--%>

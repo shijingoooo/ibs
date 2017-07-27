@@ -63,7 +63,7 @@
         <tr>
             <td>
                 <form id="pagerForm" onsubmit="return navTabSearch(this);"
-                      action="${ctx}/monitoringDevice/listByPage.action" method="post">
+                      action="${ctx}/monitoringMaintain/listByPage.action" method="post">
                     <input type="hidden" name="pageNum" value="1" />
                     <input type="hidden" name="numPerPage" value="<c:out value="${numPerPage}"></c:out>" />
 
@@ -225,9 +225,15 @@
                 <td>
                     ${obj.monitoringProject.proName}
                 </td>
-                <td>统计数据|<a id="" href="<c:out value='${ctx}/monitoringDevice/devDataCalibrationListByPage.action?devId=${obj.id}'/>"
-                            target="navTab" rel="<c:out value='ibs_data_calibration_page'/>">校准</a><c:out
-                        value='' />|控制</td>
+                <td>
+                    <a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
+                       target="navTab" rel="<c:out value='ibs_statistics_data_page'/>">统计数据</a>
+                    |
+                    <a id="checkRule" href="<c:out value='${ctx}/monitoringDevice/devDataCalibrationListByPage.action?devId=${obj.id}'/>"
+                       target="navTab" rel="<c:out value='ibs_data_calibration_page'/>">校准</a>
+                    |
+                    控制
+                </td>
 
                     <%--<td>
                     <self:a code="ibs_device_oper_restart"

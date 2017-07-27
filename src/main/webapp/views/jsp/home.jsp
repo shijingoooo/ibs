@@ -10,7 +10,7 @@
 		<link href="${ctx}/dwz_jui/themes/css/print.css" rel="stylesheet" type="text/css" media="print" />
 		<link href="${ctx}/dwz_jui/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen" />
 	</head>
-	<script src="${ctx}/dwz_jui/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz_jui/js/jquery-1.7.2.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz_jui/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz_jui/js/jquery.validate.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz_jui/js/jquery.bgiframe.js" type="text/javascript"></script>
