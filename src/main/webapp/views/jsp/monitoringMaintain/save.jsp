@@ -41,9 +41,7 @@
                 $("#methodDescription").text("");
             }
         });
-        $("input[name='devCode']").click(function () {
-            $(".btnLook").click();
-        });
+
     });
     function saveProject() {
         $("#maintainRecordForm").submit();
@@ -76,10 +74,9 @@
                     <p class="nowrap">
                         <label style="width: 60px;">选择设备：</label>
                         <input name="devCode" type="text" size="30" readonly="readonly"
-                               class="required" value="${maintain.deviceCode}" style="margin-left: 25px;"
-                        onclick="select();">
+                               class="required" value="${maintain.deviceCode}" style="margin-left: 25px;">
                         <input name="devId" type="hidden" value="${maintain.deviceId}"/>
-                        <a class="btnLook" style="display: none"
+                        <a class="btnLook"
                            href="${ctx}/monitoringMaintain/devSelectListInMaintain.action"
                            lookupGroup="" mask="true" width="800" height="500">选择设备</a>
                     </p>

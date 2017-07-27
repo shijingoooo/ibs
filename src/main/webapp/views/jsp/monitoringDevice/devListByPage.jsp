@@ -212,6 +212,9 @@
                         <c:when test="${obj.devType == 6}">
                             VOC
                         </c:when>
+                        <c:when test="${obj.devType == 7}">
+                            扬尘噪声（基础）
+                        </c:when>
                         <c:otherwise>
                             该设备未指定类型
                         </c:otherwise>

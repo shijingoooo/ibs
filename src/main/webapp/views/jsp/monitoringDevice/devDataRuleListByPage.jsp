@@ -190,7 +190,34 @@
                             parameter="?ruleId=${obj.id}&deviceId=${obj.deviceId}" style="icon" target="dialog"
                             mask="true" rel="newdeviceRule" width="560" height="380"></self:a>
                 </td>
-                <td>${obj.type}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${obj.type == 'calibration_tsp'}">
+                            TSP
+                        </c:when>
+                        <c:when test="${obj.type == 'calibration_two_pm'}">
+                            PM2.5
+                        </c:when>
+                        <c:when test="${obj.type == 'calibration_ten_pm'}">
+                            PM10
+                        </c:when>
+                        <c:when test="${obj.type == 'calibration_02'}">
+                            SO₂
+                        </c:when>
+                        <c:when test="${obj.type == 'calibration_NO2'}">
+                            NO₂
+                        </c:when>
+                        <c:when test="${obj.type == 'calibration_03'}">
+                            O₃
+                        </c:when>
+                        <c:when test="${obj.type == 'calibration_04'}">
+                            CO
+                        </c:when>
+                        <c:otherwise>
+                            ${obj.type}
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>单位：ug/m3</td>
                 <td>${obj.min}</td>
                 <td>${obj.max}</td>

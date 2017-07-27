@@ -42,6 +42,31 @@
     }
     //初始化转发因子
     function initCheckBox() {
+        var devType = parseInt($("select[name='devType'] > option:selected").val());
+        switch (devType){
+            case 4:
+                $("#dustyNoise").show();
+                $("#AQI").hide();
+                $("#VOC").hide();
+                break;
+            case 5:
+                $("#dustyNoise").hide();
+                $("#AQI").show();
+                $("#VOC").hide();
+                break;
+            case 6:
+                $("#common").hide();
+                $("#dustyNoise").hide();
+                $("#AQI").hide();
+                $("#VOC").show();
+                break;
+            case 7:
+                $("#dustyNoise").show();
+                $("#AQI").hide();
+                $("#VOC").hide();
+                break;
+        }
+        
         var forwardType = new Array();
         forwardType = "${device.forwardType}".split(';');
         if("${device.forwardType}") {
@@ -182,6 +207,11 @@
                         $("#AQI").hide();
                         $("#VOC").show();
                         break;
+                    case 7:
+                        $("#dustyNoise").show();
+                        $("#AQI").hide();
+                        $("#VOC").hide();
+                        break;
                 }
             }
             initCheckBox();
@@ -254,24 +284,35 @@
                                     <option value="4">扬尘噪声</option>
                                     <option value="5">AQI</option>
                                     <option value="6">VOC</option>
+                                    <option value="7">扬尘噪声（基础）</option>
                                 </c:when>
                                 <c:when test="${device.devType==4 }">
                                     <option value="3">视频</option>
                                     <option value="4" selected="selected">扬尘噪声</option>
                                     <option value="5">AQI</option>
                                     <option value="6">VOC</option>
+                                    <option value="7">扬尘噪声（基础）</option>
                                 </c:when>
                                 <c:when test="${device.devType==5 }">
                                     <option value="3">视频</option>
                                     <option value="4">扬尘噪声</option>
                                     <option value="5" selected="selected">AQI</option>
                                     <option value="6">VOC</option>
+                                    <option value="7">扬尘噪声（基础）</option>
                                 </c:when>
                                 <c:when test="${device.devType==6 }">
                                     <option value="3">视频</option>
                                     <option value="4">扬尘噪声</option>
                                     <option value="5">AQI</option>
                                     <option value="6" selected="selected">VOC</option>
+                                    <option value="7">扬尘噪声（基础）</option>
+                                </c:when>
+                                <c:when test="${device.devType==7 }">
+                                    <option value="3">视频</option>
+                                    <option value="4">扬尘噪声</option>
+                                    <option value="5">AQI</option>
+                                    <option value="6">VOC</option>
+                                    <option value="7" selected="selected">扬尘噪声（基础）</option>
                                 </c:when>
                                 <c:otherwise>
                                     <option value="3">视频</option>
@@ -366,32 +407,32 @@
                             <label style="width: 60px;">转发因子</label>
                             <input name="forwardType" type="hidden" value="${device.forwardType}">
 
-                            <span class="forward" id="dustyNoise">
+                            <span class="forward" id="dustyNoise" style="display: none;">
                                 <%--<input name="forwardType" type="hidden" value="${device.forwardType}">--%>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="PM2.5" />PM2.5 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="PM10" />PM10 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="TSP" />TSP </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="噪声" />噪声 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="风速" />风速 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="风向" />风向 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="温度" />温度 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="湿度" />湿度 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="气压" />气压 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_two_pm" />PM2.5 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_ten_pm" />PM10 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_tsp" />TSP </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_noise" />噪声 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="actual_wind_speed" />风速 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="actual_wind_direction" />风向 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="actual_temperature" />温度 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="humidity" />湿度 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="pressure" />气压 </label>
                             </span>
                             <span class="forward" id="AQI" style="display: none">
                                 <%--<input name="forwardType" type="hidden" value="${device.forwardType}">--%>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="PM10" />PM10 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="PM2.5" />PM2.5 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="SO2" />SO2 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="NO2" />NO2 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="O3" />O3 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="CO" />CO </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="噪声" />噪声 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="风速" />风速 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="风向" />风向 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="温度" />温度 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="湿度" />湿度 </label>
-                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="气压" />气压 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_ten_pm" />PM10 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_two_pm" />PM2.5 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_02" />SO2 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_NO2" />NO2 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_03" />O3 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_04" />CO </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="calibration_noise" />噪声 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="actual_wind_speed" />风速 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="actual_wind_direction" />风向 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="actual_temperature" />温度 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="humidity" />湿度 </label>
+                                <label style="width: 30px;"><input class="forwardType" type="checkbox" value="pressure" />气压 </label>
 
                             </span>
                             <span class="forward" id="VOC" style="display: none">

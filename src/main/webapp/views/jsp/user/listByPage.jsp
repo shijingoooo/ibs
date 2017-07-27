@@ -17,6 +17,12 @@
 		});
 	});
 </script>
+<style type="text/css">
+	.userName a{
+		color: #00f;
+		text-decoration: underline;
+	}
+</style>
 <div class="pageHeader">
 	<form id="pagerForm" onsubmit="return navTabSearch(this);"
 		action="${ctx}/user/listByPage.action" method="post">
@@ -75,7 +81,7 @@
 							<input name="userIds" type="checkbox" value="${obj.id}" />
 						</div>
 					</td>
-					<td>
+					<td class="userName">
 						<self:a code="ibs_user_page_update" name="${obj.userName}"
 							parameter="?userId=${obj.id}" style="icon" target="dialog"
 							mask="true" rel="newuser" width="560" height="380"></self:a>

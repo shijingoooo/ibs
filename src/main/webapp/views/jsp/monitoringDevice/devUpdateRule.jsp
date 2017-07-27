@@ -11,9 +11,6 @@
             if( $(".deleteRule").length > 1)
                 $(this).parent().remove();
         })
-        $("[name='deviceType']").change(function(){
-            alert($("[name='deviceType']").val());
-        });
 
         $.each($(".indicator > option"),function (i,n) {
             if(n.value == '${rule.indicator}')
@@ -158,7 +155,7 @@
                     <p class="nowrap">
                         <label class="indicator" style="width: 60px;">指标:</label>
                         <c:choose>
-                            <c:when test="${rule.deviceType == '1' }">
+                            <%--<c:when test="${rule.deviceType == '1' }">
                                 <select class='indicator' name='indicator' style='margin-left: 25px;'>
                                     <option value='PM2.5'>PM2.5</option>
                                     <option value='PM10'>PM10</option>
@@ -184,39 +181,27 @@
                                     <option value='CO'>CO</option>
                                 </select>
                                 <label class='unit'>单位：ug/m3</label>
-                            </c:when>
+                            </c:when>--%>
                             <c:when test="${rule.deviceType == '4' }">
                                 <select class='indicator' name='indicator' style='margin-left: 25px;'>
-                                    <option value='PM2.5'>PM2.5</option>
-                                    <option value='PM10'>PM10</option>
-                                    <option value='TSP'>TSP</option>
-                                    <option value='噪声'>噪声</option>
-                                    <option value='风速'>风速</option>
-                                    <option value='风向'>风向</option>
-                                    <option value='温度'>温度</option>
-                                    <option value='湿度'>湿度</option>
-                                    <option value='气压'>气压</option>
+                                    <option value='calibration_two_pm' selected>PM2.5</option>
+                                    <option value='calibration_ten_pm'>PM10</option>
+                                    <option value='calibration_tsp'>TSP</option>
                                 </select>
                                 <label class='unit'>单位：ug/m3</label>
                             </c:when>
                             <c:when test="${rule.deviceType == '5' }">
                                 <select class='indicator' name='indicator' style='margin-left: 25px;'>
-                                    <option value='PM10'>PM10</option>
-                                    <option value='PM2.5'>PM2.5</option>
-                                    <option value='SO2'>SO2</option>
-                                    <option value='NO2'>NO2</option>
-                                    <option value='O3'>O3</option>
-                                    <option value='CO'>CO</option>
-                                    <option value='噪声'>噪声</option>
-                                    <option value='风速'>风速</option>
-                                    <option value='风向'>风向</option>
-                                    <option value='温度'>温度</option>
-                                    <option value='湿度'>湿度</option>
-                                    <option value='气压'>气压</option>
+                                    <option value='calibration_ten_pm'>PM10</option>
+                                    <option value='calibration_two_pm' selected>PM2.5</option>
+                                    <option value='calibration_02'>SO₂</option>
+                                    <option value='calibration_NO2'>NO₂</option>
+                                    <option value='calibration_03'>O₃</option>
+                                    <option value='calibration_04'>CO</option>
                                 </select>
                                 <label class='unit'>单位：ug/m3</label>
                             </c:when>
-                            <c:when test="${rule.deviceType == '6' }">
+                            <%--<c:when test="${rule.deviceType == '6' }">
                                 <select class='indicator' name='indicator' style='margin-left: 25px;'>
                                     <option value='H2S'>H2S</option>
                                     <option value='NH3'>NH3</option>
@@ -226,7 +211,7 @@
                                     <option value='HCL'>HCL</option>
                                 </select>
                                 <label class='unit'>单位：ug/m3</label>
-                            </c:when>
+                            </c:when>--%>
                             <c:otherwise>
 
                             </c:otherwise>
