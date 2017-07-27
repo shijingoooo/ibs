@@ -41,19 +41,8 @@
                         <label style="width: 60px;">用户类型：</label>
                         <select class="userType" id="userType" name="userType" style="margin-left: 25px;"
                                 onchange="changeUserType(this.value)">
-                            <option value="9">省级住建委</option>
-                            <option value="1">市级住建委用户</option>
-                            <option value="2">区县住建委用户</option>
-                            <option value="10">省级经信委</option>
-                            <option value="5">市级经信委</option>
-                            <option value="6">区县级经信局</option>
-                            <option value="11">省级环保局</option>
-                            <option value="8">市级环保局</option>
-                            <option value="7">区县级环保局</option>
-                            <option value="3">站点管理员</option>
-                            <option value="4">管理员</option>
-                            <option value="12">SU</option>
-
+                            <option value="1">超级管理员</option>
+                            <option value="2">普通管理员</option>
                         </select>
                     </p>
                     <p class="nowrap">

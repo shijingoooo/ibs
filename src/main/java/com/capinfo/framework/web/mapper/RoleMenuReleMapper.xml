@@ -15,26 +15,26 @@
 	
 	<!-- SAVE RoleMenuRele -->
 	<insert id="saveRoleMenuRele" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.RoleMenuRele">
-		INSERT INTO ibs_role_menu_rele(role_id,menu_id,create_time,creater) VALUES(#{role.id},#{menu.id},#{createTime},#{creater})
+		INSERT INTO ibs_role_menu_rele_devp(role_id,menu_id,create_time,creater) VALUES(#{role.id},#{menu.id},#{createTime},#{creater})
 	</insert>
 	<!-- DELETE RoleMenuRele -->
 	<delete id="deleteRoleMenuRele" parameterType="java.lang.Integer">
-		DELETE FROM ibs_role_menu_rele WHERE id=#{id}
+		DELETE FROM ibs_role_menu_rele_devp WHERE id=#{id}
 	</delete>
 	<!-- UPDATE RoleMenuRele -->
 	<update id="updateRoleMenuRele" parameterType="com.capinfo.framework.web.pojo.RoleMenuRele">
-		UPDATE ibs_role_menu_rele SET role_id=#{role.id},menu_id=#{menu.id},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
+		UPDATE ibs_role_menu_rele_devp SET role_id=#{role.id},menu_id=#{menu.id},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
 	</update>
 	<!-- BATCH SAVE RoleMenuRele -->
 	<insert id="saveRoleMenuReleBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
-		INSERT INTO ibs_role_menu_rele(role_id,menu_id,create_time,creater) VALUES
+		INSERT INTO ibs_role_menu_rele_devp(role_id,menu_id,create_time,creater) VALUES
 		<foreach collection="list" item="item" index="index" separator="," >
 			(#{item.role.id},#{item.menu.id},#{item.createTime},#{item.creater})
 		</foreach>
 	</insert>
 	<!-- BATCH DELETE RoleMenuRele -->
 	<delete id="deleteRoleMenuReleBatch" parameterType="java.util.List">
-		DELETE FROM ibs_role_menu_rele WHERE id IN
+		DELETE FROM ibs_role_menu_rele_devp WHERE id IN
 		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 			#{item}
 		</foreach>
@@ -50,7 +50,7 @@
 		</if>
 	</sql>
 	<select id="findRoleMenuReleList" parameterType="com.capinfo.framework.web.vo.RoleMenuReleQueryBean" resultMap="RoleMenuReleResult">
-    	SELECT * FROM ibs_role_menu_rele
+    	SELECT * FROM ibs_role_menu_rele_devp
     	<where>
     		<include refid="query_role_menu_where"></include>
     	</where>
@@ -67,7 +67,7 @@
 		</if>
 	</sql>
 	<select id="findRoleMenuRelePage" parameterType="java.util.Map" resultMap="RoleMenuReleResult">
-    	SELECT * FROM ibs_role_menu_rele
+    	SELECT * FROM ibs_role_menu_rele_devp
     	<where>
     		<include refid="query_role_menu_page_where"></include>
     	</where>
@@ -99,9 +99,9 @@
 		</if>
 	</sql>
 	<select id="findRoleMenuReleCount" parameterType="com.capinfo.framework.web.vo.RoleMenuReleQueryBean" resultType="java.lang.Integer">
-    	SELECT COUNT(1) FROM ibs_role_menu_rele rm 
+    	SELECT COUNT(1) FROM ibs_role_menu_rele_devp rm
     	<if test="menuUrl!=null and menuUrl!=''">
-			,ibs_menu m  
+			,ibs_menu_devp m
 		</if>
     	<where>
     		<include refid="query_role_menu_count_where"></include>
@@ -110,7 +110,7 @@
 	
 	<!-- 根据id查询角色菜单关系数据 -->
 	<select id="findRoleMenuReleById" parameterType="java.lang.Integer" resultMap="RoleMenuReleResult">
-    	SELECT * FROM ibs_role_menu_rele
+    	SELECT * FROM ibs_role_menu_rele_devp
     	<where>
     		id=#{value}
     	</where>
@@ -118,7 +118,7 @@
 	
 	<!-- 根据角色id查询角色菜单关系数据 -->
 	<select id="findRoleMenuReleByRoleId" parameterType="java.lang.Integer" resultMap="RoleMenuReleResult">
-    	SELECT * FROM ibs_role_menu_rele
+    	SELECT * FROM ibs_role_menu_rele_devp
     	<where>
     		role_id=#{value}
     	</where>
@@ -127,7 +127,7 @@
 	
 	<!-- 根据菜单id查询角色菜单关系数据 -->
 	<select id="findRoleMenuReleByMenuId" parameterType="java.lang.Integer" resultMap="RoleMenuReleResult">
-    	SELECT * FROM ibs_role_menu_rele
+    	SELECT * FROM ibs_role_menu_rele_devp
     	<where>
     		menu_id=#{value}
     	</where>
@@ -136,11 +136,11 @@
 	<!--删除现有的关联roleId-->
 
 	<delete id="deleteRoleMenuReleByRoleId" parameterType="java.lang.Integer">
-		DELETE FROM ibs_role_menu_rele WHERE role_id =#{value}
+		DELETE FROM ibs_role_menu_rele_devp WHERE role_id =#{value}
 	</delete>
 
 	<select id="findRoleMenuReleListByRoleId" parameterType="java.lang.Integer" resultMap="RoleMenuReleResult">
-		SELECT * FROM ibs_role_menu_rele
+		SELECT * FROM ibs_role_menu_rele_devp
 		WHERE role_id =#{value}
 		ORDER BY menu_id ASC
 	</select>

@@ -15,26 +15,26 @@
 	
 	<!-- SAVE UserRoleRele -->
 	<insert id="saveUserRoleRele" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.UserRoleRele">
-		INSERT INTO ibs_user_role_rele(user_id,role_id,create_time,creater) VALUES(#{user.id},#{role.id},#{createTime},#{creater})
+		INSERT INTO ibs_user_role_rele_devp(user_id,role_id,create_time,creater) VALUES(#{user.id},#{role.id},#{createTime},#{creater})
 	</insert>
 	<!-- DELETE UserRoleRele -->
 	<delete id="deleteUserRoleRele" parameterType="java.lang.Integer">
-		DELETE FROM ibs_user_role_rele WHERE id=#{id}
+		DELETE FROM ibs_user_role_rele_devp WHERE id=#{id}
 	</delete>
 	<!-- UPDATE UserRoleRele -->
 	<update id="updateUserRoleRele" parameterType="com.capinfo.framework.web.pojo.UserRoleRele">
-		UPDATE ibs_user_role_rele SET user_id=#{user.id},role_id=#{role.id},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
+		UPDATE ibs_user_role_rele_devp SET user_id=#{user.id},role_id=#{role.id},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
 	</update>
 	<!-- BATCH SAVE UserRoleRele -->
 	<insert id="saveUserRoleReleBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
-		INSERT INTO ibs_user_role_rele(user_id,role_id,create_time,creater) VALUES
+		INSERT INTO ibs_user_role_rele_devp(user_id,role_id,create_time,creater) VALUES
 		<foreach collection="list" item="item" index="index" separator="," >
 			(#{item.user.id},#{item.role.id},#{item.createTime},#{item.creater})
 		</foreach>
 	</insert>
 	<!-- BATCH DELETE UserRoleRele -->
 	<delete id="deleteUserRoleReleBatch" parameterType="java.util.List">
-		DELETE FROM ibs_user_role_rele WHERE id IN
+		DELETE FROM ibs_user_role_rele_devp WHERE id IN
 		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 			#{item}
 		</foreach>
@@ -50,7 +50,7 @@
 		</if>
 	</sql>
 	<select id="findUserRoleReleList" parameterType="com.capinfo.framework.web.vo.UserRoleReleQueryBean" resultMap="UserRoleReleResult">
-    	SELECT * FROM ibs_user_role_rele
+    	SELECT * FROM ibs_user_role_rele_devp
     	<where>
     		<include refid="query_user_role_where"></include>
     	</where>
@@ -67,7 +67,7 @@
 		</if>
 	</sql>
 	<select id="findUserRoleRelePage" parameterType="java.util.Map" resultMap="UserRoleReleResult">
-    	SELECT * FROM ibs_user_role_rele
+    	SELECT * FROM ibs_user_role_rele_devp
     	<where>
     		<include refid="query_user_role_page_where"></include>
     	</where>
@@ -84,7 +84,7 @@
 		</if>
 	</sql>
 	<select id="findUserRoleReleCount" parameterType="com.capinfo.framework.web.vo.UserRoleReleQueryBean" resultType="java.lang.Integer">
-    	SELECT COUNT(1) FROM ibs_user_role_rele
+    	SELECT COUNT(1) FROM ibs_user_role_rele_devp
     	<where>
     		<include refid="query_user_role_count_where"></include>
     	</where>
@@ -92,7 +92,7 @@
 	
 	<!-- 根据id查询用户角色关系数据 -->
 	<select id="findUserRoleReleById" parameterType="java.lang.Integer" resultMap="UserRoleReleResult">
-    	SELECT * FROM ibs_user_role_rele
+    	SELECT * FROM ibs_user_role_rele_devp
     	<where>
     		id=#{value}
     	</where>
@@ -100,7 +100,7 @@
 	
 	<!-- 根据角色id查询用户角色关系数据 -->
 	<select id="findUserRoleReleByRoleId" parameterType="java.lang.Integer" resultMap="UserRoleReleResult">
-    	SELECT * FROM ibs_user_role_rele
+    	SELECT * FROM ibs_user_role_rele_devp
     	<where>
     		role_id=#{value}
     	</where>
@@ -108,7 +108,7 @@
 	
 	<!-- 根据用户id查询用户角色关系数据 -->
 	<select id="findUserRoleReleByUserId" parameterType="java.lang.Integer" resultMap="UserRoleReleResult">
-    	SELECT * FROM ibs_user_role_rele
+    	SELECT * FROM ibs_user_role_rele_devp
     	<where>
     		user_id=#{value}
     	</where>

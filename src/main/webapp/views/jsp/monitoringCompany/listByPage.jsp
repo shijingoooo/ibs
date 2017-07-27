@@ -56,14 +56,10 @@
                 </a>
             </li>
             <li>
-                <c:choose>
-                    <c:when test="${sessionScope.usertype==3 or sessionScope.usertype==4 or sessionScope.usertype==12}">
-                        <a id="companyDelete" class="delete" target="ajaxTodo" title="您确定要删除厂商信息吗?"
-                           href="${ctx}/monitoringCompany/delete.action">
-                            <span>删除</span>
-                        </a>
-                    </c:when>
-                </c:choose>
+                <a id="companyDelete" class="delete" target="ajaxTodo" title="您确定要删除厂商信息吗?"
+                   href="${ctx}/monitoringCompany/delete.action">
+                    <span>删除</span>
+                </a>
             </li>
         </ul>
     </div>

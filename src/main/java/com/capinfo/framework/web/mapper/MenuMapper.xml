@@ -21,26 +21,26 @@
 	
 	<!-- SAVE MENU -->
 	<insert id="saveMenu" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.Menu">
-		INSERT INTO ibs_menu(menu_name,menu_code,menu_type,menu_url,menu_level,menu_last,create_timem,creater) VALUES(#{menuName},#{menuCode},#{menuType},#{menuUrl},#{menuLevel},#{menuLast},#{createTime},,#{creater})
+		INSERT INTO ibs_menu_devp(menu_name,menu_code,menu_type,menu_url,menu_level,menu_last,create_timem,creater) VALUES(#{menuName},#{menuCode},#{menuType},#{menuUrl},#{menuLevel},#{menuLast},#{createTime},,#{creater})
 	</insert>
 	<!-- DELETE MENU -->
 	<delete id="deleteMenu" parameterType="java.lang.Integer">
-		DELETE FROM ibs_menu WHERE id=#{id}
+		DELETE FROM ibs_menu_devp WHERE id=#{id}
 	</delete>
 	<!-- UPDATE MENU -->
 	<update id="updateMenu" parameterType="com.capinfo.framework.web.pojo.Menu">
-		UPDATE ibs_menu SET menu_name=#{menuName},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
+		UPDATE ibs_menu_devp SET menu_name=#{menuName},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
 	</update>
 	<!-- BATCH SAVE MENU -->
 	<insert id="saveMenuBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
-		INSERT INTO ibs_menu(menu_name,menu_code,menu_type,menu_url,menu_level,menu_last,create_time,creater) VALUES
+		INSERT INTO ibs_menu_devp(menu_name,menu_code,menu_type,menu_url,menu_level,menu_last,create_time,creater) VALUES
 		<foreach collection="list" item="item" index="index" separator="," >
 			(#{item.menuName},#{item.menuCode},#{item.menuType},#{item.menuUrl},#{item.menuLevel},#{item.menuLast},#{item.createTime},#{item.creater})
 		</foreach>
 	</insert>
 	<!-- BATCH DELETE MENU -->
 	<delete id="deleteMenuBatch" parameterType="java.util.List">
-		DELETE FROM ibs_menu WHERE id IN
+		DELETE FROM ibs_menu_devp WHERE id IN
 		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 			#{item}
 		</foreach>
@@ -58,7 +58,7 @@
 		</if>
 	</sql>
 	<select id="findMenuList" parameterType="com.capinfo.framework.web.vo.MenuQueryBean" resultMap="MenuResult">
-    	SELECT * FROM ibs_menu
+    	SELECT * FROM ibs_menu_devp
     	<where>
     		<include refid="query_menu_where"></include>
     	</where>
@@ -76,7 +76,7 @@
 		</if>
 	</sql>
 	<select id="findMenuPage" parameterType="java.util.Map" resultMap="MenuResult">
-    	SELECT * FROM ibs_menu
+    	SELECT * FROM ibs_menu_devp
     	<where>
     		<include refid="query_menu_page_where"></include>
     	</where>
@@ -95,14 +95,14 @@
 		</if>
 	</sql>
 	<select id="findMenuCount" parameterType="com.capinfo.framework.web.vo.MenuQueryBean" resultType="java.lang.Integer">
-    	SELECT COUNT(1) FROM ibs_menu
+    	SELECT COUNT(1) FROM ibs_menu_devp
     	<where>
     		<include refid="query_menu_count_where"></include>
     	</where>
 	</select>
 	
 	<select id="findMenuById" parameterType="java.lang.Integer" resultMap="MenuResult">
-    	SELECT * FROM ibs_menu
+    	SELECT * FROM ibs_menu_devp
     	<where>
     		id=#{value}
     	</where>
@@ -117,7 +117,7 @@
 		</if>
 	</sql>
 	<select id="findMenuUnique" parameterType="com.capinfo.framework.web.vo.MenuQueryBean" resultMap="MenuResult">
-    	SELECT * FROM ibs_menu 
+    	SELECT * FROM ibs_menu_devp
     	<where>
     		<include refid="query_menu_unique_where"></include>
     	</where>

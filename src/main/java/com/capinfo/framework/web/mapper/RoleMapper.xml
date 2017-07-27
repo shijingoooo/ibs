@@ -17,26 +17,26 @@
 	
 	<!-- SAVE ROLE -->
 	<insert id="saveRole" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.Role">
-		INSERT INTO ibs_role(role_name,role_desc,role_level,create_time,creater) VALUES(#{roleName},#{roleDesc},#{roleLevel},#{createTime},#{creater})
+		INSERT INTO ibs_role_devp(role_name,role_desc,role_level,create_time,creater) VALUES(#{roleName},#{roleDesc},#{roleLevel},#{createTime},#{creater})
 	</insert>
 	<!-- DELETE ROLE -->
 	<delete id="deleteRole" parameterType="java.lang.Integer">
-		DELETE FROM ibs_role WHERE id=#{id}
+		DELETE FROM ibs_role_devp WHERE id=#{id}
 	</delete>
 	<!-- UPDATE ROLE -->
 	<update id="updateRole" parameterType="com.capinfo.framework.web.pojo.Role">
-		UPDATE ibs_role SET role_name=#{roleName},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
+		UPDATE ibs_role_devp SET role_name=#{roleName},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
 	</update>
 	<!-- BATCH SAVE ROLE -->
 	<insert id="saveRoleBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
-		INSERT INTO ibs_role(role_name,role_desc,role_level,create_time,creater) VALUES
+		INSERT INTO ibs_role_devp(role_name,role_desc,role_level,create_time,creater) VALUES
 		<foreach collection="list" item="item" index="index" separator="," >
 			(#{item.roleName},#{item.roleDesc},#{item.roleLevel},#{item.createTime},#{item.creater})
 		</foreach>
 	</insert>
 	<!-- BATCH DELETE ROLE -->
 	<insert id="deleteRoleBatch" parameterType="java.util.List">
-		DELETE FROM ibs_role WHERE id IN
+		DELETE FROM ibs_role_devp WHERE id IN
 		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 			#{item}
 		</foreach>
@@ -54,7 +54,7 @@
 		</if>
 	</sql>
 	<select id="findRoleList" parameterType="com.capinfo.framework.web.vo.RoleQueryBean" resultMap="RoleResult">
-    	SELECT * FROM ibs_role
+    	SELECT * FROM ibs_role_devp
     	<where>
     		<include refid="query_role_where"></include>
     	</where>
@@ -75,7 +75,7 @@
 		</if>
 	</sql>
 	<select id="findRolePage" parameterType="java.util.Map" resultMap="RoleResult">
-    	SELECT * FROM ibs_role
+    	SELECT * FROM ibs_role_devp
     	<where>
     		<include refid="query_role_page_where"></include>
     	</where>
@@ -94,20 +94,20 @@
 		</if>
 	</sql>
 	<select id="findRoleCount" parameterType="com.capinfo.framework.web.vo.RoleQueryBean" resultType="java.lang.Integer">
-    	SELECT COUNT(1) FROM ibs_role
+    	SELECT COUNT(1) FROM ibs_role_devp
     	<where>
     		<include refid="query_role_count_where"></include>
     	</where>
 	</select>
 	
 	<select id="findRoleById" parameterType="java.lang.Integer" resultMap="RoleResult">
-    	SELECT * FROM ibs_role
+    	SELECT * FROM ibs_role_devp
     	<where>
     		id=#{value}
     	</where>
 	</select>
 	<select id="findRoleByName" parameterType="java.lang.String" resultMap="RoleResult">
-    	SELECT * FROM ibs_role
+    	SELECT * FROM ibs_role_devp
     	<where>
     		role_name=#{value}
     	</where>

@@ -84,41 +84,11 @@
 					<td>
 						<c:choose>
 							<c:when test="${obj.userType==1}">
-								市级住建委用户
+								超级管理员
 							</c:when>
 							<c:when test="${obj.userType==2}">
-								区县住建委用户
+								普通管理员
 							</c:when>
-							<c:when test="${obj.userType==3}">
-                                站点管理员
-                            </c:when>
-                            <c:when test="${obj.userType==5}">
-                                市级经信委
-                            </c:when>
-                            <c:when test="${obj.userType==6}">
-                                区县级经信局
-                            </c:when>
-							<c:when test="${obj.userType==8}">
-                                市级环保局
-                            </c:when>
-							<c:when test="${obj.userType==7}">
-                                区县环保局
-                            </c:when>
-                            <c:when test="${obj.userType==9}">
-                                省级住建委
-                            </c:when>
-                            <c:when test="${obj.userType==10}">
-                                省级经信委
-                            </c:when>
-                            <c:when test="${obj.userType==11}">
-                                省级环保局
-                            </c:when>
-							<c:when test="${obj.userType==12}">
-                                SU
-                            </c:when>
-							<c:otherwise>
-								管理员
-							</c:otherwise>
 						</c:choose>
 					</td>
 					<td>${obj.companyName}</td>

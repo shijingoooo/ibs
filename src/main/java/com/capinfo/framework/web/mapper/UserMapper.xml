@@ -24,26 +24,26 @@
 	
 	<!-- SAVE USER -->
 	<insert id="saveUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.pojo.User">
-		INSERT INTO ibs_user(user_name,user_password,random_num,user_type,province,city,district,telephone,email,company_name,create_time,creater) VALUES(#{userName},#{userPassword},#{randomNum},#{userType},#{province},#{city},#{district},#{telephone},#{email},#{companyName},#{createTime},#{creater})
+		INSERT INTO ibs_user_devp(user_name,user_password,random_num,user_type,province,city,district,telephone,email,company_name,create_time,creater) VALUES(#{userName},#{userPassword},#{randomNum},#{userType},#{province},#{city},#{district},#{telephone},#{email},#{companyName},#{createTime},#{creater})
 	</insert>
 	<!-- DELETE USER -->
 	<delete id="deleteUser" parameterType="java.lang.Integer">
-		DELETE FROM ibs_user WHERE id=#{id}
+		DELETE FROM ibs_user_devp WHERE id=#{id}
 	</delete>
 	<!-- UPDATE USER -->
 	<update id="updateUser" parameterType="com.capinfo.framework.web.pojo.User">
-		UPDATE ibs_user SET user_name=#{userName},user_password=#{userPassword},random_num=#{randomNum},user_type=#{userType},province=#{province},city=#{city},district=#{district},telephone=#{telephone},email=#{email},company_name=#{companyName},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
+		UPDATE ibs_user_devp SET user_name=#{userName},user_password=#{userPassword},random_num=#{randomNum},user_type=#{userType},province=#{province},city=#{city},district=#{district},telephone=#{telephone},email=#{email},company_name=#{companyName},update_time=#{updateTime},updater=#{updater},version=version+1 WHERE id=#{id} AND version=#{version}
 	</update>
 	<!-- BATCH SAVE USER -->
 	<insert id="saveUserBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
-		INSERT INTO ibs_user(user_name,user_password,random_num,user_type,province,city,district,telephone,email,company_name,create_time,creater) VALUES
+		INSERT INTO ibs_user_devp(user_name,user_password,random_num,user_type,province,city,district,telephone,email,company_name,create_time,creater) VALUES
 		<foreach collection="list" item="item" index="index" separator="," >
 			(#{item.userName},#{item.userPassword},#{item.randomNum},#{item.userType},#{item.province},#{item.city},#{item.district},#{item.telephone},#{item.email},#{item.companyName},#{item.createTime},#{item.creater})
 		</foreach>
 	</insert>
 	<!-- BATCH DELETE USER -->
 	<delete id="deleteUserBatch" parameterType="java.util.List">
-		DELETE FROM ibs_user WHERE id IN
+		DELETE FROM ibs_user_devp WHERE id IN
 		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 			#{item}
 		</foreach>
@@ -61,7 +61,7 @@
 		</if>
 	</sql>
 	<select id="findUserList" parameterType="com.capinfo.framework.web.vo.UserQueryBean" resultMap="UserResult">
-    	SELECT * FROM ibs_user
+    	SELECT * FROM ibs_user_devp
     	<where>
     		<include refid="query_user_where"></include>
     	</where>
@@ -79,7 +79,7 @@
 		</if>
 	</sql>
 	<select id="findUserPage" parameterType="java.util.Map" resultMap="UserResult">
-    	SELECT * FROM ibs_user
+    	SELECT * FROM ibs_user_devp
     	<where>
     		<include refid="query_user_page_where"></include>
     	</where>
@@ -99,21 +99,21 @@
 		</if>
 	</sql>
 	<select id="findUserCount" parameterType="com.capinfo.framework.web.vo.UserQueryBean" resultType="java.lang.Integer">
-    	SELECT COUNT(1) FROM ibs_user
+    	SELECT COUNT(1) FROM ibs_user_devp
     	<where>
     		<include refid="query_user_count_where"></include>
     	</where>
 	</select>
 	
 	<select id="findUserById" parameterType="java.lang.Integer" resultMap="UserResult">
-    	SELECT * FROM ibs_user
+    	SELECT * FROM ibs_user_devp
     	<where>
     		id=#{value}
     	</where>
 	</select>
 	
 	<select id="findUserByName" parameterType="java.lang.String" resultMap="UserResult">
-    	SELECT * FROM ibs_user
+    	SELECT * FROM ibs_user_devp
     	<where>
     		user_name=#{value}
     	</where>

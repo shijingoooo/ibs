@@ -100,7 +100,10 @@
                                     </select>--%>
                                 </td>
                                 <td><button type="submit" id="modelSearchDevice">查询</button></td>
-                                <td><button type="button" id="modelExportDevice">导出数据</button></td>
+
+                                <c:if test="${sessionScope.usertype == 1}">
+                                    <td><button type="button" id="modelExportDevice">导出数据</button></td>
+                                </c:if>
 
                                 <%--暂时注释--%>
                                 <%-- <c:if test="${ sessionScope.usertype==4 }">
@@ -136,13 +139,9 @@
                 </a>
             </li>
             <li>
-                <c:choose>
-                    <c:when test="${sessionScope.usertype==3 or sessionScope.usertype==4 or sessionScope.usertype==12}">
-                        <a id="deviceDelete" class="delete" target="ajaxTodo" title="您确定要删除传感器信息吗?" href="${ctx}/monitoringDevice/delete.action">
-                            <span>删除</span>
-                        </a>
-                    </c:when>
-                </c:choose>
+                <a id="deviceDelete" class="delete" target="ajaxTodo" title="您确定要删除传感器信息吗?" href="${ctx}/monitoringDevice/delete.action">
+                    <span>删除</span>
+                </a>
             </li>
         </ul>
     </div>

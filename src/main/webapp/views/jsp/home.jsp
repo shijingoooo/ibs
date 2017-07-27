@@ -87,12 +87,13 @@
 				<div class="headerNav">
 					<img src="${ctx}/dwz_jui/themes/default/images/logo.png" id="logo" />
 					<ul class="nav" style="top:38px;">
+
 						<c:choose>
 							<c:when test="${sessionScope.usertype==3 }">
 								<li><a href="${ctx }/alarm/listByPage.action" target="navTab" rel="ibs_alarm_page">待告警处理（<font color="red">${alarmCount }</font>）</a></li>
 							</c:when>
 						</c:choose>
-						<li>您好！ ${sessionScope.username } 用户</li>
+						<li>您好！ ${sessionScope.username}用户</li>
 						<li><a href="${ctx }/user/updatePwdPage.action?userId=${sessionScope.userid }" target="dialog" 
 								mask="true" rel="newuser" width="560" height="380">修改密码</a></li>
 						<li><a href="${ctx}/login/logout.action">退出</a></li>
