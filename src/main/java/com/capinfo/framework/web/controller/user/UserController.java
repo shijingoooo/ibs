@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.capinfo.framework.web.pojo.MonitoringDeviceGroup;
+import com.capinfo.framework.web.pojo.UserGroupRele;
+import com.capinfo.framework.web.service.MonitoringDeviceGroupService;
+import com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -32,8 +36,9 @@ public class UserController extends BaseController {
 	
 	@Resource
 	private UserService userService;
+	@Resource
+	MonitoringDeviceGroupService groupService;
 
-	
 	@RequestMapping(value="/list",method={RequestMethod.POST,RequestMethod.GET})
 	public String list(Model model, UserQueryBean userQueryBean) throws Exception {
 		
@@ -61,28 +66,26 @@ public class UserController extends BaseController {
 		
 		User user = userService.findUserById(userId);
 		model.addAttribute("user", user);
-		/*if(userId!=null){
-			ProjectUserReleQueryBean projectUserReleQueryBean = new ProjectUserReleQueryBean();
-			projectUserReleQueryBean.setUserId(userId);
-			List<ProjectUserRele> projectUsers = projectUserReleService.findProjectUserReleList(projectUserReleQueryBean);
-			StringBuffer proNames = new StringBuffer();
-			StringBuffer projectIds = new StringBuffer();
-			for(ProjectUserRele projectUser : projectUsers){
-				proNames.append(projectUser.getMonitoringProject().getProName()).append(",");
-				projectIds.append(projectUser.getMonitoringProject().getId()).append(",");
+		if(userId!=null){
+			List<UserGroupRele> userGroupReles = userService.findUserGroupReleList(userId);
+			StringBuffer groupNames = new StringBuffer();
+			StringBuffer groupIds = new StringBuffer();
+			for(UserGroupRele item : userGroupReles){
+				groupNames.append(item.getGroupName()).append(",");
+				groupIds.append(item.getGroupId()).append(",");
 			}
-			if(!projectIds.toString().equals("")){
-				model.addAttribute("proNames", proNames.substring(0, proNames.length()-1));
-				model.addAttribute("projectIds", projectIds.substring(0, projectIds.length()-1));
+			if(!groupIds.toString().equals("")){
+				model.addAttribute("groupNames", groupNames.substring(0, groupNames.length()-1));
+				model.addAttribute("groupIds", groupIds.substring(0, groupIds.length()-1));
 			}
-		}*/
+		}
 		
 		return "user/save";
 	}
 	
 	@RequestMapping(value="/save",method={RequestMethod.POST})
-	public void save(Model model, HttpServletResponse response, HttpSession session, User user, String projectIds, String navTabId, String callbackType, String rel) throws Exception {
-		
+	public void save(Model model, HttpServletResponse response, HttpSession session, User user, String groupIds, String projectIds, String navTabId, String callbackType, String rel) throws Exception {
+		//当前登录用户ID
 		Integer userId = (Integer)session.getAttribute("userid");
         if (user.getUserName() != null && user.getUserName() != "") {
             boolean flag = userService.checkUserNameIsExist(user.getUserName(), user.getId());
@@ -97,21 +100,17 @@ public class UserController extends BaseController {
                 return;
             }
         }
-        if (user.getProvince() != null && user.getProvince().equals("请选择")) {
-            user.setProvince("");
-		}
-		if(user.getCity()!=null && user.getCity().equals("请选择")){
-			user.setCity("");
-		}
-		if(user.getDistrict()!=null && user.getDistrict().equals("请选择")){
-			user.setDistrict("");
-		}
+
 		if(user.getId()!=null && user.getId()!=0){
-			user.setUpdater(userId);
+			//更新
+        	user.setUpdater(userId);
 			userService.updateUser(user.getId(), user, projectIds);
+			userService.updateUserGroupRele(user.getId(),groupIds);
 		}else{
+			//新增
 			user.setCreater(userId);
 			userService.saveUser(user, projectIds);
+			userService.updateUserGroupRele(user.getId(),groupIds);
 		}
 		
 		JSONObject jo = new JSONObject();
@@ -196,5 +195,14 @@ public class UserController extends BaseController {
         model.addAttribute("fileUrl", request.getContextPath()+"/upload/"+fileName); 
 	}
 
-
+	//点击跳转到分组选择页面
+	@RequestMapping(value = "/groupSelectListInUser", method = {RequestMethod.GET,RequestMethod.POST})
+	public String groupSelectListInUser(Model model, MonitoringDeviceGroupQueryBean groupQueryBean, Integer userId,String groupIds,String groupNames) throws Exception {
+		List<MonitoringDeviceGroup> gourps = groupService.findMonitoringGroupList(groupQueryBean);
+		model.addAttribute("groups", gourps);
+		model.addAttribute("groupQueryBean", groupQueryBean);
+		model.addAttribute("groupIds", groupIds);
+		model.addAttribute("groupNames", groupNames);
+		return "user/groupSelectListInUser";
+	}
 }

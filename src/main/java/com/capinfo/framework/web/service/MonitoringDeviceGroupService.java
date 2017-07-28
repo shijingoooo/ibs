@@ -14,6 +14,8 @@ public class MonitoringDeviceGroupService {
 
 	@Autowired
 	private MonitoringDeviceGroupMapper deviceGroupMapper;
+	@Autowired
+	private MonitoringDeviceGroupMapper groupMapper;
 	//返回同一组中的设备
 	public List<MonitoringDeviceGroupQueryBean> findMonitoringDeviceByGroupId(Integer id) throws Exception {
 
@@ -115,5 +117,11 @@ public class MonitoringDeviceGroupService {
 		else
 			monitoringDeviceGroupQueryBean.setId(null);
 		return monitoringDeviceGroupQueryBean;
+	}
+		//获取分组列表（用户页面添加管理用户组时使用）
+	public List<MonitoringDeviceGroup> findMonitoringGroupList(MonitoringDeviceGroupQueryBean groupQueryBean) throws Exception{
+		List result = new ArrayList();
+		result = groupMapper.findMonitoringGroupList(groupQueryBean);
+		return result;
 	}
 }

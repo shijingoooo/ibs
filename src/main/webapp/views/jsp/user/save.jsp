@@ -32,13 +32,13 @@
 
                 <div class="pageFormContent" layoutH="100">
                     <p class="nowrap">
-                        <label style="width: 60px;">用户名：</label>
+                        <label style="width: 72px;">用户名：</label>
                         <input id="userName" name="userName" value="<c:out value='${user.userName}'/>" type="text"
                                size="11" class="required alphanumeric" maxlength="11" style="margin-left: 25px;"/>
                     </p>
 
                     <p class="nowrap">
-                        <label style="width: 60px;">用户类型：</label>
+                        <label style="width: 72px;">用户类型：</label>
                         <select class="userType" id="userType" name="userType" style="margin-left: 25px;"
                                 onchange="changeUserType(this.value)">
                             <option value="1">超级管理员</option>
@@ -46,7 +46,7 @@
                         </select>
                     </p>
                     <p class="nowrap">
-                        <label style="width: 60px;">密码：</label>
+                        <label style="width: 72px;">密码：</label>
                         <c:if test="${user.id !=null}">
                             <input id="pass_input" value="" type="password"
                                    size="30" maxlength="32" style="margin-left: 25px;"/>
@@ -59,30 +59,30 @@
                         <img class="showPassword" src="${ctx}/images/password.png">
                     </p>
                     <p class="nowrap">
-                        <label style="width: 60px;">单位：</label>
+                        <label style="width: 72px;">单位：</label>
                         <input id="companyName" name="companyName" value="${user.companyName }" type="text"
                                size="30" class="" maxlength="32" style="margin-left: 25px;"/>
                     </p>
 
                     <p class="nowrap">
-                        <label style="width: 60px;">手机号：</label>
+                        <label style="width: 72px;">手机号：</label>
                         <input id="telephone" name="telephone" value="${user.telephone }" type="text"
                                size="30" class="required" maxlength="11" style="margin-left: 25px;"/>
                     </p>
 
                     <p class="nowrap">
-                        <label style="width: 60px;">邮箱：</label>
+                        <label style="width: 72px;">邮箱：</label>
                         <input id="email" name="email" value="${user.email }" type="text"
                                size="30" class="required" maxlength="32" style="margin-left: 25px;"/>
                     </p>
                     <p class="nowrap">
-                        <label style="width: 60px;">管理设备组：</label>
-                        <input name="proNames" type="text" size="50" readonly="readonly"
-                               value="<c:out value='${proNames}'/>" style="margin-left: 25px;"/>
-                        <input name="projectIds" type="hidden"
-                               value="<c:out value='${projectIds}'/>"/>
-                        <a class="btnLook" href="${ctx}/monitoringProject/mulselectlist.action?userId=${user.id}"
-                           lookupGroup="" mask="true" width="800" height="500">查找带回</a>
+                        <label style="width: 72px;">管理设备组：</label>
+                        <input name="groupNames" type="text" size="50" readonly="readonly"
+                               value="<c:out value='${groupNames}'/>" style="margin-left: 25px;"/>
+                        <input name="groupIds" type="hidden"
+                               value="<c:out value='${groupIds}'/>"/>
+                        <a class="btnLook" href="${ctx}/user/groupSelectListInUser.action?userId=${user.id}&groupIds=${groupIds}"
+                           lookupGroup="" mask="true" width="800" height="500">选择设备组</a>
                     </p>
                 </div>
             </form>

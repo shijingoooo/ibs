@@ -12,45 +12,47 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
-        var deviceId = "${deviceId}";
-        $("input[name=deviceId]").each(function (i, n) {
-            if (n.value == deviceId) {
-                $(this).attr("checked", true);
+        var groupIds = "${groupIds}";
+        var ids = groupIds.split(",");
+        $("input[name=groupIds]").each(function (i, n) {
+            for (var i = 0; i < ids.length; i++) {
+                if (n.value == ids[i]) {
+                    $(this).attr("checked", true);
+                }
             }
         });
     });
 
     function backVal() {
-        var id = "";
-        var name = "";
-        var code = "";
-        $("input[name=deviceId]").each(function (i, n) {
+        var ids = "";
+        var names = "";
+        $("input[name=groupIds]").each(function (i, n) {
             if (n.value != "" && n.checked) {
-                id = n.value;
-                name = $("input[name=devName" + n.value + "]").val();
-                code = $("input[name=devCode" + n.value + "]").val();
+                ids += n.value+",";
+                names += $("input[name=groupName" + n.value + "]").val()+",";
             }
+            /*alert(ids);
+            alert(names);*/
         });
         $.bringBack({
-            "devId": id,
-            "devName": name,
-            "devCode": code
+            "groupIds": ids.substring(0, ids.length - 1),
+            "groupNames": names.substring(0, names.length - 1),
         });
     }
 </script>
 <div id="deviceSelectBox" layoutH="40">
     <div class="pageHeader">
         <form id="pagerForm" onsubmit="return divSearch(this, 'deviceSelectBox');"
-              action="${ctx}/monitoringMaintain/devSelectListInMaintain.action" method="post">
+              action="${ctx}/user/groupSelectListInUser.action" method="post">
             <input type="hidden" name="deviceId" value="${deviceId}"/>
             <input type="hidden" name="deviceName" value="${deviceName}"/>
             <div class="searchBar">
                 <table class="searchContent">
                     <tr>
-                        <td>组名称：<input type="text" name="devIdForLike"
+                        <td>组名称：<input type="text" name="devGroupNameForLike"
                                         value=""/>
                         </td>
-                        <td>组类型：<input type="text" name="devNameForLike"
+                        <td>组类型：<input type="text" name="devGroupTypeForLike"
                                         value=""/>
                         </td>
                         <td>
@@ -81,55 +83,20 @@
             </tr>
             </thead>
             <tbody id="paginationContent" style="display:none;">
-            <c:forEach var="obj" items="${devices}" varStatus="index">
+            <c:forEach var="obj" items="${groups}" varStatus="index">
                 <tr target="tr_form" rel="${obj.id}">
                     <td class="td_50">
                         <div>
-                            <input name="deviceId" type="radio" value="${obj.id}"/>
+                            <input name="groupIds" type="checkbox" value="${obj.id}"/>
                         </div>
                     </td>
-                    <td class="td_130">${obj.id}</td>
-                    <td class="td_130">${obj.devName}</td>
-                    <td class="td_130">
-                        <c:choose>
-                            <c:when test="${obj.devStatus==0 }">
-                                否
-                            </c:when>
-                            <c:when test="${obj.devStatus==1 }">
-                                是
-                            </c:when>
-                            <c:otherwise>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <%--不显示input--%>
-                    <input name="devName${obj.id}" type="hidden" value="${obj.devName}"/>
-                    <input name="devCode${obj.id}" type="hidden" value="${obj.devCode}"/>
-                    <td class="td_130">
-                        <c:choose>
-                            <c:when test="${obj.devType==1 }">
-                                扬尘
-                            </c:when>
-                            <c:when test="${obj.devType==2 }">
-                                噪声
-                            </c:when>
-                            <c:when test="${obj.devType==3 }">
-                                视频
-                            </c:when>
-                            <c:when test="${obj.devType == 4}">
-                                扬尘噪声
-                            </c:when>
-                            <c:when test="${obj.devType == 5}">
-                                AQI
-                            </c:when>
-                            <c:when test="${obj.devType == 6}">
-                                VOC
-                            </c:when>
-                            <c:otherwise>
-                                该设备未指定类型
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
+                    <%--不显示分组名--%>
+                    <input name="groupName${obj.id}" type="hidden" value="${obj.groupDevName}"/>
+                    <td>${obj.groupDevName}</td>
+                    <td>${obj.groupDevType}</td>
+                    <td>${obj.devCount}</td>
+                    <td><fmt:formatDate value="${obj.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                    <td>${obj.groupDevDescription}</td>
                 </tr>
             </c:forEach>
             </tbody>

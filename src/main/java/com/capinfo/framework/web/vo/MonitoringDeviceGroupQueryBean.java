@@ -23,6 +23,8 @@ public class MonitoringDeviceGroupQueryBean {
 	protected String notBelongTypeForLike;
 	//设备组类型
 	protected String devGroupType;
+	//设备组类型模糊查询
+	protected String devGroupTypeForLike;
 	//设备类型
 	protected String devType;
 	//设备描述
@@ -132,5 +134,13 @@ public class MonitoringDeviceGroupQueryBean {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getDevGroupTypeForLike() {
+		return devGroupTypeForLike;
+	}
+
+	public void setDevGroupTypeForLike(String devGroupTypeForLike) {
+		this.devGroupTypeForLike = devGroupTypeForLike;
 	}
 }

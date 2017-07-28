@@ -1,9 +1,6 @@
 package com.capinfo.framework.web.service;
 
-import com.capinfo.framework.web.mapper.RoleMapper;
-import com.capinfo.framework.web.mapper.RoleMenuReleMapper;
-import com.capinfo.framework.web.mapper.UserMapper;
-import com.capinfo.framework.web.mapper.UserRoleReleMapper;
+import com.capinfo.framework.web.mapper.*;
 import com.capinfo.framework.web.pojo.*;
 import com.capinfo.framework.web.vo.ProjectUserReleQueryBean;
 import com.capinfo.framework.web.vo.RoleMenuReleQueryBean;
@@ -29,10 +26,10 @@ public class UserService {
 	private RoleMapper roleMapper;
 	@Autowired
 	private RoleMenuReleMapper roleMenuReleMapper;
+	@Autowired
+	private UserGroupReleMapper userGroupReleMapper;
 
 
-//	@Autowired
-//	private UserRedisDao userRedisDao;
 
 
 	public Object login(UserQueryBean userQueryBean) throws Exception {
@@ -221,6 +218,33 @@ public class UserService {
 		userMapper.updateUser(user);
 	}
 
+	//更新用户分组关系表
+	public void updateUserGroupRele(Integer id,String groupIds) throws Exception{
+		String[] groupArr = groupIds.split(",");
+		//groupIds如果为空字符串则groupArr为[""],包含一个空串的数组
+		if(!groupArr[0].equals("")) {
+			//先删除
+			userGroupReleMapper.deleteByUserId(id);
+			//再添加
+			for (String groupId : groupArr) {
+				UserGroupRele userGroupRele = new UserGroupRele();
+				userGroupRele.setGroupId(Integer.parseInt(groupId));
+				userGroupRele.setUserId(id);
+				userGroupRele.setCreateTime(new Date());
+				userGroupReleMapper.insert(userGroupRele);
+			}
+		}
+		else {
+			userGroupReleMapper.deleteByUserId(id);
+		}
+	}
+
+	//根据用户Id获取分组
+	public List<UserGroupRele> findUserGroupReleList(Integer id) throws Exception{
+		List result = new ArrayList();
+		result = userGroupReleMapper.findUserGroupReleList(id);
+		return result;
+	}
 
 	public void deleteUser(Integer id) throws Exception {
 
@@ -251,8 +275,10 @@ public class UserService {
 	}
 
 	public void deleteUserBatch(List<String> ids) throws Exception {
-
 		userMapper.deleteUserBatch(ids);
+		for (String id:ids) {
+			userGroupReleMapper.deleteByUserId(Integer.parseInt(id));
+		}
 	}
 
 	public boolean checkUserNameIsExist(String userName, Integer Id) throws Exception {
@@ -298,16 +324,6 @@ public class UserService {
 	}
 
 
-
-
-
-//	public UserRedisDao getUserRedisDao() {
-//		return userRedisDao;
-//	}
-//
-//	public void setUserRedisDao(UserRedisDao userRedisDao) {
-//		this.userRedisDao = userRedisDao;
-//	}
 
 
 }

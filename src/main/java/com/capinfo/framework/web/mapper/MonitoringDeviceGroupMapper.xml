@@ -137,4 +137,30 @@
         WHERE g.group_dev_name = #{devGroupName}
         LIMIT 1
     </select>
+    <!--根据条件获取设备组列表-->
+    <sql id="query_list_where">
+        <if test="devGroupNameForLike!=null and devGroupNameForLike!='' ">
+            AND gd.group_dev_name like CONCAT('%',trim(#{devGroupNameForLike}),'%')
+        </if>
+        <if test="devGroupTypeForLike!=null and devGroupTypeForLike!='' ">
+            AND gd.group_dev_type like CONCAT('%',trim(#{devGroupTypeForLike}),'%')
+        </if>
+    </sql>
+    <!--<select id="findMonitoringGroupList" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean"
+            resultMap="MonitoringDeviceGroupResult">
+        SELECT *
+        FROM ibs_group_device g
+        <where>
+            <include refid="query_list_where"></include>
+        </where>
+    </select>-->
+    <select id="findMonitoringGroupList" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean" resultMap="MonitoringDeviceGroupResult">
+        SELECT gd.id AS id,group_dev_name,group_dev_type,group_dev_description,COUNT(gdr.device_id) as dev_count,create_time
+        FROM ibs_group_device_rele gdr RIGHT JOIN ibs_group_device gd ON gdr.group_id = gd.id
+        <where>
+            <include refid="query_list_where"></include>
+        </where>
+        GROUP BY gd.group_dev_name
+        ORDER BY gd.create_time desc
+    </select>
 </mapper>

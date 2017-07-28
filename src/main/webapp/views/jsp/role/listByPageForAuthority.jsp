@@ -23,7 +23,7 @@
 		<input type="hidden" name="pageNum" value="1" /> <input type="hidden"
 			name="numPerPage" value="<c:out value="${numPerPage}"></c:out>" />
 
-		<div class="searchBar">
+		<%--<div class="searchBar">
 			<table class="searchContent">
 				<tr>
 					<td>角色名称：<input type="text" name="roleNameForLike"
@@ -32,7 +32,7 @@
 						<button type="submit">检索</button></td>
 				</tr>
 			</table>
-		</div>
+		</div>--%>
 	</form>
 </div>
 <div class="pageContent">
@@ -54,22 +54,17 @@
 		<thead>
 			<tr>
                 <th width="120">&nbsp;角色名称</th>
+				<th width="120">角色描述</th>
+				<th width="120">创建时间</th>
 				<th width="120">操作</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="obj" items="${page.result}" varStatus="index">
 				<tr target="tr_form" rel="${obj.id}">
-					<%--<td><div>--%>
-							<%--<input name="userIds" type="checkbox" value="${obj.id}" />--%>
-						<%--</div>--%>
-					<%--</td>--%>
-					<%--<td>
-                        <self:a code="ibs_user_role_authority_page" name="${obj.roleName}"
-                                parameter="?id=${obj.id}" style="icon" target="dialog"
-                                mask="true" rel="newdevice" width="560" height="380"></self:a>
-					</td>--%>
-                    <td>&nbsp;${obj.roleName}</td>
+					<td>&nbsp;${obj.roleName}</td>
+					<td>${obj.roleDesc}</td>
+					<td><fmt:formatDate value="${obj.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                     <td><a target="dialog" mask="true" title="设置角色权限"
                            href="${ctx}/role/initMneuList.action?roleId=${obj.id}" width="620" height="500">
                         设置角色权限

@@ -32,5 +32,6 @@ public interface MonitoringDeviceGroupMapper {
     public List<MonitoringDeviceGroupRele> findMonitoringDeviceList(MonitoringDeviceGroupQueryBean queryBean) throws Exception;
     //验证分组名称唯一
     public MonitoringDeviceGroup findMonitoringDeviceGroupUnique(MonitoringDeviceGroupQueryBean queryBean) throws Exception;
-
+    //获取分组列表（用户页面添加管理用户组时使用）
+    public List<MonitoringDeviceGroup> findMonitoringGroupList(MonitoringDeviceGroupQueryBean groupQueryBean) throws Exception;
 }
