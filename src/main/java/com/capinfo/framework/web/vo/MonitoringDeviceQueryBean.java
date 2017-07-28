@@ -6,6 +6,8 @@ import org.opensaml.xmlsec.keyinfo.impl.StaticKeyInfoGenerator;
 import java.util.Date;
 
 public class MonitoringDeviceQueryBean {
+	//用户ID
+	protected Integer userId;
 	//设备ID
 	protected Integer id;
 	//设备编码
@@ -72,6 +74,14 @@ public class MonitoringDeviceQueryBean {
 	protected Date createTime;
 	//所属厂商
 	protected MonitoringCompany monitoringCompany;
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 	public Integer getId() {
 		return id;

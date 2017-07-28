@@ -14,7 +14,7 @@
     $(document).ready(function () {
         var groupIds = "${groupIds}";
         var ids = groupIds.split(",");
-        $("input[name=groupIds]").each(function (i, n) {
+        $("input[name='groupId']").each(function (i, n) {
             for (var i = 0; i < ids.length; i++) {
                 if (n.value == ids[i]) {
                     $(this).attr("checked", true);
@@ -26,7 +26,7 @@
     function backVal() {
         var ids = "";
         var names = "";
-        $("input[name=groupIds]").each(function (i, n) {
+        $("input[name='groupId']").each(function (i, n) {
             if (n.value != "" && n.checked) {
                 ids += n.value+",";
                 names += $("input[name=groupName" + n.value + "]").val()+",";
@@ -44,8 +44,6 @@
     <div class="pageHeader">
         <form id="pagerForm" onsubmit="return divSearch(this, 'deviceSelectBox');"
               action="${ctx}/user/groupSelectListInUser.action" method="post">
-            <input type="hidden" name="deviceId" value="${deviceId}"/>
-            <input type="hidden" name="deviceName" value="${deviceName}"/>
             <div class="searchBar">
                 <table class="searchContent">
                     <tr>
@@ -87,7 +85,7 @@
                 <tr target="tr_form" rel="${obj.id}">
                     <td class="td_50">
                         <div>
-                            <input name="groupIds" type="checkbox" value="${obj.id}"/>
+                            <input name="groupId" type="checkbox" value="${obj.id}"/>
                         </div>
                     </td>
                     <%--不显示分组名--%>

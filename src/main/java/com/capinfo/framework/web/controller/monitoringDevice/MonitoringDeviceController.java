@@ -32,9 +32,9 @@ public class MonitoringDeviceController extends BaseController {
     private UserService userService;
     //显示列表
     @RequestMapping(value = "/listByPage", method = {RequestMethod.POST, RequestMethod.GET})
-    public String listByPage(Model model, MonitoringDeviceQueryBean deviceQueryBean, Page<MonitoringDevice> page, Integer pageNum) throws Exception {
+    public String listByPage(Model model,HttpSession session, MonitoringDeviceQueryBean deviceQueryBean, Page<MonitoringDevice> page, Integer pageNum) throws Exception {
         //MonitoringDeviceGroupQueryBean deviceGroupQueryBean = new MonitoringDeviceGroupQueryBean();
-
+        deviceQueryBean.setUserId((Integer)session.getAttribute("userid"));
         if (page != null && pageNum != null) {
             page.setPageNo(pageNum);
         }

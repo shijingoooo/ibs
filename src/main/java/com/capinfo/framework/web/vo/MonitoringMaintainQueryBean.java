@@ -3,7 +3,8 @@ package com.capinfo.framework.web.vo;
 import java.util.Date;
 
 public class MonitoringMaintainQueryBean {
-
+	//用户id
+	protected Integer userId;
 	// 记录id
 	protected Integer id;
 	// 设备编号查询
@@ -42,6 +43,14 @@ public class MonitoringMaintainQueryBean {
 	protected String remark;
 	//创建时间
 	protected Date createTime;
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 	public Integer getId() {
 		return id;

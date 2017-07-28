@@ -33,21 +33,14 @@ public class MonitoringMaintainController extends BaseController {
     @Resource
     private MonitoringMaintainService monitoringMaintainService;
 
-    /*@RequestMapping(value = "/list", method = {RequestMethod.POST, RequestMethod.GET})
-    public String list(Model model, MonitoringCompanyQueryBean companyQueryBean) throws Exception {
-
-        List<MonitoringCompany> companys = monitoringCompanyService.findMonitoringCompanyList(companyQueryBean);
-        model.addAttribute("companys", companys);
-
-        return "monitoringCompany/list";
-    }*/
     //显示列表
     @RequestMapping(value = "/listByPage", method = {RequestMethod.POST, RequestMethod.GET})
-    public String listByPage(Model model, MonitoringMaintainQueryBean monitoringMaintainQueryBean, Page<MonitoringMaintain> page, Integer pageNum) throws Exception {
+    public String listByPage(Model model, HttpSession session, MonitoringMaintainQueryBean monitoringMaintainQueryBean, Page<MonitoringMaintain> page, Integer pageNum) throws Exception {
 
         if (page != null && pageNum != null) {
             page.setPageNo(pageNum);
         }
+        monitoringMaintainQueryBean.setUserId((Integer) session.getAttribute("userid"));
         monitoringMaintainService.findMonitoringMaintainPage(page, monitoringMaintainQueryBean);
         model.addAttribute("page", page);
         model.addAttribute("maintainQueryBean", monitoringMaintainQueryBean);
@@ -66,7 +59,8 @@ public class MonitoringMaintainController extends BaseController {
     }
     //设备列表
     @RequestMapping(value = "/devSelectListInMaintain", method = {RequestMethod.POST, RequestMethod.GET})
-    public String devSelectListInGroup(Model model, MonitoringMaintainQueryBean maintainQueryBean, Integer deviceGroupId, String deviceId, String deviceName) throws Exception {
+    public String devSelectListInGroup(Model model, HttpSession session, MonitoringMaintainQueryBean maintainQueryBean, Integer deviceGroupId, String deviceId, String deviceName) throws Exception {
+        maintainQueryBean.setUserId((Integer) session.getAttribute("userid"));
         List<MonitoringDevice> devices = monitoringMaintainService.findMonitoringDeviceList(maintainQueryBean);
         model.addAttribute("devices", devices);
         model.addAttribute("deviceQueryBean", maintainQueryBean);

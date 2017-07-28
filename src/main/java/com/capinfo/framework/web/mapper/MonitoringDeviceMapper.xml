@@ -184,6 +184,7 @@
 	
 	<!-- 查询传感器分页列表 -->
 	<sql id="query_device_page_where">
+		AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{query.userId})
 		<if test="query.devCodeForLike!=null and query.devCodeForLike!=''">
 			AND dev_code LIKE "%"#{query.devCodeForLike}"%" 
 		</if>
@@ -212,6 +213,7 @@
 	
 	<!-- 查询传感器总数 -->
 	<sql id="query_device_count_where">
+		AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{userId})
 		<if test="devCodeForLike!=null and devCodeForLike!=''">
 			AND dev_code LIKE "%"#{devCodeForLike}"%"
 		</if>

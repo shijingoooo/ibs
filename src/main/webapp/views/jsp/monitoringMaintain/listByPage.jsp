@@ -73,7 +73,7 @@
         <tr>
             <th width="30" align="center">
                 <div title="" class="gridCol">
-                    <input class="checkboxCtrl" type="checkbox" group="maintainIds">
+                    <input class="checkboxCtrl" type="checkbox" group="recordIds">
                 </div>
             </th>
             <th width="100">设备编号</th>

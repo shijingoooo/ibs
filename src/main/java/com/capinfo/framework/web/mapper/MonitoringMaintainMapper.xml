@@ -21,6 +21,10 @@
     SELECT mm.id AS id,md.id AS device_id,md.dev_code AS device_code,trouble_type,trouble_description,trouble_time,responsible,solve_way,solve_method,solve_time,method_description,remark,mm.create_time AS create_time
     FROM ibs_monitoring_device md,ibs_monitoring_maintain mm
     WHERE md.id = mm.device_id
+    AND mm.device_id IN (SELECT md.id
+    FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
+    WHERE ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{query.userId}
+    GROUP BY md.id)
     <if test="query.devCodeForLike!=null and query.devCodeForLike!=''">
       AND md.dev_code LIKE "%"#{query.devCodeForLike}"%"
     </if>
@@ -39,6 +43,10 @@
     SELECT COUNT(mm.id)
     FROM ibs_monitoring_device md,ibs_monitoring_maintain mm
     WHERE md.id = mm.device_id
+    AND mm.device_id IN (SELECT md.id
+    FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
+    WHERE ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{userId}
+    GROUP BY md.id)
     <if test="devCodeForLike!=null and devCodeForLike!=''">
       AND md.dev_code LIKE "%"#{devCodeForLike}"%"
     </if>
@@ -73,19 +81,22 @@
   
   <!--获取设备列表-->
   <sql id="query_where">
+    AND ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{userId}
     <if test="devIdForLike!=null and devIdForLike!=''">
-      AND id LIKE "%"#{devIdForLike}"%"
+      AND md.id LIKE "%"#{devIdForLike}"%"
     </if>
     <if test="devNameForLike!=null and devNameForLike!=''">
-      AND dev_name LIKE "%"#{devNameForLike}"%"
+      AND md.dev_name LIKE "%"#{devNameForLike}"%"
     </if>
   </sql>
   <select id="findMonitoringDeviceList" parameterType="com.capinfo.framework.web.vo.MonitoringMaintainQueryBean" resultType="com.capinfo.framework.web.pojo.MonitoringDevice">
-    SELECT id,dev_code AS devCode,dev_name AS devName,dev_status AS devStatus,dev_type AS devType
-    FROM ibs_monitoring_device
+    SELECT md.id,md.dev_code AS devCode,md.dev_name AS devName,md.dev_status AS devStatus,md.dev_type AS devType
+    FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
     <where>
       <include refid="query_where"></include>
     </where>
+    GROUP BY md.id
+    ORDER BY md.create_time desc
 </select>
 
   <!-- 批量删除记录 -->
