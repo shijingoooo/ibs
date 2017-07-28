@@ -60,8 +60,9 @@ public class DataCalibrationService {
 		int newCount = maxs.length;
 		//获取该设备已有的规则
 		int deviceId = dataCalibrationQueryBean.getDeviceId();
+		String indicator = dataCalibrationQueryBean.getIndicator();
 		int ruleId = (dataCalibrationQueryBean.getId()!=null)?dataCalibrationQueryBean.getId():0;
-		List<DataCalibrationRule> ruleList = dataCalibrationRuleMapper.findDataCalibrationRuleList(deviceId);
+		List<DataCalibrationRule> ruleList = dataCalibrationRuleMapper.findDataCalibrationRuleList(deviceId,indicator);
 		int oldCount = ruleList.size();
 		if (oldCount > 0) {
 			for (int i = 0; i < newCount; i++) {

@@ -27,5 +27,5 @@ public interface DataCalibrationRuleMapper {
     //更新规则状态
     int updateDataCalibrationRuleStatus(@Param("id") Integer id, @Param("status") Integer status);
     //根据设备ID获取该设备下的规则
-    List<DataCalibrationRule> findDataCalibrationRuleList(Integer id);
+    List<DataCalibrationRule> findDataCalibrationRuleList(@Param("id") Integer id,@Param("type") String indicator);
 }

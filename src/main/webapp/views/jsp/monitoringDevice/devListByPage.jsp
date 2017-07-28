@@ -63,7 +63,7 @@
         <tr>
             <td>
                 <form id="pagerForm" onsubmit="return navTabSearch(this);"
-                      action="${ctx}/monitoringMaintain/listByPage.action" method="post">
+                      action="${ctx}/monitoringDevice/listByPage.action" method="post">
                     <input type="hidden" name="pageNum" value="1" />
                     <input type="hidden" name="numPerPage" value="<c:out value="${numPerPage}"></c:out>" />
 
@@ -79,32 +79,9 @@
                                 <td>
                                     <label><input name="devStatus" type="checkbox" value="1" />在线 </label>
                                     <label><input name="devStatus" type="checkbox" value="0" />离线 </label>
-                                    <%--<select name="devStatus">
-                                        <c:choose>
-                                            <c:when test="${deviceQueryBean.devStatus=='1' }">
-                                                <option value="">全部</option>
-                                                <option value="1" selected="selected">在线</option>
-                                                <option value="0">下线</option>
-                                            </c:when>
-                                            <c:when test="${deviceQueryBean.devStatus=='0' }">
-                                                <option value="">全部</option>
-                                                <option value="1">在线</option>
-                                                <option value="0" selected="selected">下线</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value="" selected="selected">全部</option>
-                                                <option value="1">在线</option>
-                                                <option value="0">下线</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </select>--%>
                                 </td>
                                 <td><button type="submit" id="modelSearchDevice">查询</button></td>
-
-                                <c:if test="${sessionScope.usertype == 1}">
-                                    <td><button type="button" id="modelExportDevice">导出数据</button></td>
-                                </c:if>
-
+                                <td><button type="button" id="modelExportDevice">导出数据</button></td>
                                 <%--暂时注释--%>
                                 <%-- <c:if test="${ sessionScope.usertype==4 }">
                                      <td><input type="button" value="模板导出" style="cursor: pointer;" id="modelExportDevice"></td>
@@ -130,14 +107,13 @@
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
-            <li>
-                <%--<self:a code="ibs_device_page_add" width="620" height="450"--%>
-                <%--name="新增" title="新增传感器" style="add" target="dialog" mask="true"--%>
-                <%--rel="newdevice" parameter=""></self:a>--%>
-                <a id="deviceAdd" class="add" target="dialog" mask="true" width="620" height="600" title="新增传感器" rel="newdevice" href="${ctx}/monitoringDevice/savePage.action">
-                    <span>新增</span>
-                </a>
-            </li>
+            <c:if test="${sessionScope.usertype == 1}">
+                <li>
+                    <a id="deviceAdd" class="add" target="dialog" mask="true" width="620" height="600" title="新增传感器" rel="newdevice" href="${ctx}/monitoringDevice/savePage.action">
+                        <span>新增</span>
+                    </a>
+                </li>
+            </c:if>
             <li>
                 <a id="deviceDelete" class="delete" target="ajaxTodo" title="您确定要删除传感器信息吗?" href="${ctx}/monitoringDevice/delete.action">
                     <span>删除</span>

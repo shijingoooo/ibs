@@ -71,23 +71,19 @@
                     </p>
 
                     <p class="nowrap">
-                        <label style="width: 60px;">邮箱</label>
+                        <label style="width: 60px;">邮箱：</label>
                         <input id="email" name="email" value="${user.email }" type="text"
                                size="30" class="required" maxlength="32" style="margin-left: 25px;"/>
                     </p>
-
-                    <%--<label id="cityPtag" style="width: 60px;">管辖范围</label>
-
-                    <div id="areaSelect" style="display:inline;"></div>
-                    <p id="proPtag" style="display: none;" class="nowrap">
-                        <label style="width: 60px;">管辖站点</label>
+                    <p class="nowrap">
+                        <label style="width: 60px;">管理设备组：</label>
                         <input name="proNames" type="text" size="50" readonly="readonly"
                                value="<c:out value='${proNames}'/>" style="margin-left: 25px;"/>
                         <input name="projectIds" type="hidden"
                                value="<c:out value='${projectIds}'/>"/>
                         <a class="btnLook" href="${ctx}/monitoringProject/mulselectlist.action?userId=${user.id}"
                            lookupGroup="" mask="true" width="800" height="500">查找带回</a>
-                    </p>--%>
+                    </p>
                 </div>
             </form>
         </div>

@@ -82,9 +82,9 @@
     SET status=#{status}
     WHERE id=#{id}
   </update>
-  <select id="findDataCalibrationRuleList" parameterType="java.lang.Integer" resultMap="DataCalibrationResultMap">
+  <select id="findDataCalibrationRuleList" resultMap="DataCalibrationResultMap">
     SELECT *
     FROM ibs_data_calibration_rule
-    WHERE device_id = #{id}
+    WHERE device_id = #{id} AND type = #{type}
   </select>
 </mapper>
