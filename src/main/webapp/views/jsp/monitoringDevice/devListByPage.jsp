@@ -37,7 +37,11 @@
             $("#ImportDeviceForm").submit();
         });
     });
+    function clickA(node) {
+        var $node = $(node);
+        $node.parent().children("#maintain").click();
 
+    }
     function valiStr(obj){
         var str = obj.value;
         if(str.indexOf("%")>-1){
@@ -60,6 +64,16 @@
     .maintainCount a{
         color: #00f;
         text-decoration: underline;
+    }
+    td{
+        position: relative;
+    }
+    .count{
+        color: #00f;
+        text-decoration: underline;
+        cursor: pointer;
+        position: absolute;
+        top:25%;
     }
 </style>
 <div class="pageHeader">
@@ -156,7 +170,8 @@
                 </td>
                 <td class="maintainCount">
                     <a id="maintain" href="<c:out value='${ctx}/monitoringMaintain/listByPage.action?devId=${obj.id}'/>"
-                       target="navTab" rel="<c:out value='ibs_device_maintain_page'/>">${obj.maintainCount}</a>
+                       target="navTab" rel="<c:out value='ibs_device_maintain_page'/>" style="display: none">运维记录</a>
+                    <span class="count" onclick="clickA(this)">${obj.maintainCount}</span>
                 </td>
                 <td>
                     <c:choose>
