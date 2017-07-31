@@ -50,29 +50,31 @@
                         <c:forEach var="menu" items="${menuList}" varStatus="index">
                             <c:if test="${menu.menuLevel eq 1}">
                                 <tr>
-                                    <td style="border-top: 10px solid; border-color: transparent;"><input name="menuIds"
-                                                                                                          id="${menu.id}"
-                                                                                                          class="checkboxCtrl"
-                                                                                                          type="checkbox"
-                                                                                                          group=""
-                                                                                                          value="${menu.id}"
-                                                                                                          onclick="allCancle(this,${menu.id});"
-                                                                                                          <c:if test='${menu.updater eq 1  or roleId eq 4}'>checked="checked" </c:if>
-                                                                                                          <c:if test='${roleId eq 4 and menu.id eq 23}'>disabled="disabled"</c:if>>
+                                    <td style="border-top: 10px solid; border-color: transparent;">
+                                        <input name="menuIds"
+                                          id="${menu.id}"
+                                          class="checkboxCtrl"
+                                          type="checkbox"
+                                          group=""
+                                          value="${menu.id}"
+                                          onclick="allCancle(this,${menu.id});"
+                                          <c:if test='${menu.updater eq 1  or roleId eq 4}'>checked="checked" </c:if>
+                                          <c:if test='${roleId eq 4 and menu.id eq 23}'>disabled="disabled"</c:if>>
                                     </td>
                                     <td style="font-weight: bold;border-top: 10px solid; border-color: transparent;">${menu.menuName}</td>
                                 </tr>
                                 <c:forEach var="menu2" items="${menuList}" varStatus="index">
                                     <c:if test="${menu2.menuLevel eq 2 and menu2.pMenu.id  eq menu.id}">
                                         <tr>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="menuIds"
-                                                                                     id="${menu.id}_${menu2.id}"
-                                                                                     class="checkboxCtrl"
-                                                                                     type="checkbox" group=""
-                                                                                     onclick="checkboxonclick(${menu2.id},this,${menu.id},-1);"
-                                                                                     value="${menu2.id}"
-                                                                                     <c:if test='${menu2.updater eq 1 or roleId eq 4}'>checked="checked" </c:if>
-                                                                                     <c:if test='${roleId eq 4 and menu.id eq 23}'>disabled="disabled"</c:if>>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input name="menuIds"
+                                                 id="${menu.id}_${menu2.id}"
+                                                 class="checkboxCtrl"
+                                                 type="checkbox" group=""
+                                                 onclick="checkboxonclick(${menu2.id},this,${menu.id},-1);"
+                                                 value="${menu2.id}"
+                                                 <c:if test='${menu2.updater eq 1 or roleId eq 4}'>checked="checked" </c:if>
+                                                 <c:if test='${roleId eq 4 and menu.id eq 23}'>disabled="disabled"</c:if>>
                                             </td>
                                             <td>${menu2.menuName}</td>
                                         </tr>
@@ -80,7 +82,8 @@
                                             <c:if test="${menu3.menuLevel eq 3 and menu3.pMenu.id  eq menu2.id}">
                                                 <tr class="trCtrl-3">
                                                     <td>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input
                                                             name="menuIds" id="${menu.id}_${menu2.id}_${menu3.id}"
                                                             class="checkboxCtrl checkboxCtrl-3" type="checkbox" group=""
                                                             onclick="checkboxonclick(${menu3.id},this,${menu2.id},${menu.id});"

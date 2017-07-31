@@ -25,6 +25,9 @@
     FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
     WHERE ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{query.userId}
     GROUP BY md.id)
+    <if test="query.devId!=null and query.devId!=''">
+      AND md.id = #{query.devId}
+    </if>
     <if test="query.devCodeForLike!=null and query.devCodeForLike!=''">
       AND md.dev_code LIKE "%"#{query.devCodeForLike}"%"
     </if>
@@ -37,7 +40,12 @@
     ORDER BY mm.create_time desc
     LIMIT #{pageNum},#{pageSize}
   </select>
-
+<!--获取维护次数，设备列表显示调用-->
+  <select id="findMaintainCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT count(1)
+    FROM ibs_monitoring_maintain mm
+    WHERE mm.device_id = #{id}
+  </select>
   <!--查询运维记录总数-->
   <select id="findMonitoringMaintainCount" parameterType="com.capinfo.framework.web.vo.MonitoringMaintainQueryBean" resultType="java.lang.Integer">
     SELECT COUNT(mm.id)
@@ -47,6 +55,9 @@
     FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
     WHERE ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{userId}
     GROUP BY md.id)
+    <if test="devId!=null and devId!=''">
+      AND md.id = #{devId}
+    </if>
     <if test="devCodeForLike!=null and devCodeForLike!=''">
       AND md.dev_code LIKE "%"#{devCodeForLike}"%"
     </if>
@@ -81,7 +92,9 @@
   
   <!--获取设备列表-->
   <sql id="query_where">
-    AND ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{userId}
+    <if test="userId != 1" >
+      AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{userId})
+    </if>
     <if test="devIdForLike!=null and devIdForLike!=''">
       AND md.id LIKE "%"#{devIdForLike}"%"
     </if>

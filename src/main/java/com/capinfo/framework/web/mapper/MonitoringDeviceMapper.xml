@@ -40,6 +40,7 @@
 		<result column="forward_frequency" property="forwardFrequency" jdbcType="INTEGER" javaType="java.lang.Integer"/>
 		<association column="company_id" property="monitoringCompany" javaType="com.capinfo.framework.web.pojo.MonitoringCompany" select="com.capinfo.framework.web.mapper.MonitoringCompanyMapper.findMonitoringCompanyById"/>
 		<association column="project_id" property="monitoringProject" javaType="com.capinfo.framework.web.pojo.MonitoringProject" select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringProjectById"/>
+		<association column="id" property="maintainCount" javaType="java.lang.Integer" select="com.capinfo.framework.web.mapper.MonitoringMaintainMapper.findMaintainCount"/>
 		<collection column="id" property="belongGroups" javaType="java.util.ArrayList"
 					select="com.capinfo.framework.web.mapper.MonitoringDeviceGroupMapper.findMonitoringDeviceGroupByDeviceId"/>
 		<!--<association column="device_group_id" property="monitoringDeviceGroup" javaType="com.capinfo.framework.web.pojo.MonitoringDeviceGroup" select="com.capinfo.framework.web.mapper.MonitoringDeviceGroupMapper.findMonitoringDeviceGroupById"/>-->
@@ -184,7 +185,9 @@
 	
 	<!-- 查询传感器分页列表 -->
 	<sql id="query_device_page_where">
-		AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{query.userId})
+		<if test="query.userId != 1" >
+			AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{query.userId})
+		</if>
 		<if test="query.devCodeForLike!=null and query.devCodeForLike!=''">
 			AND dev_code LIKE "%"#{query.devCodeForLike}"%" 
 		</if>
@@ -200,7 +203,7 @@
 
 	</sql>
 	<select id="findMonitoringDevicePage" parameterType="java.util.Map" resultMap="MonitoringDeviceResult">
-    	SELECT md.id AS id,dev_code,pro_code,vendor_code,dev_name,dev_type,longitude,latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,paramstr,serial,start_time,end_time,install_time,creater,updater,md.create_time AS create_time,update_time,version,project_id,platform_id,platform_mn,camera_id,video_user,password,camera_index_code,phone_card,forward_type,forward_frequency,company_id
+    	SELECT md.id AS id,dev_code,pro_code,vendor_code,dev_name,dev_type,longitude,latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,paramstr,serial,start_time,end_time,install_time,creater,updater,md.create_time AS create_time,update_time,version,project_id,platform_id,platform_mn,camera_id,video_user,password,camera_index_code,phone_card,forward_type,forward_frequency,company_id,md.id AS devId
 		FROM ((ibs_group_device_rele gdr LEFT JOIN ibs_group_device gd ON gdr.group_id = gd.id)
 		RIGHT JOIN ibs_monitoring_device md ON md.id = gdr.device_id)
 		<where>
@@ -213,7 +216,9 @@
 	
 	<!-- 查询传感器总数 -->
 	<sql id="query_device_count_where">
-		AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{userId})
+		<if test="userId != 1" >
+			AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{userId})
+		</if>
 		<if test="devCodeForLike!=null and devCodeForLike!=''">
 			AND dev_code LIKE "%"#{devCodeForLike}"%"
 		</if>

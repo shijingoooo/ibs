@@ -167,7 +167,7 @@ public class RoleController extends BaseController {
         //新增菜单关联
         String[] arr = menuIdStr.split(",");
         for(int i=0;i<arr.length;i++){
-            if(arr[i]!=null){
+            if(arr[i]!=null && arr[i]!=""){
                 RoleMenuRele roleMenuRele = new RoleMenuRele();
                 Role r = roleService.findRoleById(roleId);
                 Menu m = menuService.findMenuById(Integer.parseInt(arr[i]));

@@ -33,4 +33,6 @@ public interface MonitoringMaintainMapper {
     List<MonitoringDevice> findMonitoringDeviceList(MonitoringMaintainQueryBean maintainQueryBean);
 
     void deleteMaintainRecordBatch(List<String> ids) throws Exception;
+
+    int findMaintainCount(Integer id)throws Exception;
 }

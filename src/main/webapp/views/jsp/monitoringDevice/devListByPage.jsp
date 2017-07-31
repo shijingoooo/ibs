@@ -57,6 +57,10 @@
         color: #00f;
         text-decoration: underline;
     }
+    .maintainCount a{
+        color: #00f;
+        text-decoration: underline;
+    }
 </style>
 <div class="pageHeader">
     <table>
@@ -129,7 +133,7 @@
                     <input class="checkboxCtrl" type="checkbox" group="deviceIds">
                 </div></th>
             <th width="100">设备编号</th>
-            <th width="80">维护次数（跳转到该设备维护记录）</th>
+            <th width="80">维护次数</th>
             <th width="100">是否在线</th>
             <th width="120">设备组</th>
             <th width="100">传感器类型</th>
@@ -150,8 +154,9 @@
                             parameter="?deviceId=${obj.id}" style="icon" target="dialog"
                             mask="true" rel="newdevice" width="620" height="600"></self:a>
                 </td>
-                <td>
-                    次数
+                <td class="maintainCount">
+                    <a id="maintain" href="<c:out value='${ctx}/monitoringMaintain/listByPage.action?devId=${obj.id}'/>"
+                       target="navTab" rel="<c:out value='ibs_device_maintain_page'/>">${obj.maintainCount}</a>
                 </td>
                 <td>
                     <c:choose>

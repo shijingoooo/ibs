@@ -56,36 +56,6 @@
             return false
         }
         return true;
-        /*
-        //首先判断每一条规则的上限必须大于下限
-        var ruleCount = $(".addRule").size();
-        for( var x = 0; x < ruleCount; x++){
-            if(parseFloat($mins[x].value) >= parseFloat($maxs[x].value)) {
-                $msg.text("规则错误！");
-                return false;
-            }
-        }
-        if(ruleCount >= 2){
-            var m;
-            var n;
-            for(m = 0; m < ruleCount-1; m++) {
-                for (n = m + 1; n < ruleCount; n++) {
-                    if (parseFloat($maxs[m].value) <= parseFloat($mins[n].value) || parseFloat($mins[m].value) >= parseFloat($maxs[n].value))
-                        continue;
-                    else {
-                        $msg.text("规则错误！");
-                        return false;
-                    }
-                }
-            }
-        }
-        else{
-            if(parseFloat($mins.val()) >= parseFloat($maxs.val())){
-                $msg.text("规则错误！");
-                return false
-            }
-        }
-        return true;*/
     }
 
 </script>
@@ -107,9 +77,6 @@
                   onsubmit="return validateCallback(this, dialogAjaxDone)">
                 <input name="id" type="hidden" value="${rule.id}"/>
                 <input name="deviceId" type="hidden" value="${rule.deviceId}">
-                <%--<input name="deviceCode" type="hidden" value=""/>--%>
-                <%--<input name="deviceName" type="hidden" value=""/>--%>
-                <%--<input name="deviceType" type="hidden" value=""/>--%>
                 <div class="pageFormContent" layoutH="100">
                     <p class="nowrap">
                         <label style="width: 60px;">设备编号:</label>

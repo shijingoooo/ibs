@@ -92,6 +92,8 @@ public class MonitoringDevice {
 	protected String forwardType;
 
 	protected Integer forwardFrequency;
+	//维护次数
+	protected Integer maintainCount;
 
     /**
      * chenshuxiao
@@ -426,5 +428,13 @@ public class MonitoringDevice {
 
 	public void setPlatformName(String platformName) {
 		this.platformName = platformName;
+	}
+
+	public Integer getMaintainCount() {
+		return maintainCount;
+	}
+
+	public void setMaintainCount(Integer maintainCount) {
+		this.maintainCount = maintainCount;
 	}
 }

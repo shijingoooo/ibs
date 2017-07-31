@@ -35,11 +35,12 @@ public class MonitoringMaintainController extends BaseController {
 
     //显示列表
     @RequestMapping(value = "/listByPage", method = {RequestMethod.POST, RequestMethod.GET})
-    public String listByPage(Model model, HttpSession session, MonitoringMaintainQueryBean monitoringMaintainQueryBean, Page<MonitoringMaintain> page, Integer pageNum) throws Exception {
+    public String listByPage(Model model, HttpSession session, MonitoringMaintainQueryBean monitoringMaintainQueryBean, Page<MonitoringMaintain> page, Integer pageNum,Integer devId) throws Exception {
 
         if (page != null && pageNum != null) {
             page.setPageNo(pageNum);
         }
+        monitoringMaintainQueryBean.setDevId(devId);
         monitoringMaintainQueryBean.setUserId((Integer) session.getAttribute("userid"));
         monitoringMaintainService.findMonitoringMaintainPage(page, monitoringMaintainQueryBean);
         model.addAttribute("page", page);

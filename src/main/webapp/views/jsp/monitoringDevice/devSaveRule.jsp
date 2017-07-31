@@ -28,6 +28,12 @@
         var $maxs = $("input[name='maxs']");
         var $calibrationFactors = $("input[name='calibrationFactors']");
         var $msg = $(".ruleMsg");
+        var $indicator = $("select[name='indicator']");
+        if($indicator.size() == 0)
+        {
+            $msg.text("该类型设备没有指标，无法添加规则！")
+            return false;
+        }
         for(var i = 0; i < $mins.size(); i++){
             if($mins[i].value == ""){
                 $msg.text("字段不允许为空！");
