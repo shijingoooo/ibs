@@ -21,8 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/monitoringMaintain")
-public class MonitoringMaintainController extends BaseController {
+@RequestMapping("/monitoringAlarm")
+public class MonitoringAlarmController extends BaseController {
 
     @Resource
     private MonitoringMaintainService monitoringMaintainService;
@@ -31,7 +31,7 @@ public class MonitoringMaintainController extends BaseController {
     @RequestMapping(value = "/listByPage", method = {RequestMethod.POST, RequestMethod.GET})
     public String listByPage(Model model, HttpSession session, MonitoringMaintainQueryBean monitoringMaintainQueryBean, Page<MonitoringMaintain> page, Integer pageNum,Integer devId) throws Exception {
 
-        if (page != null && pageNum != null) {
+        /*if (page != null && pageNum != null) {
             page.setPageNo(pageNum);
         }
         monitoringMaintainQueryBean.setDevId(devId);
@@ -39,10 +39,10 @@ public class MonitoringMaintainController extends BaseController {
         monitoringMaintainService.findMonitoringMaintainPage(page, monitoringMaintainQueryBean);
         model.addAttribute("page", page);
         model.addAttribute("maintainQueryBean", monitoringMaintainQueryBean);
-
-        return "monitoringMaintain/maintainListByPage";
+*/
+        return "monitoringMaintain/alarmListByPage";
     }
-    //点击新增或修改按钮
+    /*//点击新增或修改按钮
     @RequestMapping(value = "/savePage", method = {RequestMethod.GET})
     public String savePage(Model model, Integer recordId) throws Exception {
         if (recordId != null) {
@@ -118,5 +118,5 @@ public class MonitoringMaintainController extends BaseController {
         jo.put("message", "操作成功");
         super.rendText(response, jo.toString());
     }
-
+*/
 }

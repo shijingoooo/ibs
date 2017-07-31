@@ -100,10 +100,6 @@
                                 </td>
                                 <td><button type="submit" id="modelSearchDevice">查询</button></td>
                                 <td><button type="button" id="modelExportDevice">导出数据</button></td>
-                                <%--暂时注释--%>
-                                <%-- <c:if test="${ sessionScope.usertype==4 }">
-                                     <td><input type="button" value="模板导出" style="cursor: pointer;" id="modelExportDevice"></td>
-                                 </c:if>--%>
                             </tr>
                         </table>
                     </div>
