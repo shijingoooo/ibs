@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.AlarmDevpMapper" >
+  <resultMap id="BaseResultMap" type="com.capinfo.framework.web.pojo.AlarmDevp" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="dev_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="alarm_status" property="alarmStatus" jdbcType="BIT" />
+    <result column="alarm_type" property="alarmType" jdbcType="BIT" />
+    <result column="alarm_cause" property="alarmCause" jdbcType="BIT" />
+    <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
+    <association column="project_id" property="monitoringProject" javaType="com.capinfo.framework.web.pojo.MonitoringProject" select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringProjectById"/>
+  </resultMap>
+  <!--获取告警记录列表-->
+<select id="findMonitoringAlarmPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  SELECT ad.id AS id,device_id,dev_code,alarm_status,alarm_type,alarm_cause,alarm_time,project_id
+  FROM ibs_alarm_devp ad,ibs_monitoring_device md
+  WHERE md.id = ad.device_id
+  <if test="query.userId!=1">
+    AND mm.device_id IN (SELECT md.id
+    FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
+    WHERE ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{query.userId}
+    GROUP BY md.id)
+  </if>
+  <if test="query.devCodeForLike!=null and query.devCodeForLike!=''">
+    AND md.dev_code LIKE "%"#{query.devCodeForLike}"%"
+  </if>
+  <if test="query.alarmType!=null and query.alarmType!=''">
+    AND ad.alarm_type = #{query.alarmType}
+  </if>
+  <if test="query.alarmStatus!=null and query.alarmStatus!=''">
+    AND ad.alarm_status = #{query.alarmStatus}
+  </if>
+
+  <if test="query.startTime!=null and query.startTime!=''">
+    AND <![CDATA[DATE_FORMAT(alarm_time, '%Y-%m-%d %H:%i:%S')>=#{query.startTime}]]>
+  </if>
+  <if test="query.endTime!=null and query.endTime!=''">
+    AND <![CDATA[DATE_FORMAT(alarm_time, '%Y-%m-%d %H:%i:%S')<=#{query.endTime}]]>
+  </if>
+  ORDER BY ad.alarm_time desc
+  LIMIT #{pageNum},#{pageSize}
+</select>
+<!--
+  <sql id="Base_Column_List" >
+    id, device_id, alarm_status, alarm_type, alarm_cause, alarm_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ibs_alarm_devp
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ibs_alarm_devp
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
+    insert into ibs_alarm_devp (id, device_id, alarm_status, 
+      alarm_type, alarm_cause, alarm_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{deviceId,jdbcType=INTEGER}, #{alarmStatus,jdbcType=BIT}, 
+      #{alarmType,jdbcType=BIT}, #{alarmCause,jdbcType=BIT}, #{alarmTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
+    insert into ibs_alarm_devp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="alarmStatus != null" >
+        alarm_status,
+      </if>
+      <if test="alarmType != null" >
+        alarm_type,
+      </if>
+      <if test="alarmCause != null" >
+        alarm_cause,
+      </if>
+      <if test="alarmTime != null" >
+        alarm_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="alarmStatus != null" >
+        #{alarmStatus,jdbcType=BIT},
+      </if>
+      <if test="alarmType != null" >
+        #{alarmType,jdbcType=BIT},
+      </if>
+      <if test="alarmCause != null" >
+        #{alarmCause,jdbcType=BIT},
+      </if>
+      <if test="alarmTime != null" >
+        #{alarmTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
+    update ibs_alarm_devp
+    <set >
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="alarmStatus != null" >
+        alarm_status = #{alarmStatus,jdbcType=BIT},
+      </if>
+      <if test="alarmType != null" >
+        alarm_type = #{alarmType,jdbcType=BIT},
+      </if>
+      <if test="alarmCause != null" >
+        alarm_cause = #{alarmCause,jdbcType=BIT},
+      </if>
+      <if test="alarmTime != null" >
+        alarm_time = #{alarmTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
+    update ibs_alarm_devp
+    set device_id = #{deviceId,jdbcType=INTEGER},
+      alarm_status = #{alarmStatus,jdbcType=BIT},
+      alarm_type = #{alarmType,jdbcType=BIT},
+      alarm_cause = #{alarmCause,jdbcType=BIT},
+      alarm_time = #{alarmTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+-->
+
+
+</mapper>

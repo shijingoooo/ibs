@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/monitoringMaintain")
@@ -44,10 +44,25 @@ public class MonitoringMaintainController extends BaseController {
     }
     //点击新增或修改按钮
     @RequestMapping(value = "/savePage", method = {RequestMethod.GET})
-    public String savePage(Model model, Integer recordId) throws Exception {
-        if (recordId != null) {
+    public String savePage(Model model, HttpServletRequest request) throws Exception {
+        String queryString = request.getQueryString();
+        if(queryString.contains("recordId")){
+            Integer recordId = Integer.parseInt(request.getParameter("recordId"));
             MonitoringMaintain maintain = monitoringMaintainService.findMonitoringMaintainById(recordId);
             maintain.setId(recordId);
+            model.addAttribute("maintain", maintain);
+        }else if(queryString.contains("deviceId")){
+            Integer deviceId = Integer.parseInt(request.getParameter("deviceId"));
+            String deviceCode = request.getParameter("deviceCode");
+            String alarmTime = request.getParameter("alarmTime");
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM ddHH:mm:ss 'CST' yyyy", Locale.US);
+            Date date =sdf.parse(alarmTime);
+            MonitoringMaintain maintain = new MonitoringMaintain();
+            maintain.setDeviceId(deviceId);
+            maintain.setDeviceCode(deviceCode);
+            maintain.setTroubleTime(date);
+            maintain.setSolveTime(date);
+
             model.addAttribute("maintain", maintain);
         }
         return "monitoringMaintain/maintainSave";

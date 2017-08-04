@@ -1,9 +1,12 @@
 package com.capinfo.framework.web.controller.monitoringMaintain;
 
 import com.capinfo.framework.common.controller.BaseController;
+import com.capinfo.framework.web.pojo.AlarmDevp;
 import com.capinfo.framework.web.pojo.MonitoringDevice;
 import com.capinfo.framework.web.pojo.MonitoringMaintain;
+import com.capinfo.framework.web.service.MonitoringAlarmService;
 import com.capinfo.framework.web.service.MonitoringMaintainService;
+import com.capinfo.framework.web.vo.MonitoringAlarmQueryBean;
 import com.capinfo.framework.web.vo.MonitoringMaintainQueryBean;
 import com.capinfo.modules.orm.Page;
 import net.sf.json.JSONObject;
@@ -25,21 +28,21 @@ import java.util.List;
 public class MonitoringAlarmController extends BaseController {
 
     @Resource
-    private MonitoringMaintainService monitoringMaintainService;
+    private MonitoringAlarmService monitoringAlarmService;
 
     //显示列表
     @RequestMapping(value = "/listByPage", method = {RequestMethod.POST, RequestMethod.GET})
-    public String listByPage(Model model, HttpSession session, MonitoringMaintainQueryBean monitoringMaintainQueryBean, Page<MonitoringMaintain> page, Integer pageNum,Integer devId) throws Exception {
+    public String listByPage(Model model, HttpSession session, MonitoringAlarmQueryBean alarmQueryBean, Page<AlarmDevp> page, Integer pageNum, Integer devId) throws Exception {
 
-        /*if (page != null && pageNum != null) {
+        if (page != null && pageNum != null) {
             page.setPageNo(pageNum);
         }
-        monitoringMaintainQueryBean.setDevId(devId);
-        monitoringMaintainQueryBean.setUserId((Integer) session.getAttribute("userid"));
-        monitoringMaintainService.findMonitoringMaintainPage(page, monitoringMaintainQueryBean);
+        alarmQueryBean.setDevId(devId);
+        alarmQueryBean.setUserId((Integer) session.getAttribute("userid"));
+        monitoringAlarmService.findMonitoringAlarmPage(page, alarmQueryBean);
         model.addAttribute("page", page);
-        model.addAttribute("maintainQueryBean", monitoringMaintainQueryBean);
-*/
+        model.addAttribute("alarmQueryBean", alarmQueryBean);
+
         return "monitoringMaintain/alarmListByPage";
     }
     /*//点击新增或修改按钮

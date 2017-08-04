@@ -51,13 +51,9 @@
         <td>4</td>
         <td>5</td>
         <td>6</td>
-        <td><self:a code="ibs_device_maintain_add" name="添加运维记录"
-                    parameter="?devId=${obj.id}" style="icon" target="dialog"
-                    mask="true" rel="addRecord" width="620" height="600"></self:a></td>
-        <td><a target="dialog" mask="true" width="620" height="600" title="添加运维记录"
-               rel="newMaintain" href="${ctx}/monitoringMaintain/savePage.action">
-            <span>添加运维记录</span>
-        </a></td>
+        <td>
+        <td>
+        </td>
         <%--<tbody>
         <c:forEach var="obj" items="${page.result}" varStatus="index">
             <tr target="tr_form" rel="${obj.id}">
@@ -100,22 +96,23 @@
             <table class="searchContent">
                 <tr>
                     <td>设备编号：<input type="text" name="devCodeForLike" value=""/></td>
-                    <td>站点：<input type="text" name="proName" value=""></td>
+                    <td>站点：<input type="text" name="proNameForLike" value=""></td>
                     <td>类型：
-                        <select id="type" name="" >
+                        <select id="type" name="alarmType" >
                             <option value="" selected="selected">全部</option>
-                            <option value="">设备断电</option>
-                            <option value="">设备下线</option>
-                            <option value="">数据恒值</option>
-                            <option value="">数据0值</option>
+                            <option value="0">设备断电</option>
+                            <option value="1">设备下线</option>
+                            <option value="2">数据恒值</option>
+                            <option value="3">数据0值</option>
+                            <option value="4">温湿度异常</option>
                         </select>
                     </td>
                     <td>状态：
-                        <select id="status" name="" >
+                        <select id="status" name="alarmStatus" >
                             <option value="" selected="selected">全部</option>
-                            <option value="">未处理</option>
-                            <option value="">处理中</option>
-                            <option value="">已完成</option>
+                            <option value="0">未处理</option>
+                            <option value="1">处理中</option>
+                            <option value="2">已完成</option>
                         </select>
                     </td>
                     <td>
@@ -137,7 +134,7 @@
     </form>
 </div>
 <div class="pageContent">
-    <div class="panelBar">
+    <%--<div class="panelBar">
         <ul class="toolBar">
             <li>
                 <a id="maintainAdd" class="add" target="dialog" mask="true" width="620" height="600" title="新增记录"
@@ -152,15 +149,15 @@
                 </a>
             </li>
         </ul>
-    </div>
+    </div>--%>
     <table class="table" width="100%" layoutH="112" rel="maintain_list">
         <thead>
         <tr>
-            <th width="30" align="center">
+            <%--<th width="30" align="center">
                 <div title="" class="gridCol">
                     <input class="checkboxCtrl" type="checkbox" group="recordIds">
                 </div>
-            </th>
+            </th>--%>
             <th width="50">设备编号</th>
             <th width="80">站点</th>
             <th width="80">告警类型</th>
@@ -173,34 +170,72 @@
         <tbody>
         <c:forEach var="obj" items="${page.result}" varStatus="index">
             <tr target="tr_form" rel="${obj.id}">
+                <%--<td>--%>
+                    <%--<div>--%>
+                        <%--<input name="recordIds" type="checkbox" value="${obj.id}"/>--%>
+                    <%--</div>--%>
+                <%--</td>--%>
+                <input name="deviceId" type="hidden" value="${obj.deviceId}">
                 <td>
-                    <div>
-                        <input name="recordIds" type="checkbox" value="${obj.id}"/>
-                    </div>
+                    ${obj.deviceCode}
                 </td>
-                <td class="devCode">
-                    <self:a code="ibs_device_maintain_update" name="${obj.deviceCode}"
-                            parameter="?recordId=${obj.id}" style="icon" target="dialog"
-                            mask="true" rel="updateRecord" width="620" height="600"></self:a>
+                <td>
+                    ${obj.monitoringProject.proName}
                 </td>
-                <td><fmt:formatDate value="${obj.troubleTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                 <td>
                     <c:choose>
-                        <c:when test="${obj.troubleType =='请选择'}">
+                        <c:when test="${obj.alarmType =='0'}">
+                            设备断电
+                        </c:when>
+                        <c:when test="${obj.alarmType =='1'}">
+                            设备下线
+                        </c:when>
+                        <c:when test="${obj.alarmType =='2'}">
+                            设备恒值
+                        </c:when>
+                        <c:when test="${obj.alarmType =='3'}">
+                            设备0值
+                        </c:when>
+                        <c:when test="${obj.alarmType =='4'}">
+                            温湿度异常
                         </c:when>
                         <c:otherwise>
-                            ${obj.troubleType}
+                        </c:otherwise>
+                    </c:choose>
+
+                </td>
+                <td><fmt:formatDate value="${obj.alarmTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${obj.alarmStatus =='0'}">
+                            未处理
+                        </c:when>
+                        <c:when test="${obj.alarmStatus =='1'}">
+                            处理中
+                        </c:when>
+                        <c:when test="${obj.alarmStatus =='2'}">
+                            已完成
+                        </c:when>
+                        <c:otherwise>
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${obj.alarmCause =='0'}">
+                            设备故障
+                        </c:when>
+                        <c:when test="${obj.alarmCause =='1'}">
+                            误报
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>
                     <self:a code="ibs_device_maintain_add" name="添加运维记录"
-                            parameter="?devId=${obj.id}" style="icon" target="dialog"
-                            mask="true" rel="addRecord" width="620" height="600"></self:a>
+                            parameter="?deviceId=${obj.deviceId}&deviceCode=${obj.deviceCode}&alarmTime=${obj.alarmTime}" style="icon" target="dialog"
+                            mask="true" rel="addRecord" width="620" height="600"></self:a></td>
                 </td>
             </tr>
         </c:forEach>
