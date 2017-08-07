@@ -104,64 +104,9 @@
 	</delete>
 
 	<!-- 查询传感器列表 -->
-	<sql id="query_device_where">
-		<if test="devCode!=null and devCode!=''">
-			AND dev_code=#{devCode} 
-		</if>
-		<if test="devCodeForLike!=null and devCodeForLike!=''">
-			AND dev_code LIKE "%"#{devCodeForLike}"%" 
-		</if>
-		<if test="devStatus!=null and devStatus!=''">
-			AND dev_status=#{devStatus} 
-		</if>
-		<if test="proCode!=null and proCode!=''">
-			AND pro_code=#{proCode} 
-		</if>
-		<if test="vendorCode!=null and vendorCode!=''">
-			AND vendor_code=#{vendorCode} 
-		</if>
-		<if test="devName!=null and devName!=''">
-			AND dev_name=#{devName} 
-		</if>
-		<if test="devNameForLike!=null and devNameForLike!=''">
-			AND dev_name LIKE "%"#{devNameForLike}"%" 
-		</if>
-		<if test="projectId!=null and projectId!=0">
-			AND project_id=#{projectId} 
-		</if>
-		<if test="deviceGroupId!=null and deviceGroupId!=0">
-			AND device_group_id=#{deviceGroupId} 
-		</if>
-		<if test="deviceGroupIdForNotNull!=null and deviceGroupIdForNotNull!=0">
-			AND device_group_id IS NOT NULL 
-		</if>
-		<if test="deviceGroupIdForNull!=null and deviceGroupIdForNull!=0">
-			AND device_group_id IS NULL 
-		</if>
-		<if test="deviceGroupIdForIn!=null and deviceGroupIdForIn.length>0">
-			AND device_group_id IN
-			<foreach collection="deviceGroupIdForIn" item="item" index="index" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-		<if test="deviceGroupIdForOr!=null and deviceGroupIdForOr!=0">
-			OR device_group_id=#{deviceGroupIdForOr}
-		</if>
-		<if test="devType!=null">
-			AND dev_type=#{devType} 
-		</if>
-		<if test="devTypeForIn!=null">
-			AND dev_type IN 
-			<foreach collection="devTypeForIn" item="item" index="index" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-	</sql>
-	<select id="findMonitoringDeviceList" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultMap="MonitoringDeviceResult">
+
+	<select id="findMonitoringDeviceList" resultMap="MonitoringDeviceResult">
         SELECT * FROM ibs_monitoring_device
-        <where>
-            <include refid="query_device_where"></include>
-        </where>
 		order BY create_time DESC
 	</select>
 

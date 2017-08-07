@@ -32,7 +32,7 @@ public class ContextListener implements ServletContextListener {
              * 定时器到指定的时间时,执行某个操作(如某个类,或方法)
              */
             //后边最后一个参数代表监视器的监视周期,现在为一分钟
-            timer.schedule(new MyTask(event.getServletContext()), 0, 10 * 1000);
+            //timer.schedule(new MyTask(event.getServletContext()), 0, 10 * 1000);
 
             event.getServletContext().log("已经添加任务调度表");
         }

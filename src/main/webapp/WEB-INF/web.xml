@@ -27,9 +27,9 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    <listener>
-        <listener-class>com.capinfo.framework.common.servlet.ContextListener</listener-class>
-    </listener>
+    <!--<listener>-->
+        <!--<listener-class>com.capinfo.framework.common.servlet.ContextListener</listener-class>-->
+    <!--</listener>-->
     <servlet>
         <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

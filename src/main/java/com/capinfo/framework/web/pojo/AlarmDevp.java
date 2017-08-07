@@ -9,11 +9,11 @@ public class AlarmDevp {
 
     private String deviceCode;
 
-    private Boolean alarmStatus;
+    private Integer alarmStatus;
 
-    private Boolean alarmType;
+    private Integer alarmType;
 
-    private Boolean alarmCause;
+    private Integer alarmCause;
 
     private Date alarmTime;
 
@@ -43,27 +43,27 @@ public class AlarmDevp {
         this.deviceCode = deviceCode;
     }
 
-    public Boolean getAlarmStatus() {
+    public Integer getAlarmStatus() {
         return alarmStatus;
     }
 
-    public void setAlarmStatus(Boolean alarmStatus) {
+    public void setAlarmStatus(Integer alarmStatus) {
         this.alarmStatus = alarmStatus;
     }
 
-    public Boolean getAlarmType() {
+    public Integer getAlarmType() {
         return alarmType;
     }
 
-    public void setAlarmType(Boolean alarmType) {
+    public void setAlarmType(Integer alarmType) {
         this.alarmType = alarmType;
     }
 
-    public Boolean getAlarmCause() {
+    public Integer getAlarmCause() {
         return alarmCause;
     }
 
-    public void setAlarmCause(Boolean alarmCause) {
+    public void setAlarmCause(Integer alarmCause) {
         this.alarmCause = alarmCause;
     }
 

@@ -44,8 +44,12 @@ public class MonitoringAlarmService {
 		}else {
 			page.setResult(datas);
 		}
-		//page.setTotalCount(alarmDevpMapper.findMonitoringMaintainCount(alarmQueryBean));
+		page.setTotalCount(alarmDevpMapper.findMonitoringAlarmCount(alarmQueryBean));
 
+	}
+	public void saveMonitoringAlarmRecord(AlarmDevp alarmDevp) throws Exception{
+		alarmDevp.setAlarmTime(new Date());
+		alarmDevpMapper.insert(alarmDevp);
 	}
 
 	/*public MonitoringMaintain findMonitoringMaintainById(Integer recordId) throws Exception {
@@ -62,10 +66,6 @@ public class MonitoringAlarmService {
 		maintainMapper.updateMonitoringMaintianRecord(maintainQueryBean);
 	}
 
-	public void saveMonitoringMaintainRecord(MonitoringMaintainQueryBean maintainQueryBean) throws Exception{
-		maintainQueryBean.setCreateTime(new Date());
-		maintainMapper.saveMonitoringMaintainRecord(maintainQueryBean);
-	}
 
 	public List<MonitoringDevice> findMonitoringDeviceList(MonitoringMaintainQueryBean maintainQueryBean) throws Exception{
 		List result = new ArrayList();

@@ -1,17 +1,16 @@
 package com.capinfo.framework.common.alarm;
 
 /**
- * Created by shijing on 2017/8/4.
+ * Created by shijing on 2017/8/7.
  */
-public class OffLine extends BaseMethod{
-//    public OffLine(CheckData checkData){
+public class AbnormalValue extends BaseMethod {
+//    public AbnormalValue(CheckData checkData){
 //        super(checkData);
 //    }
 //    @Override
 //    public void run(){
-//        try{
-//            System.out.println("offLine !!!");
-//
+//        try {
+//            System.out.println("AbnormalValue !!!");
 //        }catch (Exception e){
 //            e.printStackTrace();
 //        }

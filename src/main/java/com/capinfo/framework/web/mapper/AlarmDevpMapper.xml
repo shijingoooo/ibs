@@ -5,9 +5,9 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="device_id" property="deviceId" jdbcType="INTEGER" />
     <result column="dev_code" property="deviceCode" jdbcType="VARCHAR" />
-    <result column="alarm_status" property="alarmStatus" jdbcType="BIT" />
-    <result column="alarm_type" property="alarmType" jdbcType="BIT" />
-    <result column="alarm_cause" property="alarmCause" jdbcType="BIT" />
+    <result column="alarm_status" property="alarmStatus" jdbcType="INTEGER" />
+    <result column="alarm_type" property="alarmType" jdbcType="INTEGER" />
+    <result column="alarm_cause" property="alarmCause" jdbcType="INTEGER" />
     <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
     <association column="project_id" property="monitoringProject" javaType="com.capinfo.framework.web.pojo.MonitoringProject" select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringProjectById"/>
   </resultMap>
@@ -41,6 +41,41 @@
   ORDER BY ad.alarm_time desc
   LIMIT #{pageNum},#{pageSize}
 </select>
+<!--保存记录-->
+  <insert id="insert" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
+    insert into ibs_alarm_devp (device_id, alarm_status,alarm_type, alarm_cause, alarm_time)
+    values (#{deviceId}, #{alarmStatus},#{alarmType}, #{alarmCause}, #{alarmTime})
+  </insert>
+<!--获取总数-->
+  <select id="findMonitoringAlarmCount" parameterType="com.capinfo.framework.web.vo.MonitoringAlarmQueryBean" resultType="java.lang.Integer">
+    SELECT COUNT(ad.id)
+    FROM ibs_alarm_devp ad,ibs_monitoring_device md
+    WHERE md.id = ad.device_id
+    <if test="userId!=1">
+      AND mm.device_id IN (SELECT md.id
+      FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
+      WHERE ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{userId}
+      GROUP BY md.id)
+    </if>
+    <if test="devCodeForLike!=null and devCodeForLike!=''">
+      AND md.dev_code LIKE "%"#{devCodeForLike}"%"
+    </if>
+    <if test="alarmType!=null and alarmType!=''">
+      AND ad.alarm_type = #{alarmType}
+    </if>
+    <if test="alarmStatus!=null and alarmStatus!=''">
+      AND ad.alarm_status = #{alarmStatus}
+    </if>
+
+    <if test="startTime!=null and startTime!=''">
+      AND <![CDATA[DATE_FORMAT(alarm_time, '%Y-%m-%d %H:%i:%S')>=#{startTime}]]>
+    </if>
+    <if test="endTime!=null and endTime!=''">
+      AND <![CDATA[DATE_FORMAT(alarm_time, '%Y-%m-%d %H:%i:%S')<=#{endTime}]]>
+    </if>
+    ORDER BY ad.alarm_time desc
+
+  </select>
 <!--
   <sql id="Base_Column_List" >
     id, device_id, alarm_status, alarm_type, alarm_cause, alarm_time
@@ -55,14 +90,7 @@
     delete from ibs_alarm_devp
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
-    insert into ibs_alarm_devp (id, device_id, alarm_status, 
-      alarm_type, alarm_cause, alarm_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{deviceId,jdbcType=INTEGER}, #{alarmStatus,jdbcType=BIT}, 
-      #{alarmType,jdbcType=BIT}, #{alarmCause,jdbcType=BIT}, #{alarmTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
+
   <insert id="insertSelective" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
     insert into ibs_alarm_devp
     <trim prefix="(" suffix=")" suffixOverrides="," >

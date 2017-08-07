@@ -95,7 +95,7 @@
 	<import resource="classpath:spring/applicationContext-caching.xml"/>
 	<import resource="classpath:spring/applicationContext-dao.xml"/>
 	<!--<import resource="classpath:spring/applicationContext-dao-sec.xml"/>-->
-	<!--<import resource="classpath:spring/applicationContext-quartz.xml"/>-->
+	<import resource="classpath:spring/applicationContext-quartz.xml"/>
 	<!--<import resource="classpath:spring/applicationContext-security.xml"/>-->
 	<!--<import resource="classpath:spring/applicationContext-thread.xml"/>-->
 	<!--<import resource="classpath:spring/applicationContext-transaction.xml"/>-->

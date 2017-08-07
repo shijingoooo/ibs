@@ -1,886 +1,551 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.capinfo.framework.web.mapper.MonitoringDataMapper">
-
-    <resultMap id="MonitoringDataResult" type="com.capinfo.framework.web.pojo.MonitoringData">
-        <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="actual_tsp" property="actualTsp" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_tsp" property="calibrationTsp" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_two_pm" property="actualTwoPm" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_two_pm" property="calibrationTwoPm" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_ten_pm" property="actualTenPm" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_ten_pm" property="calibrationTenPm" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_noise" property="actualNoise" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_noise" property="calibrationNoise" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_bg_noise" property="actualBgNoise" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_bg_noise" property="calibrationBgNoise" jdbcType="DECIMAL"
-                javaType="java.lang.Float"/>
-        <result column="actual_max_level" property="actualMaxLevel" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="calibration_max_level" property="calibrationMaxLevel" jdbcType="INTEGER"
-                javaType="java.lang.Integer"/>
-        <result column="before_dev_calibration" property="beforeDevCalibration" jdbcType="DECIMAL"
-                javaType="java.lang.Float"/>
-        <result column="after_dev_calibration" property="afterDevCalibration" jdbcType="DECIMAL"
-                javaType="java.lang.Float"/>
-        <result column="actual_temperature" property="actualTemperature" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_humidity" property="actualHumidity" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_pressure" property="actualPressure" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="actual_rainfall" property="actualRainfall" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="is_rain" property="isRain" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="actual_wind_speed" property="actualWindSpeed" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_wind_direction" property="actualWindDirection" jdbcType="INTEGER"
-                javaType="java.lang.Integer"/>
-        <result column="electric_quantity" property="electricQuantity" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="col_time" property="colTime" javaType="java.util.Date"/>
-        <result column="long_time" property="longTime" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="data_sign" property="dataSign" jdbcType="CHAR" javaType="java.lang.String"/>
-        <result column="creater" property="creater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="updater" property="updater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="create_time" property="createTime" javaType="java.util.Date"/>
-        <result column="update_time" property="updateTime" javaType="java.util.Date"/>
-        <result column="version" property="version" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="sh_sign" property="shSign" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <association column="device_id" property="monitoringDevice"
-                     javaType="com.capinfo.framework.web.pojo.MonitoringDevice"
-                     select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringDeviceById"/>
-    </resultMap>
-    <!--2017/1/18 新思 彭 开始-->
-    <resultMap id="MonitoringDataPojoResult" type="com.capinfo.framework.web.pojo.MonitoringData">
-        <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="actual_tsp" property="actual_tsp" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_tsp" property="calibration_tsp" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_two_pm" property="actual_two_pm" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_two_pm" property="calibration_two_pm" jdbcType="DECIMAL"
-                javaType="java.lang.Float"/>
-        <result column="actual_ten_pm" property="actual_ten_pm" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_ten_pm" property="calibration_ten_pm" jdbcType="DECIMAL"
-                javaType="java.lang.Float"/>
-        <result column="actual_noise" property="actual_noise" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_noise" property="calibration_noise" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_bg_noise" property="actual_bg_noise" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="calibration_bg_noise" property="calibration_bg_noise" jdbcType="DECIMAL"
-                javaType="java.lang.Float"/>
-        <result column="actual_max_level" property="actual_max_level" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="calibration_max_level" property="calibration_max_level" jdbcType="INTEGER"
-                javaType="java.lang.Integer"/>
-        <result column="before_dev_calibration" property="before_dev_calibration" jdbcType="DECIMAL"
-                javaType="java.lang.Float"/>
-        <result column="after_dev_calibration" property="after_dev_calibration" jdbcType="DECIMAL"
-                javaType="java.lang.Float"/>
-        <result column="actual_temperature" property="actual_temperature" jdbcType="DECIMAL"
-                javaType="java.lang.Float"/>
-        <result column="actual_humidity" property="actual_humidity" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_pressure" property="actual_pressure" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="actual_rainfall" property="actual_rainfall" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="is_rain" property="is_rain" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="actual_wind_speed" property="actual_wind_speed" jdbcType="DECIMAL" javaType="java.lang.Float"/>
-        <result column="actual_wind_direction" property="actual_wind_direction" jdbcType="INTEGER"
-                javaType="java.lang.Integer"/>
-        <result column="electric_quantity" property="electric_quantity" jdbcType="INTEGER"
-                javaType="java.lang.Integer"/>
-        <result column="col_time" property="col_time" javaType="java.util.Date"/>
-        <result column="long_time" property="long_time" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="data_sign" property="data_sign" jdbcType="CHAR" javaType="java.lang.String"/>
-        <result column="creater" property="creater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="updater" property="updater" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="create_time" property="create_time" javaType="java.util.Date"/>
-        <result column="update_time" property="update_time" javaType="java.util.Date"/>
-        <result column="version" property="version" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="sh_sign" property="sh_sign" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="device_id" property="device_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-    </resultMap>
-    <!--2017/1/18 新思 彭 结束-->
-
-<!--
-    <sql id="all_fileds">id,actual_tsp,calibration_tsp,actual_two_pm,calibration_two_pm,actual_ten_pm,calibration_ten_pm,actual_noise,calibration_noise,actual_bg_noise,calibration_bg_noise,actual_max_level,calibration_max_level,before_dev_calibration,after_dev_calibration,actual_temperature,actual_humidity,actual_pressure,actual_rainfall,is_rain,actual_wind_speed,actual_wind_direction,electric_quantity,col_time,long_time,data_sign,creater,updater,create_time,update_time,version,sh_sign,device_id</sql>
-
-    &lt;!&ndash; SAVE MONITORING DATA &ndash;&gt;
-    <insert id="saveMonitoringData" useGeneratedKeys="true" keyProperty="id"
-            parameterType="com.capinfo.framework.web.pojo.MonitoringData">
-		INSERT INTO ibs_monitoring_data(actual_tsp,calibration_tsp,actual_two_pm,calibration_two_pm,actual_ten_pm,calibration_ten_pm,actual_noise,calibration_noise,actual_bg_noise,calibration_bg_noise,actual_max_level,calibration_max_level,before_dev_calibration,after_dev_calibration,actual_temperature,actual_humidity,actual_pressure,actual_rainfall,is_rain,actual_wind_speed,actual_wind_direction,electric_quantity,col_time,long_time,data_sign,device_id,creater,create_time) 
-		VALUES(#{actualTsp},#{calibrationTsp},#{actualTwoPm},#{calibrationTwoPm},#{actualTenPm},#{calibrationTenPm},#{actualNoise},#{calibrationNoise},#{actualBgNoise},#{calibrationBgNoise},#{actualMaxLevel},#{calibrationMaxLevel},#{beforeDevCalibration},#{afterDevCalibration},#{actualTemperature},#{actualHumidity},#{actualPressure},#{actualRainfall},#{isRain},#{actualWindSpeed},#{actualWindDirection},#{electricQuantity},#{colTime},#{longTime},#{dataSign},#{monitoringDevice.id},#{creater},#{createTime}) 
-	</insert>
-    &lt;!&ndash; DELETE MONITORING DATA &ndash;&gt;
-    <delete id="deleteMonitoringData" parameterType="java.lang.Integer">
-		DELETE FROM ibs_monitoring_data WHERE id=#{id}
-	</delete>
-    &lt;!&ndash; UPDATE MONITORING DATA FOR dataSign &ndash;&gt;
-    <update id="updateMonitoringDataSign" parameterType="com.capinfo.framework.web.pojo.MonitoringData">
-		UPDATE ibs_monitoring_data SET data_sign=#{dataSign},version=version+1 WHERE id=#{id}
-	</update>
-    &lt;!&ndash; BATCH UPDATE MONITORING DATA FOR shSign &ndash;&gt;
-    <update id="updateMonitoringDataShSign" parameterType="com.capinfo.framework.web.vo.MonitoringDataQueryBean">
-        UPDATE ibs_monitoring_data SET sh_sign=1,version=version+1
-        <where>
-            <if test="idForIn!=null and idForIn.length>0">
-                AND id IN
-                <foreach collection="idForIn" item="item" index="index" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </if>
-            <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-                AND col_time BETWEEN #{startTime} AND #{endTime}
-            </if>
-        </where>
-    </update>
-    &lt;!&ndash; BATCH SAVE MONITORING DATA &ndash;&gt;
-    <insert id="saveMonitoringDataBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
-        INSERT INTO
-        ibs_monitoring_data(actual_tsp,calibration_tsp,actual_two_pm,calibration_two_pm,actual_ten_pm,calibration_ten_pm,actual_noise,calibration_noise,actual_bg_noise,calibration_bg_noise,actual_max_level,calibration_max_level,before_dev_calibration,after_dev_calibration,actual_temperature,actual_humidity,actual_pressure,actual_rainfall,is_rain,actual_wind_speed,actual_wind_direction,electric_quantity,col_time,long_time,data_sign,device_id,creater,create_time)
-        VALUES
-        <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.actualTsp},#{item.calibrationTsp},#{item.actualTwoPm},#{item.calibrationTwoPm},#{item.actualTenPm},#{item.calibrationTenPm},#{item.actualNoise},#{item.calibrationNoise},#{item.actualBgNoise},#{item.calibrationBgNoise},#{item.actualMaxLevel},#{item.calibrationMaxLevel},#{item.beforeDevCalibration},#{item.afterDevCalibration},#{item.actualTemperature},#{item.actualHumidity},#{item.actualPressure},#{item.actualRainfall},#{item.isRain},#{item.actualWindSpeed},#{item.actualWindDirection},#{item.electricQuantity},#{item.colTime},#{item.longTime},#{item.dataSign},#{item.monitoringDevice.id},#{item.creater},#{item.createTime})
-        </foreach>
-    </insert>
-    &lt;!&ndash; BATCH DELETE MONITORING DATA &ndash;&gt;
-    <delete id="deleteMonitoringDataBatch" parameterType="java.util.List">
-        DELETE FROM ibs_monitoring_data WHERE id IN
-        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </delete>
-
-    &lt;!&ndash; 查询监测数据列表 &ndash;&gt;
-    <sql id="query_data_where">
-        <if test="deviceId!=null and deviceId!=0">
-            AND device_id=#{deviceId}
-        </if>
-        <if test="shSign!=null">
-            AND sh_sign=#{shSign}
-        </if>
-    </sql>
-    <select id="findMonitoringDataList" parameterType="com.capinfo.framework.web.vo.MonitoringDataQueryBean"
-            resultMap="MonitoringDataResult">
-        SELECT <include refid="all_fileds"></include> FROM ibs_monitoring_data
-        <where>
-            <include refid="query_data_where"></include>
-        </where>
-    </select>
-
-    &lt;!&ndash; 查询监测数据分页列表 &ndash;&gt;
-    <sql id="query_data_page_where">
-        <if test="query.deviceId!=null and query.deviceId!=0">
-            AND device_id=#{query.deviceId}
-        </if>
-        <if test="query.shSign!=null">
-            AND sh_sign=#{query.shSign}
-        </if>
-        <if test="query.startTime!=null and query.startTime!='' and query.endTime!=null and query.endTime!=''">
-            AND col_time BETWEEN #{query.startTime} AND #{query.endTime}
-        </if>
-    </sql>
-    <select id="findMonitoringDataPage" parameterType="java.util.Map" resultMap="MonitoringDataResult">
-        SELECT <include refid="all_fileds"></include> FROM ibs_monitoring_data
-        <where>
-            <include refid="query_data_page_where"></include>
-        </where>
-        ORDER BY col_time DESC
-        LIMIT #{pageNum},#{pageSize}
-    </select>
-
-    &lt;!&ndash; 查询监测数据总数 &ndash;&gt;
-    <sql id="query_data_count_where">
-        <if test="deviceId!=null and deviceId!=0">
-            AND device_id=#{deviceId}
-        </if>
-        <if test="shSign!=null">
-            AND sh_sign=#{shSign}
-        </if>
-        <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-            AND col_time BETWEEN #{startTime} AND #{endTime}
-        </if>
-    </sql>
-    <select id="findMonitoringDataCount" parameterType="com.capinfo.framework.web.vo.MonitoringDataQueryBean"
-            resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM ibs_monitoring_data
-        <where>
-            <include refid="query_data_count_where"></include>
-        </where>
-    </select>
-    &lt;!&ndash;2017/2/20新思 彭 开始（传感器上下线问题）&ndash;&gt;
-    <select id="findMonitoringDataCopyCount" parameterType="com.capinfo.framework.web.vo.MonitoringDataQueryBean"
-            resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM ibs_monitoring_data_copy
-        <where>
-            <include refid="query_data_count_where"></include>
-        </where>
-    </select>
-    &lt;!&ndash;2017/2/20新思 彭 结束（传感器上下线问题）&ndash;&gt;
-
-    &lt;!&ndash; 根据id查询监测数据 &ndash;&gt;
-    <select id="findMonitoringDataById" parameterType="java.lang.Integer" resultMap="MonitoringDataResult">
-        SELECT <include refid="all_fileds"></include> FROM ibs_monitoring_data
-        <where>
-            id=#{value}
-        </where>
-    </select>
--->
-
-    <!-- 根据设备id查询监测数据 -->
-    <select id="findMonitoringDataByDeviceId" parameterType="java.lang.Integer" resultMap="MonitoringDataResult">
-        SELECT <include refid="all_fileds"></include> FROM ibs_monitoring_data
-        <where>
-            device_id=#{value}
-        </where>
-    </select>
-<!--
-
-    &lt;!&ndash; 设备杆最新监测数据 &ndash;&gt;
-    <select id="findMonitoringDataByDeviceIdForLastest" parameterType="java.lang.Integer"
-            resultMap="MonitoringDataResult">
-        SELECT d.calibration_two_pm calibrationTwoPm,d.calibration_ten_pm calibrationTenPm,d.calibration_tsp/1000
-        calibrationTsp,d.calibration_noise calibrationNoise,d.actual_temperature actualTemperature,d.actual_humidity
-        actualHumidity,d.actual_wind_speed actualWindSpeed,d.actual_pressure actualPressure,d.is_rain
-        isRain,d.actual_wind_direction actualWindDirection
-        FROM ibs_monitoring_data d,ibs_monitoring_device dev
-        <where>
-            d.device_id=dev.id AND dev.device_group_id=#{value}
-        </where>
-        ORDER BY d.col_time DESC,d.version DESC LIMIT 1
-    </select>
-
-    &lt;!&ndash; 设备杆当天的监测数据(按小时) &ndash;&gt;
-    <select id="findMonitoringDeviceGroupDataByToday" parameterType="java.lang.Integer"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        &lt;!&ndash; SELECT DATE_FORMAT(da.col_time,'%m-%d %H') hourTime,ROUND(AVG(da.calibration_two_pm),0)
-          calibrationTwoPm,ROUND(AVG(da.calibration_ten_pm),0) calibrationTenPm,ROUND(AVG(da.calibration_tsp/1000),3)
-          calibrationTsp,ROUND(AVG(da.calibration_noise),0) calibrationNoise,ROUND(AVG(da.actual_temperature),1)
-          actualTemperature,ROUND(AVG(da.actual_humidity),1) actualHumidity,ROUND(AVG(da.actual_wind_speed),1)
-          actualWindSpeed,ROUND(AVG(da.actual_pressure)/1000,0) actualPressure
-          FROM ibs_monitoring_data_copy da,ibs_monitoring_device de
-          <where>
-              da.device_id=de.id AND da.col_time BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND NOW() AND
-              de.device_group_id=#{value}
-          </where>
-          GROUP BY DATE_FORMAT(da.col_time,'%m-%d %H')&ndash;&gt;
-        SELECT DATE_FORMAT(h.col_time,'%m-%d %H') as hourTime,h.actual_two_pm as calibrationTwoPm,
-        h.actual_ten_pm as calibrationTenPm,h.actual_tsp/1000 as calibrationTsp,
-        h.actual_noise as calibrationNoise, 0 as actualTemperature,0 as actualHumidity,0 as actualWindSpeed,0 as
-        actualPressure
-        from ibs_data_hour h,ibs_monitoring_device_group g
-        where h.project_id = g.project_id and g.id = #{value}
-        and col_time BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND NOW()
-        /*2017/1/20 新思 彭 开始*/
-        &lt;!&ndash; SELECT
-         DATE_FORMAT(h.col_time, '%m-%d %H') hourTime,
-         ROUND(h.actual_two_pm,0) calibrationTwoPm,
-         ROUND(h.actual_ten_pm, 0) calibrationTenPm,
-         ROUND(h.actual_tsp,0) calibrationTsp,
-         ROUND(h.actual_noise,0) calibrationNoise
-         FROM ibs_data_hour h, ibs_monitoring_device_group g, ibs_monitoring_project p
-         <where>p.id = g.project_id AND h.project_id = p.id
-             AND h.col_time BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND NOW() AND
-             g.id=#{value}
-         </where>
-         GROUP BY DATE_FORMAT(h.col_time,'%m-%d %H')&ndash;&gt;
-        /*2017/1/20 新思 彭 结束*/
-
-    </select>
-
-    &lt;!&ndash; 工地数据当前一小时实时统计 &ndash;&gt;
-    <sql id="query_project_data_hour_where">
-        <if test="proCode!=null and proCode!=''">
-            AND p.pro_code=#{proCode}
-        </if>
-        <if test="startTime!=null and startTime!=''">
-            AND d.col_time > #{startTime}
-        </if>
-    </sql>
-    <select id="findMonitoringProjectDataByProCodeAndHour"
-            parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT DATE_FORMAT(d.col_time,'%H:%i') hourTime,p.pro_name proName,ROUND(MAX(d.calibration_two_pm),0)
-        calibrationTwoPm,ROUND(MAX(d.calibration_ten_pm),0) calibrationTenPm,ROUND(MAX(d.calibration_tsp)/1000,3)
-        calibrationTsp,ROUND(MAX(d.calibration_noise),0) calibrationNoise,ROUND(MAX(d.actual_temperature),1)
-        actualTemperature,ROUND(MAX(d.actual_humidity),1) actualHumidity,ROUND(MAX(d.actual_wind_speed),1)
-        actualWindSpeed,ROUND(MAX(d.actual_pressure)/1000,0) actualPressure,ROUND(MAX(d.is_rain),0)
-        isRain,ROUND(MAX(d.actual_wind_direction),0) actualWindDirection
-        FROM ibs_monitoring_data_copy d,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            d.device_id=dev.id AND dev.project_id=p.id
-            <include refid="query_project_data_hour_where"></include>
-        </where>
-        GROUP BY DATE_FORMAT(d.col_time,'%H:%i')
-    </select>
-    &lt;!&ndash;2017/1/11 新思 彭 开始&ndash;&gt;
-    <select id="findDeviceByProCode" parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT dev.id deviceId ,p.pro_name proName from ibs_monitoring_device dev ,ibs_monitoring_project p WHERE
-        dev.project_id=p.id
-        <if test="proCode!=null and proCode!=''">
-            AND p.pro_code=#{proCode}
-        </if>
-        &lt;!&ndash;2017/1/11 新思 彭 结束&ndash;&gt;
-    </select>
-
-    &lt;!&ndash; 工地数据当天实时统计 &ndash;&gt;
-    <sql id="query_project_data_day_where">
-        <if test="proCode!=null and proCode!=''">
-            AND p.pro_code=#{proCode}
-        </if>
-        <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-            AND d.col_time BETWEEN #{startTime} AND #{endTime}
-        </if>
-    </sql>
-    <select id="findMonitoringProjectDataByProCodeAndDay"
-            parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        &lt;!&ndash;SELECT DATE_FORMAT(d.col_time,'%m-%d %H') dayTime,p.pro_name proName,ROUND(AVG(d.calibration_two_pm),0) calibrationTwoPm,ROUND(AVG(d.calibration_ten_pm),0) calibrationTenPm,ROUND(AVG(d.calibration_tsp/1000),3) calibrationTsp,ROUND(AVG(d.calibration_noise),0) calibrationNoise,ROUND(AVG(d.actual_temperature),1) actualTemperature,ROUND(AVG(d.actual_humidity),1) actualHumidity,ROUND(AVG(d.actual_wind_speed),1) actualWindSpeed,ROUND(AVG(d.actual_pressure)/1000,0) actualPressure,ROUND(AVG(d.is_rain),0) isRain,ROUND(AVG(d.actual_wind_direction),0) actualWindDirection
-        FROM ibs_monitoring_data d,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            d.device_id=dev.id AND dev.project_id=p.id AND d.calibration_two_pm!=0 AND d.calibration_ten_pm!=0
-            <include refid="query_project_data_day_where"></include>
-        </where>
-        GROUP BY DATE_FORMAT(d.col_time,'%m-%d %H')&ndash;&gt;
-        /*peng 2016-11-18 开始*/
-        SELECT DATE_FORMAT(d.col_time,'%m-%d %H') dayTime,p.pro_name proName,
-        d.actual_two_pm calibrationTwoPm,
-        d.actual_ten_pm calibrationTenPm,
-        ROUND(AVG(d.actual_tsp/1000),3) calibrationTsp,
-        d.actual_noise calibrationNoise
-        FROM
-        ibs_data_hour d,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            d.project_id = p.id AND dev.project_id=p.id AND d.actual_two_pm!=0 AND d.actual_ten_pm!=0
-            <include refid="query_project_data_day_where"></include>
-        </where>
-        GROUP BY DATE_FORMAT(d.col_time,'%m-%d %H')
-        /*peng 2016-11-18 结束*/
-    </select>
-
-    &lt;!&ndash; 工地数据当月实时统计 &ndash;&gt;
-    <sql id="query_project_data_month_where">
-        <if test="proCode!=null and proCode!=''">
-            AND p.pro_code=#{proCode}
-        </if>
-        <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-            AND d.col_time BETWEEN #{startTime} AND #{endTime}
-        </if>
-    </sql>
-    <select id="findMonitoringProjectDataByProCodeAndMonth"
-            parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        &lt;!&ndash;SELECT DATE_FORMAT(d.col_time,'%m-%d') monthTime,p.pro_name proName,ROUND(AVG(d.calibration_two_pm),0) calibrationTwoPm,ROUND(AVG(d.calibration_ten_pm),0) calibrationTenPm,ROUND(AVG(d.calibration_tsp/1000),3) calibrationTsp,ROUND(AVG(d.calibration_noise),0) calibrationNoise,ROUND(AVG(d.actual_temperature),1) actualTemperature,ROUND(AVG(d.actual_humidity),1) actualHumidity,ROUND(AVG(d.actual_wind_speed),1) actualWindSpeed,ROUND(AVG(d.actual_pressure)/1000,0) actualPressure,ROUND(AVG(d.is_rain),0) isRain,ROUND(AVG(d.actual_wind_direction),0) actualWindDirection
-        FROM ibs_monitoring_data d,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            d.device_id=dev.id AND dev.project_id=p.id AND d.calibration_two_pm!=0 AND d.calibration_ten_pm!=0
-            <include refid="query_project_data_month_where"></include>
-        </where>
-        GROUP BY DATE_FORMAT(d.col_time,'%m-%d')&ndash;&gt;
-        /*peng 2016-11-18 开始*/
-        SELECT DATE_FORMAT(d.col_time,'%m-%d') monthTime,p.pro_name proName,d.actual_two_pm
-        calibrationTwoPm,d.actual_ten_pm calibrationTenPm,ROUND(AVG(d.actual_tsp/1000),3) calibrationTsp,d.actual_noise
-        calibrationNoise
-        FROM ibs_data_day d,ibs_monitoring_device dev,ibs_monitoring_project p
-        where
-        d.project_id=p.id AND dev.project_id=p.id AND d.actual_two_pm!=0 AND d.actual_ten_pm!=0
-        <include refid="query_project_data_month_where"></include>
-
-        GROUP BY DATE_FORMAT(d.col_time,'%m-%d')
-        /*peng 2016-11-18 开始*/
-    </select>
-
-    &lt;!&ndash; 所有工地实时数据排名 &ndash;&gt;
-    <select id="findMonitoringProjectDataOrderForLastest"
-            parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT p.pro_name proName
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ,ROUND(AVG(da.calibration_tsp/1000),3) calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ,ROUND(AVG(da.calibration_two_pm),0) calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ,ROUND(AVG(da.calibration_ten_pm),0) calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ,ROUND(AVG(da.calibration_noise),0) calibrationNoise
-        </if>
-        FROM ibs_monitoring_data da,(SELECT dev.project_id proId,MAX(d.col_time) col_time FROM ibs_monitoring_data
-        d,ibs_monitoring_device dev WHERE d.device_id = dev.id GROUP BY dev.id) t,ibs_monitoring_project p
-        <where>
-            <if test="province!=null and province!=''">
-                AND p.province=#{province}
-            </if>
-            <if test="city!=null and city!=''">
-                AND p.city=#{city}
-            </if>
-            <if test="district!=null and district!=''">
-                AND p.district=#{district}
-            </if>
-            AND da.col_time=t.col_time AND p.id=t.proId
-        </where>
-        GROUP BY p.id
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ORDER BY calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ORDER BY calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ORDER BY calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ORDER BY calibrationNoise
-        </if>
-    </select>
-
-    &lt;!&ndash; 单个工地实时数据 &ndash;&gt;
-    <select id="findMonitoringProjectDataForLastest" parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT 1 proName,ifnull(ROUND(AVG(calibration_tsp/1000),3),0)
-        calibrationTsp,ifnull(ROUND(AVG(calibration_two_pm),0),0) calibrationTwoPm,
-        ifnull(ROUND(AVG(calibration_ten_pm),0),0) calibrationTenPm,ifnull(ROUND(AVG(calibration_noise),0),0)
-        calibrationNoise
-        FROM ibs_monitoring_data
-        <where>
-            device_id in (select id from ibs_monitoring_device where project_id=#{projectId})
-        </where>
-    </select>
-
-    &lt;!&ndash; 查询工地监测数据总数 &ndash;&gt;
-    <select id="findMonitoringDataCountByProject" parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM ibs_monitoring_data d,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            d.device_id=dev.id AND p.id=dev.project_id AND p.pro_code=#{proCode}
-            <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-                AND d.col_time BETWEEN #{startTime} AND #{endTime}
-            </if>
-        </where>
-    </select>
-
-    &lt;!&ndash; 查询工地监测数据超标总数 &ndash;&gt;
-    <select id="findOverproofLogCountByProject" parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM ibs_overproof_log lo,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            lo.device_id=dev.id AND p.id=dev.project_id AND p.pro_code=#{proCode} AND lo.alarm_cause=#{alarmCause}
-            <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-                AND lo.col_time BETWEEN #{startTime} AND #{endTime}
-            </if>
-        </where>
-    </select>
-
-    &lt;!&ndash; 查询工地监测数据均值 &ndash;&gt;
-    <select id="findMonitoringDataAvgByProjectId" parameterType="java.lang.Integer" resultMap="MonitoringDataResult">
-        SELECT ROUND(AVG(d.calibration_tsp/1000),3) calibrationTsp,ROUND(AVG(d.calibration_two_pm),0)
-        calibrationTwoPm,ROUND(AVG(d.calibration_ten_pm),0) calibrationTenPm,ROUND(AVG(d.calibration_noise),0)
-        calibrationNoise,ROUND(AVG(d.calibration_bg_noise),0) calibrationBgNoise,ROUND(AVG(d.calibration_max_level),0)
-        calibrationMaxLevel,ROUND(AVG(d.actual_temperature),1) actualTemperature,ROUND(AVG(d.actual_humidity),1)
-        actualHumidity,AVG(d.actual_pressure) actualPressure,ROUND(AVG(d.actual_rainfall),0)
-        actualRainfall,ROUND(AVG(d.is_rain),0) isRain,ROUND(AVG(d.actual_wind_speed),1)
-        actualWindSpeed,ROUND(AVG(d.actual_wind_direction),0) actualWindDirection FROM ibs_monitoring_data
-        d,ibs_monitoring_device dev
-        <where>
-            AND d.device_id=dev.id
-            AND dev.project_id=#{value}
-            AND d.id=(SELECT MAX(id) FROM ibs_monitoring_data dd WHERE dd.device_id=dev.id)
-        </where>
-    </select>
-
-    &lt;!&ndash; 查询最近一条工地监测数据 &ndash;&gt;
-    <select id="findLastMonitoringDataByProjectId" parameterType="java.lang.Integer" resultMap="MonitoringDataResult">
-        SELECT d.calibration_tsp calibrationTsp,d.calibration_two_pm calibrationTwoPm,d.calibration_ten_pm
-        calibrationTenPm,d.calibration_noise calibrationNoise,d.calibration_bg_noise
-        calibrationBgNoise,d.calibration_max_level calibrationMaxLevel,d.actual_temperature
-        actualTemperature,d.actual_humidity actualHumidity,d.actual_pressure actualPressure,d.actual_rainfall
-        actualRainfall,d.is_rain isRain,d.actual_wind_speed actualWindSpeed,d.actual_wind_direction actualWindDirection
-        FROM ibs_monitoring_data_copy d,ibs_monitoring_device dev
-        <where>
-            AND d.device_id=dev.id
-            AND dev.project_id=#{value}
-        </where>
-        ORDER BY d.col_time DESC LIMIT 1
-    </select>
-
-    &lt;!&ndash; 所有工地数据排名(按日，按月，按区县) &ndash;&gt;
-    <select id="findMonitoringProjectDataOrder" parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        &lt;!&ndash; SELECT p.pro_name proName
-         <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-             ,ROUND(AVG(da.calibration_tsp/1000),3) calibrationTsp
-         </if>
-         <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-             ,ROUND(AVG(da.calibration_two_pm),0) calibrationTwoPm
-         </if>
-         <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-             ,ROUND(AVG(da.calibration_ten_pm),0) calibrationTenPm
-         </if>
-         <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-             ,ROUND(AVG(da.calibration_noise),0) calibrationNoise
-         </if>
-         FROM ibs_monitoring_data da,ibs_monitoring_device dev,ibs_monitoring_project p
-         <where>
-             <if test="province!=null and province!=''">
-                 AND p.province=#{province}
-             </if>
-             <if test="city!=null and city!=''">
-                 AND p.city=#{city}
-             </if>
-             <if test="district!=null and district!=''">
-                 AND p.district=#{district}
-             </if>
-             <if test="proSiteType!=null and proSiteType!=0">
-                 AND p.pro_site_type=#{proSiteType}
-             </if>
-             <if test="stage!=null and stage!=0">
-                 AND p.stage=#{stage}
-             </if>
-             <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-                 AND da.col_time BETWEEN #{startTime} AND #{endTime}
-             </if>
-             AND da.device_id = dev.id AND p.id=dev.project_id
-         </where>
-         GROUP BY p.id
-         <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-             ORDER BY calibrationTsp
-         </if>
-         <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-             ORDER BY calibrationTwoPm
-         </if>
-         <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-             ORDER BY calibrationTenPm
-         </if>
-         <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-             ORDER BY calibrationNoise
-         </if>&ndash;&gt;
-        /* 2017/2/10 新思 彭 开始*/
-        SELECT p.pro_name proName
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ,da.actual_tsp calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ,da.actual_two_pm calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ,da.actual_ten_pm calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ,da.actual_noise calibrationNoise
-        </if>
-        FROM ibs_data_hour da,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            <if test="province!=null and province!=''">
-                AND p.province=#{province}
-            </if>
-            <if test="city!=null and city!=''">
-                AND p.city=#{city}
-            </if>
-            <if test="district!=null and district!=''">
-                AND p.district=#{district}
-            </if>
-            <if test="proSiteType!=null and proSiteType!=0">
-                AND p.pro_site_type=#{proSiteType}
-            </if>
-            <if test="stage!=null and stage!=0">
-                AND p.stage=#{stage}
-            </if>
-            <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-                AND da.col_time BETWEEN #{startTime} AND #{endTime}
-            </if>
-            AND da.project_id = p.id AND p.id=dev.project_id
-        </where>
-        GROUP BY p.id
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ORDER BY calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ORDER BY calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ORDER BY calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ORDER BY calibrationNoise
-        </if>
-        /* 2017/2/10 新思 彭 结束*/
-    </select>
-
-    &lt;!&ndash; 2017/2/10 新思 彭 开始&ndash;&gt;
-    &lt;!&ndash; 所有工地数据排名(按月，按区县) &ndash;&gt;
-    <select id="findMonitoringProjectDataOrderForMonth" parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT p.pro_name proName
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ,da.actual_tsp calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ,da.actual_two_pm calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ,da.actual_ten_pm calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ,da.actual_noise calibrationNoise
-        </if>
-        FROM ibs_data_day da,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            <if test="province!=null and province!=''">
-                AND p.province=#{province}
-            </if>
-            <if test="city!=null and city!=''">
-                AND p.city=#{city}
-            </if>
-            <if test="district!=null and district!=''">
-                AND p.district=#{district}
-            </if>
-            <if test="proSiteType!=null and proSiteType!=0">
-                AND p.pro_site_type=#{proSiteType}
-            </if>
-            <if test="stage!=null and stage!=0">
-                AND p.stage=#{stage}
-            </if>
-            <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-                AND da.col_time BETWEEN #{startTime} AND #{endTime}
-            </if>
-            AND da.project_id = p.id AND p.id=dev.project_id
-        </where>
-        GROUP BY p.id
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ORDER BY calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ORDER BY calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ORDER BY calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ORDER BY calibrationNoise
-        </if>
-    </select>
-    &lt;!&ndash; 2017/2/10 新思 彭 结束&ndash;&gt;
-
-    &lt;!&ndash; 所有工地数据排名(按日，按月，按区县，按工地性质) &ndash;&gt;
-    <select id="findMonitoringProjectSiteTypeDataOrder" parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT p.pro_name proName
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ,ROUND(AVG(da.calibration_tsp/1000),3) calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ,ROUND(AVG(da.calibration_two_pm),0) calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ,ROUND(AVG(da.calibration_ten_pm),0) calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ,ROUND(AVG(da.calibration_noise),0) calibrationNoise
-        </if>
-        FROM ibs_monitoring_data da,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            <if test="province!=null and province!=''">
-                AND p.province=#{province}
-            </if>
-            <if test="city!=null and city!=''">
-                AND p.city=#{city}
-            </if>
-            <if test="district!=null and district!=''">
-                AND p.district=#{district}
-            </if>
-            <if test="proSiteType!=null and proSiteType!=0">
-                AND p.pro_site_type=#{proSiteType}
-            </if>
-            <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-                AND da.col_time BETWEEN #{startTime} AND #{endTime}
-            </if>
-            <if test="stage!=null and stage!=0">
-                AND p.stage=#{stage}
-            </if>
-            AND da.device_id = dev.id AND p.id=dev.project_id
-        </where>
-        GROUP BY p.id
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ORDER BY calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ORDER BY calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ORDER BY calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ORDER BY calibrationNoise
-        </if>
-    </select>
-
-    &lt;!&ndash; 所有工地数据排名(按日，按月，按区县，按工地工期) &ndash;&gt;
-    <select id="findMonitoringProjectStageDataOrder" parameterType="com.capinfo.framework.web.vo.StatisticsQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT p.pro_name proName
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ,ROUND(AVG(da.calibration_tsp/1000),3) calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ,ROUND(AVG(da.calibration_two_pm),0) calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ,ROUND(AVG(da.calibration_ten_pm),0) calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ,ROUND(AVG(da.calibration_noise),0) calibrationNoise
-        </if>
-        FROM ibs_monitoring_data da,ibs_monitoring_device dev,ibs_monitoring_project p
-        <where>
-            <if test="province!=null and province!=''">
-                AND p.province=#{province}
-            </if>
-            <if test="city!=null and city!=''">
-                AND p.city=#{city}
-            </if>
-            <if test="district!=null and district!=''">
-                AND p.district=#{district}
-            </if>
-            <if test="proSiteType!=null and proSiteType!=0">
-                AND p.pro_site_type=#{proSiteType}
-            </if>
-            <if test="stage!=null and stage!=0">
-                AND p.stage=#{stage}
-            </if>
-            <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
-                AND da.col_time BETWEEN #{startTime} AND #{endTime}
-            </if>
-            AND da.device_id = dev.id AND p.id=dev.project_id
-        </where>
-        GROUP BY p.id
-        <if test="orderByCalibrationTsp!=null and orderByCalibrationTsp==1">
-            ORDER BY calibrationTsp
-        </if>
-        <if test="orderByCalibrationTwoPm!=null and orderByCalibrationTwoPm==1">
-            ORDER BY calibrationTwoPm
-        </if>
-        <if test="orderByCalibrationTenPm!=null and orderByCalibrationTenPm==1">
-            ORDER BY calibrationTenPm
-        </if>
-        <if test="orderByCalibrationNoise!=null and orderByCalibrationNoise==1">
-            ORDER BY calibrationNoise
-        </if>
-
-    </select>
-
-    &lt;!&ndash; 查询工地监测数据五分钟均值 &ndash;&gt;
-    <select id="findMonitoringDataAvgFiveMinByDeviceId" parameterType="java.lang.Integer"
-            resultMap="MonitoringDataResult">
-    	SELECT ROUND(AVG(d.calibration_tsp/1000),3) calibrationTsp,ROUND(AVG(d.calibration_noise),0) calibrationNoise FROM (SELECT device_id,calibration_tsp,calibration_noise FROM ibs_monitoring_data WHERE device_id=#{value} AND sh_sign=0 ORDER BY col_time LIMIT 0,5) d GROUP BY d.device_id
-	</select>
-    &lt;!&ndash;2017/1/22 新思 彭 开始&ndash;&gt;
-    <select id="findLastMonitoringDataByProjectIdFromDataCopy" parameterType="java.lang.Integer"
-            resultMap="MonitoringDataResult">
-        SELECT d.calibration_tsp calibrationTsp,d.calibration_two_pm calibrationTwoPm,d.calibration_ten_pm
-        calibrationTenPm,d.calibration_noise calibrationNoise,d.calibration_bg_noise
-        calibrationBgNoise,d.calibration_max_level calibrationMaxLevel,d.actual_temperature
-        actualTemperature,d.actual_humidity actualHumidity,d.actual_pressure actualPressure,d.actual_rainfall
-        actualRainfall,d.is_rain isRain,d.actual_wind_speed actualWindSpeed,d.actual_wind_direction actualWindDirection
-        FROM ibs_monitoring_data_copy d,ibs_monitoring_device dev
-        <where>
-            AND d.device_id=dev.id
-            AND dev.project_id=#{value}
-        </where>
-        ORDER BY d.col_time DESC LIMIT 1
-    </select>
-    &lt;!&ndash;2017/1/22 新思 彭 结束&ndash;&gt;
-    &lt;!&ndash;2017/1/18 新思 彭 开始&ndash;&gt;
-    <select id="findAllMonitoringDate" resultMap="MonitoringDataPojoResult">
-        SELECT  <include refid="all_fileds"></include> FROM ibs_monitoring_data
-    </select>
-    &lt;!&ndash;2017/1/18 新思 彭 结束&ndash;&gt;    &lt;!&ndash;2017/2/8 新思 wty 开始&ndash;&gt;
-    <select id="selectMonitorDataLimit" parameterType="java.lang.Integer"
-            resultMap="MonitoringDataResult">
-        SELECT
-        <include refid="all_fileds"></include>
-        FROM ibs_monitoring_data_online
-        LIMIT #{start},#{end}
-    </select>
-    &lt;!&ndash;2017/2/8 新思 wty 结束&ndash;&gt;
-    &lt;!&ndash;实时排名&ndash;&gt;
-
-    <sql id="query_office_where">
-        <if test="proOffice==null and cityOffice==null and disOffice!=null">
-            AND (p.bureauOffice=#{disOffice})
-        </if>
-        <if test="proOffice==null and cityOffice!=null and disOffice!=null ">
-            AND (p.bureauOffice=#{cityOffice} or p.bureauOffice=#{disOffice})
-        </if>
-        <if test="proOffice!=null and cityOffice!=null and disOffice!=null">
-            AND (p.bureauOffice=#{proOffice} or p.bureauOffice=#{cityOffice} or p.bureauOffice=#{disOffice})
-        </if>
-    </sql>
-
-
-    <sql id="query_project_where">
-        <if test="proName!=null and proName!=''">
-            AND p.pro_name=#{proName}
-        </if>
-        <if test="province!=null and province!=''">
-            AND p.province=#{province}
-        </if>
-        <if test="city!=null and city!=''">
-            AND p.city=#{city}
-        </if>
-        <if test="district!=null and district!=''">
-            AND p.district=#{district}
-        </if>
-        <if test="auditSign!=null">
-            AND p.audit_sign=#{auditSign}
-        </if>
-    </sql>
-
-    <select id="findOrderDataByHour" parameterType="com.capinfo.framework.web.vo.MonitoringProjectQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT
-        p.pro_name AS proName,
-        pd.actual_two_pm AS calibrationTwoPm,
-        pd.actual_ten_pm AS calibrationTenPm,
-        ROUND(AVG(pd.actual_tsp/1000),3) AS calibrationTsp,
-        pd.actual_noise AS calibrationNoise
-        FROM
-        ibs_monitoring_project p
-        LEFT JOIN ibs_data_hour pd ON p.id = pd.project_id
-        WHERE
-        1 = 1
-        <include refid="query_office_where"></include>
-        <include refid="query_project_where"></include>
-        and pd.col_time BETWEEN DATE_SUB(NOW(), INTERVAL 1 HOUR) AND NOW()
-        GROUP BY p.id
-    </select>
-    <select id="findOrderDataByDay" parameterType="com.capinfo.framework.web.vo.MonitoringProjectQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT
-        p.pro_name AS proName,
-        pd.actual_two_pm AS calibrationTwoPm,
-        pd.actual_ten_pm AS calibrationTenPm,
-        ROUND(AVG(pd.actual_tsp/1000),3) AS calibrationTsp,
-        pd.actual_noise AS calibrationNoise
-        FROM
-        ibs_monitoring_project p
-        LEFT JOIN ibs_data_day pd ON p.id = pd.project_id
-        WHERE
-        1 = 1
-        <include refid="query_office_where"></include>
-        <include refid="query_project_where"></include>
-        and col_time BETWEEN DATE_SUB(NOW(), INTERVAL 1 DAY ) AND NOW()
-        GROUP BY p.id
-    </select>
-    <select id="findOrderDataByMonth" parameterType="com.capinfo.framework.web.vo.MonitoringProjectQueryBean"
-            resultType="com.capinfo.framework.web.vo.MonitoringDataResult">
-        SELECT
-        p.pro_name AS proName,
-        pd.actual_two_pm AS calibrationTwoPm,
-        pd.actual_ten_pm AS calibrationTenPm,
-        ROUND(AVG(pd.actual_tsp/1000),3) AS calibrationTsp,
-        pd.actual_noise AS calibrationNoise
-        FROM
-        ibs_monitoring_project p
-        LEFT JOIN ibs_data_day pd ON p.id = pd.project_id
-        WHERE
-        1 = 1
-        <include refid="query_office_where"></include>
-        <include refid="query_project_where"></include>
-        and pd.col_time BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH ) AND NOW()
-        GROUP BY p.id
-    </select>
--->
-
+<mapper namespace="com.capinfo.framework.web.mapper.MonitoringDataMapper" >
+  <resultMap id="BaseResultMap" type="com.capinfo.framework.web.pojo.MonitoringData" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="actual_tsp" property="actualTsp" jdbcType="DECIMAL" />
+    <result column="calibration_tsp" property="calibrationTsp" jdbcType="DECIMAL" />
+    <result column="actual_two_pm" property="actualTwoPm" jdbcType="DECIMAL" />
+    <result column="calibration_two_pm" property="calibrationTwoPm" jdbcType="DECIMAL" />
+    <result column="actual_ten_pm" property="actualTenPm" jdbcType="DECIMAL" />
+    <result column="calibration_ten_pm" property="calibrationTenPm" jdbcType="DECIMAL" />
+    <result column="actual_noise" property="actualNoise" jdbcType="DECIMAL" />
+    <result column="calibration_noise" property="calibrationNoise" jdbcType="DECIMAL" />
+    <result column="actual_bg_noise" property="actualBgNoise" jdbcType="DECIMAL" />
+    <result column="calibration_bg_noise" property="calibrationBgNoise" jdbcType="DECIMAL" />
+    <result column="actual_02" property="actual02" jdbcType="DECIMAL" />
+    <result column="calibration_02" property="calibration02" jdbcType="DECIMAL" />
+    <result column="actual_NO2" property="actualNo2" jdbcType="DECIMAL" />
+    <result column="calibration_NO2" property="calibrationNo2" jdbcType="DECIMAL" />
+    <result column="actual_03" property="actual03" jdbcType="DECIMAL" />
+    <result column="calibration_03" property="calibration03" jdbcType="DECIMAL" />
+    <result column="actual_04" property="actual04" jdbcType="DECIMAL" />
+    <result column="calibration_04" property="calibration04" jdbcType="DECIMAL" />
+    <result column="actual_AQI" property="actualAqi" jdbcType="DECIMAL" />
+    <result column="calibration_AQI" property="calibrationAqi" jdbcType="DECIMAL" />
+    <result column="actual_max_level" property="actualMaxLevel" jdbcType="INTEGER" />
+    <result column="calibration_max_level" property="calibrationMaxLevel" jdbcType="INTEGER" />
+    <result column="before_dev_calibration" property="beforeDevCalibration" jdbcType="DECIMAL" />
+    <result column="after_dev_calibration" property="afterDevCalibration" jdbcType="DECIMAL" />
+    <result column="actual_temperature" property="actualTemperature" jdbcType="DECIMAL" />
+    <result column="actual_humidity" property="actualHumidity" jdbcType="DECIMAL" />
+    <result column="actual_pressure" property="actualPressure" jdbcType="INTEGER" />
+    <result column="actual_rainfall" property="actualRainfall" jdbcType="DECIMAL" />
+    <result column="is_rain" property="isRain" jdbcType="BIT" />
+    <result column="actual_wind_speed" property="actualWindSpeed" jdbcType="DECIMAL" />
+    <result column="actual_wind_direction" property="actualWindDirection" jdbcType="INTEGER" />
+    <result column="electric_quantity" property="electricQuantity" jdbcType="INTEGER" />
+    <result column="col_time" property="colTime" jdbcType="TIMESTAMP" />
+    <result column="long_time" property="longTime" jdbcType="INTEGER" />
+    <result column="data_sign" property="dataSign" jdbcType="CHAR" />
+    <result column="creater" property="creater" jdbcType="INTEGER" />
+    <result column="updater" property="updater" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="sh_sign" property="shSign" jdbcType="BIT" />
+    <association column="device_id" property="monitoringDevice"
+                 javaType="com.capinfo.framework.web.pojo.MonitoringDevice"
+                 select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringDeviceById"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, actual_tsp, calibration_tsp, actual_two_pm, calibration_two_pm, actual_ten_pm, 
+    calibration_ten_pm, actual_noise, calibration_noise, actual_bg_noise, calibration_bg_noise, 
+    actual_02, calibration_02, actual_NO2, calibration_NO2, actual_03, calibration_03, 
+    actual_04, calibration_04, actual_AQI, calibration_AQI, actual_max_level, calibration_max_level, 
+    before_dev_calibration, after_dev_calibration, actual_temperature, actual_humidity, 
+    actual_pressure, actual_rainfall, is_rain, actual_wind_speed, actual_wind_direction, 
+    electric_quantity, col_time, long_time, data_sign, creater, updater, create_time, 
+    update_time, version, device_id, sh_sign
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ibs_monitoring_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ibs_monitoring_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.capinfo.framework.web.pojo.MonitoringData" >
+    insert into ibs_monitoring_data (id, actual_tsp, calibration_tsp, 
+      actual_two_pm, calibration_two_pm, actual_ten_pm, 
+      calibration_ten_pm, actual_noise, calibration_noise, 
+      actual_bg_noise, calibration_bg_noise, actual_02, 
+      calibration_02, actual_NO2, calibration_NO2, 
+      actual_03, calibration_03, actual_04, 
+      calibration_04, actual_AQI, calibration_AQI, 
+      actual_max_level, calibration_max_level, before_dev_calibration, 
+      after_dev_calibration, actual_temperature, 
+      actual_humidity, actual_pressure, actual_rainfall, 
+      is_rain, actual_wind_speed, actual_wind_direction, 
+      electric_quantity, col_time, long_time, 
+      data_sign, creater, updater, 
+      create_time, update_time, version, 
+      device_id, sh_sign)
+    values (#{id,jdbcType=INTEGER}, #{actualTsp,jdbcType=DECIMAL}, #{calibrationTsp,jdbcType=DECIMAL}, 
+      #{actualTwoPm,jdbcType=DECIMAL}, #{calibrationTwoPm,jdbcType=DECIMAL}, #{actualTenPm,jdbcType=DECIMAL}, 
+      #{calibrationTenPm,jdbcType=DECIMAL}, #{actualNoise,jdbcType=DECIMAL}, #{calibrationNoise,jdbcType=DECIMAL}, 
+      #{actualBgNoise,jdbcType=DECIMAL}, #{calibrationBgNoise,jdbcType=DECIMAL}, #{actual02,jdbcType=DECIMAL}, 
+      #{calibration02,jdbcType=DECIMAL}, #{actualNo2,jdbcType=DECIMAL}, #{calibrationNo2,jdbcType=DECIMAL}, 
+      #{actual03,jdbcType=DECIMAL}, #{calibration03,jdbcType=DECIMAL}, #{actual04,jdbcType=DECIMAL}, 
+      #{calibration04,jdbcType=DECIMAL}, #{actualAqi,jdbcType=DECIMAL}, #{calibrationAqi,jdbcType=DECIMAL}, 
+      #{actualMaxLevel,jdbcType=INTEGER}, #{calibrationMaxLevel,jdbcType=INTEGER}, #{beforeDevCalibration,jdbcType=DECIMAL}, 
+      #{afterDevCalibration,jdbcType=DECIMAL}, #{actualTemperature,jdbcType=DECIMAL}, 
+      #{actualHumidity,jdbcType=DECIMAL}, #{actualPressure,jdbcType=INTEGER}, #{actualRainfall,jdbcType=DECIMAL}, 
+      #{isRain,jdbcType=BIT}, #{actualWindSpeed,jdbcType=DECIMAL}, #{actualWindDirection,jdbcType=INTEGER}, 
+      #{electricQuantity,jdbcType=INTEGER}, #{colTime,jdbcType=TIMESTAMP}, #{longTime,jdbcType=INTEGER}, 
+      #{dataSign,jdbcType=CHAR}, #{creater,jdbcType=INTEGER}, #{updater,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, 
+      #{deviceId,jdbcType=INTEGER}, #{shSign,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.capinfo.framework.web.pojo.MonitoringData" >
+    insert into ibs_monitoring_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="actualTsp != null" >
+        actual_tsp,
+      </if>
+      <if test="calibrationTsp != null" >
+        calibration_tsp,
+      </if>
+      <if test="actualTwoPm != null" >
+        actual_two_pm,
+      </if>
+      <if test="calibrationTwoPm != null" >
+        calibration_two_pm,
+      </if>
+      <if test="actualTenPm != null" >
+        actual_ten_pm,
+      </if>
+      <if test="calibrationTenPm != null" >
+        calibration_ten_pm,
+      </if>
+      <if test="actualNoise != null" >
+        actual_noise,
+      </if>
+      <if test="calibrationNoise != null" >
+        calibration_noise,
+      </if>
+      <if test="actualBgNoise != null" >
+        actual_bg_noise,
+      </if>
+      <if test="calibrationBgNoise != null" >
+        calibration_bg_noise,
+      </if>
+      <if test="actual02 != null" >
+        actual_02,
+      </if>
+      <if test="calibration02 != null" >
+        calibration_02,
+      </if>
+      <if test="actualNo2 != null" >
+        actual_NO2,
+      </if>
+      <if test="calibrationNo2 != null" >
+        calibration_NO2,
+      </if>
+      <if test="actual03 != null" >
+        actual_03,
+      </if>
+      <if test="calibration03 != null" >
+        calibration_03,
+      </if>
+      <if test="actual04 != null" >
+        actual_04,
+      </if>
+      <if test="calibration04 != null" >
+        calibration_04,
+      </if>
+      <if test="actualAqi != null" >
+        actual_AQI,
+      </if>
+      <if test="calibrationAqi != null" >
+        calibration_AQI,
+      </if>
+      <if test="actualMaxLevel != null" >
+        actual_max_level,
+      </if>
+      <if test="calibrationMaxLevel != null" >
+        calibration_max_level,
+      </if>
+      <if test="beforeDevCalibration != null" >
+        before_dev_calibration,
+      </if>
+      <if test="afterDevCalibration != null" >
+        after_dev_calibration,
+      </if>
+      <if test="actualTemperature != null" >
+        actual_temperature,
+      </if>
+      <if test="actualHumidity != null" >
+        actual_humidity,
+      </if>
+      <if test="actualPressure != null" >
+        actual_pressure,
+      </if>
+      <if test="actualRainfall != null" >
+        actual_rainfall,
+      </if>
+      <if test="isRain != null" >
+        is_rain,
+      </if>
+      <if test="actualWindSpeed != null" >
+        actual_wind_speed,
+      </if>
+      <if test="actualWindDirection != null" >
+        actual_wind_direction,
+      </if>
+      <if test="electricQuantity != null" >
+        electric_quantity,
+      </if>
+      <if test="colTime != null" >
+        col_time,
+      </if>
+      <if test="longTime != null" >
+        long_time,
+      </if>
+      <if test="dataSign != null" >
+        data_sign,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="shSign != null" >
+        sh_sign,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="actualTsp != null" >
+        #{actualTsp,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationTsp != null" >
+        #{calibrationTsp,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTwoPm != null" >
+        #{actualTwoPm,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationTwoPm != null" >
+        #{calibrationTwoPm,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTenPm != null" >
+        #{actualTenPm,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationTenPm != null" >
+        #{calibrationTenPm,jdbcType=DECIMAL},
+      </if>
+      <if test="actualNoise != null" >
+        #{actualNoise,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationNoise != null" >
+        #{calibrationNoise,jdbcType=DECIMAL},
+      </if>
+      <if test="actualBgNoise != null" >
+        #{actualBgNoise,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationBgNoise != null" >
+        #{calibrationBgNoise,jdbcType=DECIMAL},
+      </if>
+      <if test="actual02 != null" >
+        #{actual02,jdbcType=DECIMAL},
+      </if>
+      <if test="calibration02 != null" >
+        #{calibration02,jdbcType=DECIMAL},
+      </if>
+      <if test="actualNo2 != null" >
+        #{actualNo2,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationNo2 != null" >
+        #{calibrationNo2,jdbcType=DECIMAL},
+      </if>
+      <if test="actual03 != null" >
+        #{actual03,jdbcType=DECIMAL},
+      </if>
+      <if test="calibration03 != null" >
+        #{calibration03,jdbcType=DECIMAL},
+      </if>
+      <if test="actual04 != null" >
+        #{actual04,jdbcType=DECIMAL},
+      </if>
+      <if test="calibration04 != null" >
+        #{calibration04,jdbcType=DECIMAL},
+      </if>
+      <if test="actualAqi != null" >
+        #{actualAqi,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationAqi != null" >
+        #{calibrationAqi,jdbcType=DECIMAL},
+      </if>
+      <if test="actualMaxLevel != null" >
+        #{actualMaxLevel,jdbcType=INTEGER},
+      </if>
+      <if test="calibrationMaxLevel != null" >
+        #{calibrationMaxLevel,jdbcType=INTEGER},
+      </if>
+      <if test="beforeDevCalibration != null" >
+        #{beforeDevCalibration,jdbcType=DECIMAL},
+      </if>
+      <if test="afterDevCalibration != null" >
+        #{afterDevCalibration,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTemperature != null" >
+        #{actualTemperature,jdbcType=DECIMAL},
+      </if>
+      <if test="actualHumidity != null" >
+        #{actualHumidity,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPressure != null" >
+        #{actualPressure,jdbcType=INTEGER},
+      </if>
+      <if test="actualRainfall != null" >
+        #{actualRainfall,jdbcType=DECIMAL},
+      </if>
+      <if test="isRain != null" >
+        #{isRain,jdbcType=BIT},
+      </if>
+      <if test="actualWindSpeed != null" >
+        #{actualWindSpeed,jdbcType=DECIMAL},
+      </if>
+      <if test="actualWindDirection != null" >
+        #{actualWindDirection,jdbcType=INTEGER},
+      </if>
+      <if test="electricQuantity != null" >
+        #{electricQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="colTime != null" >
+        #{colTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="longTime != null" >
+        #{longTime,jdbcType=INTEGER},
+      </if>
+      <if test="dataSign != null" >
+        #{dataSign,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="shSign != null" >
+        #{shSign,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.capinfo.framework.web.pojo.MonitoringData" >
+    update ibs_monitoring_data
+    <set >
+      <if test="actualTsp != null" >
+        actual_tsp = #{actualTsp,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationTsp != null" >
+        calibration_tsp = #{calibrationTsp,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTwoPm != null" >
+        actual_two_pm = #{actualTwoPm,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationTwoPm != null" >
+        calibration_two_pm = #{calibrationTwoPm,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTenPm != null" >
+        actual_ten_pm = #{actualTenPm,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationTenPm != null" >
+        calibration_ten_pm = #{calibrationTenPm,jdbcType=DECIMAL},
+      </if>
+      <if test="actualNoise != null" >
+        actual_noise = #{actualNoise,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationNoise != null" >
+        calibration_noise = #{calibrationNoise,jdbcType=DECIMAL},
+      </if>
+      <if test="actualBgNoise != null" >
+        actual_bg_noise = #{actualBgNoise,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationBgNoise != null" >
+        calibration_bg_noise = #{calibrationBgNoise,jdbcType=DECIMAL},
+      </if>
+      <if test="actual02 != null" >
+        actual_02 = #{actual02,jdbcType=DECIMAL},
+      </if>
+      <if test="calibration02 != null" >
+        calibration_02 = #{calibration02,jdbcType=DECIMAL},
+      </if>
+      <if test="actualNo2 != null" >
+        actual_NO2 = #{actualNo2,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationNo2 != null" >
+        calibration_NO2 = #{calibrationNo2,jdbcType=DECIMAL},
+      </if>
+      <if test="actual03 != null" >
+        actual_03 = #{actual03,jdbcType=DECIMAL},
+      </if>
+      <if test="calibration03 != null" >
+        calibration_03 = #{calibration03,jdbcType=DECIMAL},
+      </if>
+      <if test="actual04 != null" >
+        actual_04 = #{actual04,jdbcType=DECIMAL},
+      </if>
+      <if test="calibration04 != null" >
+        calibration_04 = #{calibration04,jdbcType=DECIMAL},
+      </if>
+      <if test="actualAqi != null" >
+        actual_AQI = #{actualAqi,jdbcType=DECIMAL},
+      </if>
+      <if test="calibrationAqi != null" >
+        calibration_AQI = #{calibrationAqi,jdbcType=DECIMAL},
+      </if>
+      <if test="actualMaxLevel != null" >
+        actual_max_level = #{actualMaxLevel,jdbcType=INTEGER},
+      </if>
+      <if test="calibrationMaxLevel != null" >
+        calibration_max_level = #{calibrationMaxLevel,jdbcType=INTEGER},
+      </if>
+      <if test="beforeDevCalibration != null" >
+        before_dev_calibration = #{beforeDevCalibration,jdbcType=DECIMAL},
+      </if>
+      <if test="afterDevCalibration != null" >
+        after_dev_calibration = #{afterDevCalibration,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTemperature != null" >
+        actual_temperature = #{actualTemperature,jdbcType=DECIMAL},
+      </if>
+      <if test="actualHumidity != null" >
+        actual_humidity = #{actualHumidity,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPressure != null" >
+        actual_pressure = #{actualPressure,jdbcType=INTEGER},
+      </if>
+      <if test="actualRainfall != null" >
+        actual_rainfall = #{actualRainfall,jdbcType=DECIMAL},
+      </if>
+      <if test="isRain != null" >
+        is_rain = #{isRain,jdbcType=BIT},
+      </if>
+      <if test="actualWindSpeed != null" >
+        actual_wind_speed = #{actualWindSpeed,jdbcType=DECIMAL},
+      </if>
+      <if test="actualWindDirection != null" >
+        actual_wind_direction = #{actualWindDirection,jdbcType=INTEGER},
+      </if>
+      <if test="electricQuantity != null" >
+        electric_quantity = #{electricQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="colTime != null" >
+        col_time = #{colTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="longTime != null" >
+        long_time = #{longTime,jdbcType=INTEGER},
+      </if>
+      <if test="dataSign != null" >
+        data_sign = #{dataSign,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="shSign != null" >
+        sh_sign = #{shSign,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.capinfo.framework.web.pojo.MonitoringData" >
+    update ibs_monitoring_data
+    set actual_tsp = #{actualTsp,jdbcType=DECIMAL},
+      calibration_tsp = #{calibrationTsp,jdbcType=DECIMAL},
+      actual_two_pm = #{actualTwoPm,jdbcType=DECIMAL},
+      calibration_two_pm = #{calibrationTwoPm,jdbcType=DECIMAL},
+      actual_ten_pm = #{actualTenPm,jdbcType=DECIMAL},
+      calibration_ten_pm = #{calibrationTenPm,jdbcType=DECIMAL},
+      actual_noise = #{actualNoise,jdbcType=DECIMAL},
+      calibration_noise = #{calibrationNoise,jdbcType=DECIMAL},
+      actual_bg_noise = #{actualBgNoise,jdbcType=DECIMAL},
+      calibration_bg_noise = #{calibrationBgNoise,jdbcType=DECIMAL},
+      actual_02 = #{actual02,jdbcType=DECIMAL},
+      calibration_02 = #{calibration02,jdbcType=DECIMAL},
+      actual_NO2 = #{actualNo2,jdbcType=DECIMAL},
+      calibration_NO2 = #{calibrationNo2,jdbcType=DECIMAL},
+      actual_03 = #{actual03,jdbcType=DECIMAL},
+      calibration_03 = #{calibration03,jdbcType=DECIMAL},
+      actual_04 = #{actual04,jdbcType=DECIMAL},
+      calibration_04 = #{calibration04,jdbcType=DECIMAL},
+      actual_AQI = #{actualAqi,jdbcType=DECIMAL},
+      calibration_AQI = #{calibrationAqi,jdbcType=DECIMAL},
+      actual_max_level = #{actualMaxLevel,jdbcType=INTEGER},
+      calibration_max_level = #{calibrationMaxLevel,jdbcType=INTEGER},
+      before_dev_calibration = #{beforeDevCalibration,jdbcType=DECIMAL},
+      after_dev_calibration = #{afterDevCalibration,jdbcType=DECIMAL},
+      actual_temperature = #{actualTemperature,jdbcType=DECIMAL},
+      actual_humidity = #{actualHumidity,jdbcType=DECIMAL},
+      actual_pressure = #{actualPressure,jdbcType=INTEGER},
+      actual_rainfall = #{actualRainfall,jdbcType=DECIMAL},
+      is_rain = #{isRain,jdbcType=BIT},
+      actual_wind_speed = #{actualWindSpeed,jdbcType=DECIMAL},
+      actual_wind_direction = #{actualWindDirection,jdbcType=INTEGER},
+      electric_quantity = #{electricQuantity,jdbcType=INTEGER},
+      col_time = #{colTime,jdbcType=TIMESTAMP},
+      long_time = #{longTime,jdbcType=INTEGER},
+      data_sign = #{dataSign,jdbcType=CHAR},
+      creater = #{creater,jdbcType=INTEGER},
+      updater = #{updater,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      device_id = #{deviceId,jdbcType=INTEGER},
+      sh_sign = #{shSign,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findMonitoringDataList" resultMap="BaseResultMap">
+    SELECT * FROM ibs_monitoring_data
+    ORDER BY create_time
+  </select>
 </mapper>

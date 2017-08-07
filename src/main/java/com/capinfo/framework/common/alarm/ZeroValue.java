@@ -1,17 +1,16 @@
 package com.capinfo.framework.common.alarm;
 
 /**
- * Created by shijing on 2017/8/4.
+ * Created by shijing on 2017/8/7.
  */
-public class OffLine extends BaseMethod{
-//    public OffLine(CheckData checkData){
+public class ZeroValue extends BaseMethod {
+//    public ZeroValue(CheckData checkData){
 //        super(checkData);
 //    }
 //    @Override
 //    public void run(){
 //        try{
-//            System.out.println("offLine !!!");
-//
+//            System.out.println("ZeroValue !!!");
 //        }catch (Exception e){
 //            e.printStackTrace();
 //        }

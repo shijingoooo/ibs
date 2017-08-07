@@ -29,10 +29,9 @@ public class MonitoringDeviceService {
 	@Autowired
 	private UserMapper userMapper;
 	//获取设备列表
-	public List<MonitoringDevice> findMonitoringDeviceList(MonitoringDeviceQueryBean deviceQueryBean) throws Exception {
-		return deviceMapper.findMonitoringDeviceList(deviceQueryBean);
+	public List<MonitoringDevice> findMonitoringDeviceList() throws Exception {
+		return deviceMapper.findMonitoringDeviceList();
 	}
-
 	public List<MonitoringDevice> findMonitoringDeviceShList(MonitoringDeviceQueryBean deviceQueryBean) throws Exception {
 		return deviceMapper.findMonitoringDeviceShList(deviceQueryBean);
 	}

@@ -1,15 +1,13 @@
 package com.capinfo.framework.common.alarm;
 
-import com.capinfo.framework.web.mapper.MonitoringDeviceMapper;
-import com.capinfo.framework.web.pojo.AlarmDevp;
-import com.capinfo.framework.web.pojo.MonitoringData;
-import com.capinfo.framework.web.pojo.MonitoringDevice;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
 /**
  * Created by shijing on 2017/8/4.
  */
+@Component("checkData")
 public class CheckData {
     private ArrayList<BaseMethod> methods;
 
@@ -33,8 +31,5 @@ public class CheckData {
             BaseMethod baseMethod = (BaseMethod)methods.get(i);
             baseMethod.run();
         }
-    }
-    public void changed(){
-        notifyMethod();
     }
 }

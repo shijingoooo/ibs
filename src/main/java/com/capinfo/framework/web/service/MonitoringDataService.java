@@ -22,8 +22,11 @@ public class MonitoringDataService{
     @Autowired
     private MonitoringDataMapper dataMapper;
 
-
-   /* @Override
+    public List<MonitoringData> findMonitoringDataList() throws Exception {
+        return dataMapper.findMonitoringDataList();
+    }
+    /*
+    @Override
     public List<MonitoringData> findMonitoringDataList(MonitoringDataQueryBean dataQueryBean) throws Exception {
         return dataMapper.findMonitoringDataList(dataQueryBean);
     }

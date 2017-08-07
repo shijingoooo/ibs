@@ -8,8 +8,32 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
     <context:component-scan base-package="com.capinfo.framework.web.common.job"/>
+    <context:component-scan base-package="com.capinfo.framework.common.alarm"/>
 
-    <bean id="pushData" class="com.capinfo.framework.web.common.job.PushDataJob"></bean>
+    <!--有参数构造方法注入-->
+    <bean id="myTask" class="com.capinfo.framework.common.alarm.MyTask">
+        <constructor-arg ref="powerOff"/>
+        <constructor-arg ref="checkData"/>
+    </bean>
+    <bean id="myTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="myTask"/>
+        </property>
+        <property name="targetMethod">
+            <value>run</value>
+        </property>
+    </bean>
+    <!--<bean id="myTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="myTaskJobDetail"/>
+        <property name="cronExpression" value="0/10 * * ? * *"></property>
+    </bean>-->
+    <bean id="myTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="myTaskJobDetail"/>
+        <property name="startDelay" value="2000"/>
+        <property name="repeatInterval" value="10000"/>
+        <property name="repeatCount" value="1"/>
+    </bean>
+    <!--<bean id="pushData" class="com.capinfo.framework.web.common.job.PushDataJob"></bean>
     <bean id="pushDataJob"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
@@ -25,7 +49,7 @@
         <property name="cronExpression">
             <value>0 0/5 * * * ?</value>
         </property>
-        <!-- 容器启动后 延时 0毫秒 后 定时器开始启动 -->
+        &lt;!&ndash; 容器启动后 延时 0毫秒 后 定时器开始启动 &ndash;&gt;
         <property name="startDelay">
             <value>30000</value>
         </property>
@@ -47,7 +71,7 @@
         <property name="cronExpression">
             <value>0 0/1 * * * ?</value>
         </property>
-        <!-- 容器启动后 延时 0毫秒 后 定时器开始启动 -->
+        &lt;!&ndash; 容器启动后 延时 0毫秒 后 定时器开始启动 &ndash;&gt;
         <property name="startDelay">
             <value>30000</value>
         </property>
@@ -69,12 +93,12 @@
         <property name="cronExpression">
             <value>0 /2 * * * ?</value>
         </property>
-        <!-- 容器启动后 延时 0毫秒 后 定时器开始启动 -->
+        &lt;!&ndash; 容器启动后 延时 0毫秒 后 定时器开始启动 &ndash;&gt;
         <property name="startDelay">
             <value>30000</value>
         </property>
     </bean>
-    <!--2017/1/18 新思 彭  开始-->
+    &lt;!&ndash;2017/1/18 新思 彭  开始&ndash;&gt;
     <bean id="moveDatabases" class="com.capinfo.framework.web.common.job.DataBaseJob"></bean>
     <bean id="dataBaseJob"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -91,17 +115,17 @@
         <property name="cronExpression">
             <value>0 0 1 * * ?</value>
         </property>
-        <!-- 容器启动后 延时 0毫秒 后 定时器开始启动 -->
+        &lt;!&ndash; 容器启动后 延时 0毫秒 后 定时器开始启动 &ndash;&gt;
         <property name="startDelay">
             <value>30000</value>
         </property>
-    </bean>
+    </bean>-->
     <!--2017/1/18 新思 彭  结束-->
 
     <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  -->
     <bean id="startQuertz" lazy-init="false" autowire="no"
           class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
+        <property name="jobDetails">
             <list>
                 <!--<ref bean="pushDataTrigger" /> -->
                 <!--新思 彭  开始-->
@@ -110,7 +134,13 @@
                 <!--2017/1/18 新思 彭  开始-->
                 <!-- <ref bean="dataBaseTrigger"/>-->
                 <!--2017/1/18 新思 彭  结束-->
-                <ref bean="statusScanTrigger"/>
+                <!--<ref bean="statusScanTrigger"/>-->
+                <ref bean="myTaskJobDetail"/>
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="myTaskTrigger"/>
             </list>
         </property>
     </bean>

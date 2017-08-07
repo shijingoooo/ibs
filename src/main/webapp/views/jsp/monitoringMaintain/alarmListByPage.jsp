@@ -27,66 +27,66 @@
 <div class="pageHeader">
     告警情况描述
 </div>
-<div class="pageContent">
-    <table class="table" width="100%" rel="maintain_list">
-        <thead>
-        <tr>
-            <th width="30" align="center">
-                <div title="" class="gridCol">
-                    <input class="checkboxCtrl" type="checkbox" group="recordIds">
-                </div>
-            </th>
-            <th width="80">告警类型</th>
-            <th width="80">告警数量</th>
-            <th width="80">告警类型</th>
-            <th width="80">发生时间</th>
-            <th width="80">处理状态</th>
-            <th width="50">告警原因</th>
-            <th width="50">操作</th>
-        </tr>
-        </thead>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-        <td>6</td>
-        <td>
-        <td>
-        </td>
-        <%--<tbody>
-        <c:forEach var="obj" items="${page.result}" varStatus="index">
-            <tr target="tr_form" rel="${obj.id}">
-                <td>
-                    <div>
-                        <input name="recordIds" type="checkbox" value="${obj.id}"/>
-                    </div>
-                </td>
-                <td class="devCode">
-                    <self:a code="ibs_device_maintain_update" name="${obj.deviceCode}"
-                            parameter="?recordId=${obj.id}" style="icon" target="dialog"
-                            mask="true" rel="updateRecord" width="620" height="600"></self:a>
-                </td>
-                <td><fmt:formatDate value="${obj.troubleTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                <td>
-                    <c:choose>
-                        <c:when test="${obj.troubleType =='请选择'}">
-                        </c:when>
-                        <c:otherwise>
-                            ${obj.troubleType}
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td>${obj.solveWay}</td>
-                <td>${obj.solveMethod}</td>
-                <td>${obj.responsible}</td>
-                <td>${obj.remark}</td>
-                <td>操作</td>
-            </tr>
-        </c:forEach>
-        </tbody>--%>
-    </table>
-</div>
+<%--<div class="pageContent">--%>
+    <%--<table class="table" width="100%" rel="maintain_list">--%>
+        <%--<thead>--%>
+        <%--<tr>--%>
+            <%--<th width="30" align="center">--%>
+                <%--<div title="" class="gridCol">--%>
+                    <%--<input class="checkboxCtrl" type="checkbox" group="recordIds">--%>
+                <%--</div>--%>
+            <%--</th>--%>
+            <%--<th width="80">告警类型</th>--%>
+            <%--<th width="80">告警数量</th>--%>
+            <%--<th width="80">告警类型</th>--%>
+            <%--<th width="80">发生时间</th>--%>
+            <%--<th width="80">处理状态</th>--%>
+            <%--<th width="50">告警原因</th>--%>
+            <%--<th width="50">操作</th>--%>
+        <%--</tr>--%>
+        <%--</thead>--%>
+        <%--<td>1</td>--%>
+        <%--<td>2</td>--%>
+        <%--<td>3</td>--%>
+        <%--<td>4</td>--%>
+        <%--<td>5</td>--%>
+        <%--<td>6</td>--%>
+        <%--<td>--%>
+        <%--<td>--%>
+        <%--</td>--%>
+        <%--&lt;%&ndash;<tbody>--%>
+        <%--<c:forEach var="obj" items="${page.result}" varStatus="index">--%>
+            <%--<tr target="tr_form" rel="${obj.id}">--%>
+                <%--<td>--%>
+                    <%--<div>--%>
+                        <%--<input name="recordIds" type="checkbox" value="${obj.id}"/>--%>
+                    <%--</div>--%>
+                <%--</td>--%>
+                <%--<td class="devCode">--%>
+                    <%--<self:a code="ibs_device_maintain_update" name="${obj.deviceCode}"--%>
+                            <%--parameter="?recordId=${obj.id}" style="icon" target="dialog"--%>
+                            <%--mask="true" rel="updateRecord" width="620" height="600"></self:a>--%>
+                <%--</td>--%>
+                <%--<td><fmt:formatDate value="${obj.troubleTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>--%>
+                <%--<td>--%>
+                    <%--<c:choose>--%>
+                        <%--<c:when test="${obj.troubleType =='请选择'}">--%>
+                        <%--</c:when>--%>
+                        <%--<c:otherwise>--%>
+                            <%--${obj.troubleType}--%>
+                        <%--</c:otherwise>--%>
+                    <%--</c:choose>--%>
+                <%--</td>--%>
+                <%--<td>${obj.solveWay}</td>--%>
+                <%--<td>${obj.solveMethod}</td>--%>
+                <%--<td>${obj.responsible}</td>--%>
+                <%--<td>${obj.remark}</td>--%>
+                <%--<td>操作</td>--%>
+            <%--</tr>--%>
+        <%--</c:forEach>--%>
+        <%--</tbody>&ndash;%&gt;--%>
+    <%--</table>--%>
+<%--</div>--%>
 <div class="pageHeader">
     <form id="pagerForm" onsubmit="return navTabSearch(this);"
           action="${ctx}/monitoringAlarm/listByPage.action" method="post">

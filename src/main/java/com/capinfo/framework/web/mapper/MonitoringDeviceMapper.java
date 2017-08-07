@@ -25,7 +25,7 @@ public interface MonitoringDeviceMapper {
 
 	public MonitoringDevice findMonitoringDeviceUnique(MonitoringDeviceQueryBean deviceQueryBean) throws Exception;
 
-	public List<MonitoringDevice> findMonitoringDeviceList(MonitoringDeviceQueryBean deviceQueryBean) throws Exception;
+	public List<MonitoringDevice> findMonitoringDeviceList() throws Exception;
 
     //public List<DeviceRecentData> findMonitoringDeviceRecentDataList(MonitoringDeviceQueryBean deviceQueryBean) throws Exception;
 

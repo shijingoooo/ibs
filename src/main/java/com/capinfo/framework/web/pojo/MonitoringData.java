@@ -1,103 +1,96 @@
 package com.capinfo.framework.web.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * 检测数据
- *
- * @author kevin_zhan
- */
 public class MonitoringData {
+    private Integer id;
 
+    private BigDecimal actualTsp;
 
-    protected Integer id;
+    private BigDecimal calibrationTsp;
 
-    // 粉尘 实际测量值
-    protected Float actual_tsp;
+    private BigDecimal actualTwoPm;
 
-    // 校准值
-    protected Float calibration_tsp;
+    private BigDecimal calibrationTwoPm;
 
-    // pm2.5
-    protected Float actual_two_pm;
+    private BigDecimal actualTenPm;
 
-    // 校准值
-    protected Float calibration_two_pm;
+    private BigDecimal calibrationTenPm;
 
-    // pm10
-    protected Float actual_ten_pm;
+    private BigDecimal actualNoise;
 
-    // 校准值
-    protected Float calibration_ten_pm;
+    private BigDecimal calibrationNoise;
 
-    // 噪声
-    protected Float actual_noise;
+    private BigDecimal actualBgNoise;
 
-    // 校准值
-    protected Float calibration_noise;
+    private BigDecimal calibrationBgNoise;
 
-    // 背景噪声
-    protected Float actual_bg_noise;
+    private BigDecimal actual02;
 
-    // 校准值
-    protected Float calibration_bg_noise;
+    private BigDecimal calibration02;
 
-    // 最大声值级别
-    protected Integer actual_max_level;
+    private BigDecimal actualNo2;
 
-    // 校准值
-    protected Integer calibration_max_level;
+    private BigDecimal calibrationNo2;
 
-    // 测前仪器校准值
-    protected Float before_dev_calibration;
+    private BigDecimal actual03;
 
-    // 测后仪器校准值
-    protected Float after_dev_calibration;
+    private BigDecimal calibration03;
 
-    // 温度
-    protected Float actual_temperature;
+    private BigDecimal actual04;
 
-    // 湿度
-    protected Float actual_humidity;
+    private BigDecimal calibration04;
 
-    // 气压
-    protected Integer actual_pressure;
+    private BigDecimal actualAqi;
 
-    // 降雨量
-    protected Float actual_rainfall;
+    private BigDecimal calibrationAqi;
 
-    // 是否下雨
-    protected Integer is_rain;
+    private Integer actualMaxLevel;
 
-    // 风速
-    protected Float actual_wind_speed;
+    private Integer calibrationMaxLevel;
 
-    // 风向 按360度划分，0° 北向，90°东向，180°南向，270°西向
-    protected Integer actual_wind_direction;
+    private BigDecimal beforeDevCalibration;
 
-    // 电池电量
-    protected Integer electric_quantity;
-    // 采集时间
-    protected Date col_time;
+    private BigDecimal afterDevCalibration;
 
-    protected Integer long_time;
+    private BigDecimal actualTemperature;
 
-    // 数据标示
-    protected String data_sign;
+    private BigDecimal actualHumidity;
 
-    protected Integer creater;
+    private Integer actualPressure;
 
-    protected Integer updater;
+    private BigDecimal actualRainfall;
 
-    protected Date create_time;
+    private Boolean isRain;
 
-    protected Date update_time;
+    private BigDecimal actualWindSpeed;
 
-    protected Integer version;
+    private Integer actualWindDirection;
 
-    protected Integer sh_sign;
+    private Integer electricQuantity;
 
-    protected Integer device_id;
+    private Date colTime;
+
+    private Integer longTime;
+
+    private String dataSign;
+
+    private Integer creater;
+
+    private Integer updater;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Integer version;
+
+    private Integer deviceId;
+
+    private Boolean shSign;
+
+    protected MonitoringDevice monitoringDevice;
 
     public Integer getId() {
         return id;
@@ -107,204 +100,284 @@ public class MonitoringData {
         this.id = id;
     }
 
-    public Float getActual_tsp() {
-        return actual_tsp;
+    public BigDecimal getActualTsp() {
+        return actualTsp;
     }
 
-    public void setActual_tsp(Float actual_tsp) {
-        this.actual_tsp = actual_tsp;
+    public void setActualTsp(BigDecimal actualTsp) {
+        this.actualTsp = actualTsp;
     }
 
-    public Float getCalibration_tsp() {
-        return calibration_tsp;
+    public BigDecimal getCalibrationTsp() {
+        return calibrationTsp;
     }
 
-    public void setCalibration_tsp(Float calibration_tsp) {
-        this.calibration_tsp = calibration_tsp;
+    public void setCalibrationTsp(BigDecimal calibrationTsp) {
+        this.calibrationTsp = calibrationTsp;
     }
 
-    public Float getActual_two_pm() {
-        return actual_two_pm;
+    public BigDecimal getActualTwoPm() {
+        return actualTwoPm;
     }
 
-    public void setActual_two_pm(Float actual_two_pm) {
-        this.actual_two_pm = actual_two_pm;
+    public void setActualTwoPm(BigDecimal actualTwoPm) {
+        this.actualTwoPm = actualTwoPm;
     }
 
-    public Float getCalibration_two_pm() {
-        return calibration_two_pm;
+    public BigDecimal getCalibrationTwoPm() {
+        return calibrationTwoPm;
     }
 
-    public void setCalibration_two_pm(Float calibration_two_pm) {
-        this.calibration_two_pm = calibration_two_pm;
+    public void setCalibrationTwoPm(BigDecimal calibrationTwoPm) {
+        this.calibrationTwoPm = calibrationTwoPm;
     }
 
-    public Float getActual_ten_pm() {
-        return actual_ten_pm;
+    public BigDecimal getActualTenPm() {
+        return actualTenPm;
     }
 
-    public void setActual_ten_pm(Float actual_ten_pm) {
-        this.actual_ten_pm = actual_ten_pm;
+    public void setActualTenPm(BigDecimal actualTenPm) {
+        this.actualTenPm = actualTenPm;
     }
 
-    public Float getCalibration_ten_pm() {
-        return calibration_ten_pm;
+    public BigDecimal getCalibrationTenPm() {
+        return calibrationTenPm;
     }
 
-    public void setCalibration_ten_pm(Float calibration_ten_pm) {
-        this.calibration_ten_pm = calibration_ten_pm;
+    public void setCalibrationTenPm(BigDecimal calibrationTenPm) {
+        this.calibrationTenPm = calibrationTenPm;
     }
 
-    public Float getActual_noise() {
-        return actual_noise;
+    public BigDecimal getActualNoise() {
+        return actualNoise;
     }
 
-    public void setActual_noise(Float actual_noise) {
-        this.actual_noise = actual_noise;
+    public void setActualNoise(BigDecimal actualNoise) {
+        this.actualNoise = actualNoise;
     }
 
-    public Float getCalibration_noise() {
-        return calibration_noise;
+    public BigDecimal getCalibrationNoise() {
+        return calibrationNoise;
     }
 
-    public void setCalibration_noise(Float calibration_noise) {
-        this.calibration_noise = calibration_noise;
+    public void setCalibrationNoise(BigDecimal calibrationNoise) {
+        this.calibrationNoise = calibrationNoise;
     }
 
-    public Float getActual_bg_noise() {
-        return actual_bg_noise;
+    public BigDecimal getActualBgNoise() {
+        return actualBgNoise;
     }
 
-    public void setActual_bg_noise(Float actual_bg_noise) {
-        this.actual_bg_noise = actual_bg_noise;
+    public void setActualBgNoise(BigDecimal actualBgNoise) {
+        this.actualBgNoise = actualBgNoise;
     }
 
-    public Float getCalibration_bg_noise() {
-        return calibration_bg_noise;
+    public BigDecimal getCalibrationBgNoise() {
+        return calibrationBgNoise;
     }
 
-    public void setCalibration_bg_noise(Float calibration_bg_noise) {
-        this.calibration_bg_noise = calibration_bg_noise;
+    public void setCalibrationBgNoise(BigDecimal calibrationBgNoise) {
+        this.calibrationBgNoise = calibrationBgNoise;
     }
 
-    public Integer getActual_max_level() {
-        return actual_max_level;
+    public BigDecimal getActual02() {
+        return actual02;
     }
 
-    public void setActual_max_level(Integer actual_max_level) {
-        this.actual_max_level = actual_max_level;
+    public void setActual02(BigDecimal actual02) {
+        this.actual02 = actual02;
     }
 
-    public Integer getCalibration_max_level() {
-        return calibration_max_level;
+    public BigDecimal getCalibration02() {
+        return calibration02;
     }
 
-    public void setCalibration_max_level(Integer calibration_max_level) {
-        this.calibration_max_level = calibration_max_level;
+    public void setCalibration02(BigDecimal calibration02) {
+        this.calibration02 = calibration02;
     }
 
-    public Float getBefore_dev_calibration() {
-        return before_dev_calibration;
+    public BigDecimal getActualNo2() {
+        return actualNo2;
     }
 
-    public void setBefore_dev_calibration(Float before_dev_calibration) {
-        this.before_dev_calibration = before_dev_calibration;
+    public void setActualNo2(BigDecimal actualNo2) {
+        this.actualNo2 = actualNo2;
     }
 
-    public Float getAfter_dev_calibration() {
-        return after_dev_calibration;
+    public BigDecimal getCalibrationNo2() {
+        return calibrationNo2;
     }
 
-    public void setAfter_dev_calibration(Float after_dev_calibration) {
-        this.after_dev_calibration = after_dev_calibration;
+    public void setCalibrationNo2(BigDecimal calibrationNo2) {
+        this.calibrationNo2 = calibrationNo2;
     }
 
-    public Float getActual_temperature() {
-        return actual_temperature;
+    public BigDecimal getActual03() {
+        return actual03;
     }
 
-    public void setActual_temperature(Float actual_temperature) {
-        this.actual_temperature = actual_temperature;
+    public void setActual03(BigDecimal actual03) {
+        this.actual03 = actual03;
     }
 
-    public Float getActual_humidity() {
-        return actual_humidity;
+    public BigDecimal getCalibration03() {
+        return calibration03;
     }
 
-    public void setActual_humidity(Float actual_humidity) {
-        this.actual_humidity = actual_humidity;
+    public void setCalibration03(BigDecimal calibration03) {
+        this.calibration03 = calibration03;
     }
 
-    public Integer getActual_pressure() {
-        return actual_pressure;
+    public BigDecimal getActual04() {
+        return actual04;
     }
 
-    public void setActual_pressure(Integer actual_pressure) {
-        this.actual_pressure = actual_pressure;
+    public void setActual04(BigDecimal actual04) {
+        this.actual04 = actual04;
     }
 
-    public Float getActual_rainfall() {
-        return actual_rainfall;
+    public BigDecimal getCalibration04() {
+        return calibration04;
     }
 
-    public void setActual_rainfall(Float actual_rainfall) {
-        this.actual_rainfall = actual_rainfall;
+    public void setCalibration04(BigDecimal calibration04) {
+        this.calibration04 = calibration04;
     }
 
-    public Integer getIs_rain() {
-        return is_rain;
+    public BigDecimal getActualAqi() {
+        return actualAqi;
     }
 
-    public void setIs_rain(Integer is_rain) {
-        this.is_rain = is_rain;
+    public void setActualAqi(BigDecimal actualAqi) {
+        this.actualAqi = actualAqi;
     }
 
-    public Float getActual_wind_speed() {
-        return actual_wind_speed;
+    public BigDecimal getCalibrationAqi() {
+        return calibrationAqi;
     }
 
-    public void setActual_wind_speed(Float actual_wind_speed) {
-        this.actual_wind_speed = actual_wind_speed;
+    public void setCalibrationAqi(BigDecimal calibrationAqi) {
+        this.calibrationAqi = calibrationAqi;
     }
 
-    public Integer getActual_wind_direction() {
-        return actual_wind_direction;
+    public Integer getActualMaxLevel() {
+        return actualMaxLevel;
     }
 
-    public void setActual_wind_direction(Integer actual_wind_direction) {
-        this.actual_wind_direction = actual_wind_direction;
+    public void setActualMaxLevel(Integer actualMaxLevel) {
+        this.actualMaxLevel = actualMaxLevel;
     }
 
-    public Integer getElectric_quantity() {
-        return electric_quantity;
+    public Integer getCalibrationMaxLevel() {
+        return calibrationMaxLevel;
     }
 
-    public void setElectric_quantity(Integer electric_quantity) {
-        this.electric_quantity = electric_quantity;
+    public void setCalibrationMaxLevel(Integer calibrationMaxLevel) {
+        this.calibrationMaxLevel = calibrationMaxLevel;
     }
 
-    public Date getCol_time() {
-        return col_time;
+    public BigDecimal getBeforeDevCalibration() {
+        return beforeDevCalibration;
     }
 
-    public void setCol_time(Date col_time) {
-        this.col_time = col_time;
+    public void setBeforeDevCalibration(BigDecimal beforeDevCalibration) {
+        this.beforeDevCalibration = beforeDevCalibration;
     }
 
-    public Integer getLong_time() {
-        return long_time;
+    public BigDecimal getAfterDevCalibration() {
+        return afterDevCalibration;
     }
 
-    public void setLong_time(Integer long_time) {
-        this.long_time = long_time;
+    public void setAfterDevCalibration(BigDecimal afterDevCalibration) {
+        this.afterDevCalibration = afterDevCalibration;
     }
 
-    public String getData_sign() {
-        return data_sign;
+    public BigDecimal getActualTemperature() {
+        return actualTemperature;
     }
 
-    public void setData_sign(String data_sign) {
-        this.data_sign = data_sign;
+    public void setActualTemperature(BigDecimal actualTemperature) {
+        this.actualTemperature = actualTemperature;
+    }
+
+    public BigDecimal getActualHumidity() {
+        return actualHumidity;
+    }
+
+    public void setActualHumidity(BigDecimal actualHumidity) {
+        this.actualHumidity = actualHumidity;
+    }
+
+    public Integer getActualPressure() {
+        return actualPressure;
+    }
+
+    public void setActualPressure(Integer actualPressure) {
+        this.actualPressure = actualPressure;
+    }
+
+    public BigDecimal getActualRainfall() {
+        return actualRainfall;
+    }
+
+    public void setActualRainfall(BigDecimal actualRainfall) {
+        this.actualRainfall = actualRainfall;
+    }
+
+    public Boolean getIsRain() {
+        return isRain;
+    }
+
+    public void setIsRain(Boolean isRain) {
+        this.isRain = isRain;
+    }
+
+    public BigDecimal getActualWindSpeed() {
+        return actualWindSpeed;
+    }
+
+    public void setActualWindSpeed(BigDecimal actualWindSpeed) {
+        this.actualWindSpeed = actualWindSpeed;
+    }
+
+    public Integer getActualWindDirection() {
+        return actualWindDirection;
+    }
+
+    public void setActualWindDirection(Integer actualWindDirection) {
+        this.actualWindDirection = actualWindDirection;
+    }
+
+    public Integer getElectricQuantity() {
+        return electricQuantity;
+    }
+
+    public void setElectricQuantity(Integer electricQuantity) {
+        this.electricQuantity = electricQuantity;
+    }
+
+    public Date getColTime() {
+        return colTime;
+    }
+
+    public void setColTime(Date colTime) {
+        this.colTime = colTime;
+    }
+
+    public Integer getLongTime() {
+        return longTime;
+    }
+
+    public void setLongTime(Integer longTime) {
+        this.longTime = longTime;
+    }
+
+    public String getDataSign() {
+        return dataSign;
+    }
+
+    public void setDataSign(String dataSign) {
+        this.dataSign = dataSign == null ? null : dataSign.trim();
     }
 
     public Integer getCreater() {
@@ -323,20 +396,20 @@ public class MonitoringData {
         this.updater = updater;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getUpdate_time() {
-        return update_time;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdate_time(Date update_time) {
-        this.update_time = update_time;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Integer getVersion() {
@@ -347,19 +420,27 @@ public class MonitoringData {
         this.version = version;
     }
 
-    public Integer getSh_sign() {
-        return sh_sign;
+    public Integer getDeviceId() {
+        return deviceId;
     }
 
-    public void setSh_sign(Integer sh_sign) {
-        this.sh_sign = sh_sign;
+    public void setDeviceId(Integer deviceId) {
+        this.deviceId = deviceId;
     }
 
-    public Integer getDevice_id() {
-        return device_id;
+    public Boolean getShSign() {
+        return shSign;
     }
 
-    public void setDevice_id(Integer device_id) {
-        this.device_id = device_id;
+    public void setShSign(Boolean shSign) {
+        this.shSign = shSign;
+    }
+
+    public MonitoringDevice getMonitoringDevice() {
+        return monitoringDevice;
+    }
+
+    public void setMonitoringDevice(MonitoringDevice monitoringDevice) {
+        this.monitoringDevice = monitoringDevice;
     }
 }

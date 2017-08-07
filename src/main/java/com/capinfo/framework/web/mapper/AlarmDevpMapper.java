@@ -1,6 +1,7 @@
 package com.capinfo.framework.web.mapper;
 
 import com.capinfo.framework.web.pojo.AlarmDevp;
+import com.capinfo.framework.web.vo.MonitoringAlarmQueryBean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,4 +21,6 @@ public interface AlarmDevpMapper {
     int updateByPrimaryKey(AlarmDevp record);
     //查询列表
     List<AlarmDevp> findMonitoringAlarmPage(Map<String,Object> map);
+
+    int findMonitoringAlarmCount(MonitoringAlarmQueryBean alarmQueryBean);
 }
