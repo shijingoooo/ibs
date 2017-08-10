@@ -1,6 +1,7 @@
 package com.capinfo.framework.web.mapper;
 
 //import com.capinfo.framework.web.pojo.DeviceRecentData;
+import com.capinfo.framework.web.pojo.DeviceRecentData;
 import com.capinfo.framework.web.pojo.MonitoringDevice;
 //import com.capinfo.framework.web.pojo.MonitoringDeviceXsl;
 import com.capinfo.framework.web.pojo.MonitoringProject;
@@ -27,7 +28,7 @@ public interface MonitoringDeviceMapper {
 
 	public List<MonitoringDevice> findMonitoringDeviceList() throws Exception;
 
-    //public List<DeviceRecentData> findMonitoringDeviceRecentDataList(MonitoringDeviceQueryBean deviceQueryBean) throws Exception;
+    public List<DeviceRecentData> findMonitoringDeviceRecentDataList() throws Exception;
 
 	public List<MonitoringDevice> findMonitoringDeviceShList(MonitoringDeviceQueryBean deviceQueryBean) throws Exception;
 	

@@ -29,13 +29,12 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<aop:config>
-		<aop:pointcut id="serviceMethods"
-			expression="execution(* com.capinfo.framework.web.service.*.*(..))|| execution(* com.capinfo.ws.service.*.*(..))" />
+		<aop:pointcut id="serviceMethods" expression="execution(* com.capinfo.framework.web.service.*.*(..)) and execution(* com.capinfo.framework.common.alarm.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
 	</aop:config>
-
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
+			<tx:method name="run*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
 			<tx:method name="insert*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
 			<tx:method name="create*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
 			<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>

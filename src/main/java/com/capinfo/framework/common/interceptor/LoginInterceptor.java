@@ -13,14 +13,15 @@ import java.util.Map;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
-	
+
 	//进入 Handler方法之前执行
 	//用于身份认证、身份授权
 	//比如身份认证，如果认证通过表示当前用户没有登陆，需要此方法拦截不再向下执行
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		
+
+		System.out.println("HandlerInterceptor1...preHandle");
 		//获取请求的url
 		String url = request.getRequestURI();
 		if(url.indexOf("/listByPage")>=0){
@@ -98,6 +99,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	 * 分析并设置contentType与headers.
 	 */
 	private static HttpServletResponse initResponseHeader(final String contentType, HttpServletResponse response) {
+		System.out.println("HandlerInterceptor1...initResponseHeader");
 		//分析headers参数
 		String encoding = "UTF-8";
 		boolean noCache = true;

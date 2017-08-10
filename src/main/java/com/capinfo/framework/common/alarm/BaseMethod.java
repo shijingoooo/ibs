@@ -17,11 +17,8 @@ import java.util.List;
  */
 
 public class BaseMethod {
-
-    private CheckData checkData;
-
-    public void setData(CheckData checkData){
+    public BaseMethod(CheckData checkData){
         checkData.registerMethod(this);
     }
-    public void run(){}
+    public void run() throws Exception{}
 }

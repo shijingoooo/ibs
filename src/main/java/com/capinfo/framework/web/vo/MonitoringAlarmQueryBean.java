@@ -4,6 +4,8 @@ package com.capinfo.framework.web.vo;
  * Created by shijing on 2017/8/4.
  */
 public class MonitoringAlarmQueryBean {
+    //告警记录ID
+    protected Integer id;
     //用户ID
     protected Integer userId;
     //设备ID
@@ -26,6 +28,14 @@ public class MonitoringAlarmQueryBean {
     protected String startTime;
     //结束时间
     protected String endTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getUserId() {
         return userId;

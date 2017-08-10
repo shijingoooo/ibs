@@ -62,7 +62,6 @@ public class MonitoringDeviceService {
 		page.setTotalCount(deviceMapper.findMonitoringDeviceCount(deviceQueryBean));
 	}
 
-
 	public MonitoringDevice findMonitoringDeviceById(Integer id) throws Exception {
 
 		if(id!=null && id!=0){
@@ -72,12 +71,10 @@ public class MonitoringDeviceService {
 		return null;
 	}
 
-
 	public MonitoringDevice findMonitoringDeviceUnique(MonitoringDeviceQueryBean deviceQueryBean) throws Exception {
 
 		return deviceMapper.findMonitoringDeviceUnique(deviceQueryBean);
 	}
-
 
 	public Integer findMonitoringDeviceCount(MonitoringDeviceQueryBean deviceQueryBean) throws Exception {
 
@@ -101,7 +98,6 @@ public class MonitoringDeviceService {
 		return deviceQueryBean;
 	}
 
-
 	public void updateMonitoringDevice(Integer id, MonitoringDeviceQueryBean deviceQueryBean) throws Exception {
 
 		deviceQueryBean.setId(id);
@@ -109,7 +105,6 @@ public class MonitoringDeviceService {
 		deviceMapper.updateMonitoringDevice(deviceQueryBean);
 
 	}
-
 
 	public void deleteMonitoringDevice(Integer id, Integer userId) throws Exception {
 
@@ -130,7 +125,6 @@ public class MonitoringDeviceService {
 			LogUtil.printLog("ERROR", "传感器删除日志记录失败!");
 		}*/
 	}
-
 
 	public void deleteMonitoringDeviceBatch(List<String> ids, Integer userId) throws Exception {
 
@@ -165,8 +159,6 @@ public class MonitoringDeviceService {
 		}*/
 	}
 
-
-
 	public MonitoringDeviceMapper getDeviceMapper() {
 		return deviceMapper;
 	}
@@ -192,6 +184,9 @@ public class MonitoringDeviceService {
 		return deviceMapper.downloadMonitoringDeviceList(ids);
 	}
 
+	public List<DeviceRecentData> findMonitoringDeviceRecentDataList() throws Exception {
+		return deviceMapper.findMonitoringDeviceRecentDataList();
+	}
 
 	/**
 	 * 导入传感器数据

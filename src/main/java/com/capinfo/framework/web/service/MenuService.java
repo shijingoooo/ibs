@@ -19,9 +19,6 @@ public class MenuService {
 
 	@Autowired
 	private MenuMapper menuMapper;
-//	@Autowired
-//	private MenuMongoDao menuMongoDao;
-
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public List<Menu> findMenuList(MenuQueryBean menuQueryBean) throws Exception {

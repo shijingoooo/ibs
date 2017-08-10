@@ -19,18 +19,13 @@ public class RoleMenuReleService {
 
 	@Autowired
 	private RoleMenuReleMapper roleMenuReleMapper;
-//	@Autowired
-//	private RoleMenuReleRoleReleMongoDao roleMenuReleMongoDao;
-
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public List<RoleMenuRele> findRoleMenuReleList(RoleMenuReleQueryBean roleMenuReleQueryBean) throws Exception {
 		return roleMenuReleMapper.findRoleMenuReleList(roleMenuReleQueryBean);
 	}
 
-
-	public void findRoleMenuRelePage(Page<RoleMenuRele> page, RoleMenuReleQueryBean roleMenuReleQueryBean)
-			throws Exception {
+	public void findRoleMenuRelePage(Page<RoleMenuRele> page, RoleMenuReleQueryBean roleMenuReleQueryBean) throws Exception {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pageNo", page.getPageNo()-1);
@@ -42,7 +37,6 @@ public class RoleMenuReleService {
 		page.setTotalCount(roleMenuReleMapper.findRoleMenuReleCount(roleMenuReleQueryBean));
 	}
 
-
 	public RoleMenuRele findRoleMenuReleById(Integer id) throws Exception {
 
 		if(id!=null && id!=0){
@@ -52,45 +46,34 @@ public class RoleMenuReleService {
 		return null;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public RoleMenuRele saveRoleMenuRele(RoleMenuRele roleMenuRele) throws Exception {
-
 		roleMenuRele.setCreateTime(new Date());
 		roleMenuReleMapper.saveRoleMenuRele(roleMenuRele);
 		return roleMenuRele;
 	}
 
-
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void updateRoleMenuRele(Integer id, RoleMenuRele roleMenuRele) throws Exception {
-
 		roleMenuRele.setId(id);
 		roleMenuReleMapper.updateRoleMenuRele(roleMenuRele);
 	}
 
-
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void deleteRoleMenuRele(Integer id) throws Exception {
 
 		roleMenuReleMapper.deleteRoleMenuRele(id);
 	}
-
 
 	public void doInfo() throws Exception {
 
 
 	}
 
-
-	public void deleteRoleMenuReleByRoleId(Integer roleId)	{
+	public void deleteRoleMenuReleByRoleId(Integer roleId) throws Exception	{
 		roleMenuReleMapper.deleteRoleMenuReleByRoleId(roleId);
 	}
 
 	public List<RoleMenuRele> findRoleMenuReleListByRoleId(Integer roleId) throws Exception{
 		return roleMenuReleMapper.findRoleMenuReleListByRoleId(roleId);
 	}
-
-
 
 	public RoleMenuReleMapper getRoleMenuReleMapper() {
 		return roleMenuReleMapper;

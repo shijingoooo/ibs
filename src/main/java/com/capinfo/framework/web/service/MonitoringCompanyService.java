@@ -17,14 +17,10 @@ public class MonitoringCompanyService {
 
 	@Autowired
 	private MonitoringCompanyMapper companyMapper;
-//	@Autowired
-//	private UserMongoDao userMongoDao;
-
 
 	public List<MonitoringCompany> findMonitoringCompanyList(MonitoringCompanyQueryBean companyQueryBean) throws Exception {
 		return companyMapper.findMonitoringCompanyList(companyQueryBean);
 	}
-
 
 	public void findMonitoringCompanyPage(Page<MonitoringCompany> page, MonitoringCompanyQueryBean companyQueryBean)
 			throws Exception {
@@ -39,7 +35,6 @@ public class MonitoringCompanyService {
 		page.setTotalCount(companyMapper.findMonitoringCompanyCount(companyQueryBean));
 	}
 
-
 	public MonitoringCompany findMonitoringCompanyById(Integer id) throws Exception {
 
 		if(id!=null && id!=0){
@@ -49,53 +44,35 @@ public class MonitoringCompanyService {
 		return null;
 	}
 
-
 	public MonitoringCompany findMonitoringCompanyUnique(MonitoringCompanyQueryBean companyQueryBean) throws Exception {
 
 		return companyMapper.findMonitoringCompanyUnique(companyQueryBean);
 	}
-
 
 	public Integer findMonitoringCompanyCount(MonitoringCompanyQueryBean companyQueryBean) throws Exception {
 
 		return companyMapper.findMonitoringCompanyCount(companyQueryBean);
 	}
 
-
 	public MonitoringCompany saveMonitoringCompany(MonitoringCompany company) throws Exception {
-
-//		PushResourceServiceService service = new PushResourceServiceService();
-//		PushResourceService s = service.getPushResourceServicePort();
-//		String code = s.registerVendor(company.getCompanyName());
-//		if(StringUtils.isNotEmpty(code)){
-//			company.setCompanyCode(code);
 		company.setCreateTime(new Date());
 		companyMapper.saveMonitoringCompany(company);
 		return company;
-//		}
-//		return null;
 	}
 
-
 	public void updateMonitoringCompany(Integer id, MonitoringCompany company) throws Exception {
-
 		company.setId(id);
 		companyMapper.updateMonitoringCompany(company);
 	}
 
-
 	public void deleteMonitoringCompany(Integer id) throws Exception {
-
 		companyMapper.deleteMonitoringCompany(id);
 	}
 
-
 	public void deleteMonitoringCompanyBatch(List<String> ids)
 			throws Exception {
-
 		companyMapper.deleteMonitoringCompanyBatch(ids);
 	}
-
 
 	public List<MonitoringCompany> findCompanyListByIds(String[] ids) throws Exception {
 		return companyMapper.findCompanyListByIds(ids);

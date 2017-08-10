@@ -98,7 +98,7 @@
 	<import resource="classpath:spring/applicationContext-quartz.xml"/>
 	<!--<import resource="classpath:spring/applicationContext-security.xml"/>-->
 	<!--<import resource="classpath:spring/applicationContext-thread.xml"/>-->
-	<!--<import resource="classpath:spring/applicationContext-transaction.xml"/>-->
+	<import resource="classpath:spring/applicationContext-transaction.xml"/>
 	<!--<import resource="classpath:spring/applicationContext-ws.xml"/>-->
 	<import resource="classpath:spring/applicationContext-email.xml"/>
 </beans>

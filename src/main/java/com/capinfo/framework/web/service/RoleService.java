@@ -19,17 +19,12 @@ public class RoleService {
 
 	@Autowired
 	private RoleMapper roleMapper;
-//	@Autowired
-//	private RoleMongoDao roleMongoDao;
 
-
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public List<Role> findRoleList(RoleQueryBean roleQueryBean) throws Exception {
 		return roleMapper.findRoleList(roleQueryBean);
 	}
 
-	public void findRolePage(Page<Role> page, RoleQueryBean roleQueryBean)
-			throws Exception {
+	public void findRolePage(Page<Role> page, RoleQueryBean roleQueryBean) throws Exception {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pageNo", page.getPageNo()-1);
@@ -40,7 +35,6 @@ public class RoleService {
 		page.setResult(roles);
 		page.setTotalCount(roleMapper.findRoleCount(roleQueryBean));
 	}
-
 
 	public Role findRoleById(Integer id) throws Exception {
 

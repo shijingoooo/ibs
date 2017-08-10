@@ -7,7 +7,6 @@ import java.util.ArrayList;
 /**
  * Created by shijing on 2017/8/4.
  */
-@Component("checkData")
 public class CheckData {
     private ArrayList<BaseMethod> methods;
 
@@ -26,7 +25,8 @@ public class CheckData {
         }
     }
     //通知方法
-    public void notifyMethod(){
+    public void notifyMethod() throws Exception{
+        System.out.println(methods.size());
         for(int i = 0; i < methods.size(); i++){
             BaseMethod baseMethod = (BaseMethod)methods.get(i);
             baseMethod.run();

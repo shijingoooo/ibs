@@ -2,7 +2,6 @@ package com.capinfo.framework.web.service;
 
 import com.capinfo.framework.web.mapper.AlarmDevpMapper;
 import com.capinfo.framework.web.pojo.AlarmDevp;
-import com.capinfo.framework.web.pojo.MonitoringProject;
 import com.capinfo.framework.web.vo.MonitoringAlarmQueryBean;
 import com.capinfo.modules.orm.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +46,29 @@ public class MonitoringAlarmService {
 		page.setTotalCount(alarmDevpMapper.findMonitoringAlarmCount(alarmQueryBean));
 
 	}
-	public void saveMonitoringAlarmRecord(AlarmDevp alarmDevp) throws Exception{
+
+	public List<AlarmDevp> findMonitoringAlarmList(MonitoringAlarmQueryBean alarmQueryBean) throws Exception{
+		return alarmDevpMapper.findMonitoringAlarmList(alarmQueryBean);
+	}
+
+	public void saveMonitoringAlarmRecord(MonitoringAlarmQueryBean alarmQueryBean) throws Exception{
+		AlarmDevp alarmDevp = new AlarmDevp();
+		//id自增
+		alarmDevp.setDeviceId(alarmQueryBean.getDevId());
+		alarmDevp.setAlarmCause(0);//默认
+		alarmDevp.setAlarmStatus(0);//默认
+		alarmDevp.setAlarmType(alarmQueryBean.getAlarmType());
 		alarmDevp.setAlarmTime(new Date());
 		alarmDevpMapper.insert(alarmDevp);
 	}
 
+	public void updateMonitoringAlarmRecord(MonitoringAlarmQueryBean alarmQueryBean) throws Exception{
+		AlarmDevp alarmDevp = new AlarmDevp();
+		alarmDevp.setId(alarmQueryBean.getId());
+		alarmDevp.setAlarmType(alarmQueryBean.getAlarmType());
+		alarmDevp.setAlarmTime(new Date());
+		alarmDevpMapper.updateByPrimaryKeySelective(alarmDevp);
+	}
 	/*public MonitoringMaintain findMonitoringMaintainById(Integer recordId) throws Exception {
 
 		if(recordId!=null && recordId!=0){

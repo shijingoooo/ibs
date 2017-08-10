@@ -57,8 +57,8 @@ public class MonitoringMaintainService {
 		result = maintainMapper.findMonitoringDeviceList(maintainQueryBean);
 		return  result;
 	}
-	public void deleteMaintainRecordBatch(List<String> ids)
-			throws Exception {
+
+	public void deleteMaintainRecordBatch(List<String> ids) throws Exception {
 		maintainMapper.deleteMaintainRecordBatch(ids);
 	}
 }

@@ -8,19 +8,20 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
     <context:component-scan base-package="com.capinfo.framework.web.common.job"/>
-    <context:component-scan base-package="com.capinfo.framework.common.alarm"/>
+    <!--<context:component-scan base-package="com.capinfo.framework.common.alarm"/>-->
 
     <!--有参数构造方法注入-->
-    <bean id="myTask" class="com.capinfo.framework.common.alarm.MyTask">
-        <constructor-arg ref="powerOff"/>
-        <constructor-arg ref="checkData"/>
+    <bean id="checkData" class="com.capinfo.framework.common.alarm.CheckData">
     </bean>
-    <bean id="myTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <bean id="powerOff" class="com.capinfo.framework.common.alarm.OffLine">
+        <constructor-arg ref="checkData"></constructor-arg>
+    </bean>
+    <bean id="checkDataJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
-            <ref bean="myTask"/>
+            <ref bean="checkData"/>
         </property>
         <property name="targetMethod">
-            <value>run</value>
+            <value>notifyMethod</value>
         </property>
     </bean>
     <!--<bean id="myTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
@@ -28,9 +29,9 @@
         <property name="cronExpression" value="0/10 * * ? * *"></property>
     </bean>-->
     <bean id="myTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-        <property name="jobDetail" ref="myTaskJobDetail"/>
-        <property name="startDelay" value="2000"/>
-        <property name="repeatInterval" value="10000"/>
+        <property name="jobDetail" ref="checkDataJobDetail"/>
+        <property name="startDelay" value="5000"/>
+        <property name="repeatInterval" value="15000"/>
         <property name="repeatCount" value="1"/>
     </bean>
     <!--<bean id="pushData" class="com.capinfo.framework.web.common.job.PushDataJob"></bean>
@@ -135,7 +136,7 @@
                 <!-- <ref bean="dataBaseTrigger"/>-->
                 <!--2017/1/18 新思 彭  结束-->
                 <!--<ref bean="statusScanTrigger"/>-->
-                <ref bean="myTaskJobDetail"/>
+                <ref bean="checkDataJobDetail"/>
             </list>
         </property>
         <property name="triggers">

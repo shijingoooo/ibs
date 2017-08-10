@@ -52,7 +52,7 @@
 		<result column="pro_name" property="proName" jdbcType="VARCHAR" javaType="java.lang.String"/>
 	</resultMap>
 
-    <!--<resultMap id="DeviceRecentDataResult" type="com.capinfo.framework.web.pojo.DeviceRecentData">
+    <resultMap id="DeviceRecentDataResult" type="com.capinfo.framework.web.pojo.DeviceRecentData">
         <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
         <result column="dev_code" property="devCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
         <result column="dev_name" property="devName" jdbcType="VARCHAR" javaType="java.lang.String"/>
@@ -61,7 +61,7 @@
         <result column="dev_group_code" property="devGroupCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
         <result column="dev_group_name" property="devGroupName" jdbcType="VARCHAR" javaType="java.lang.String"/>
         <result column="data_id" property="dataId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-    </resultMap>-->
+    </resultMap>
 
     <!-- SAVE Monitoring Device -->
 	<insert id="saveMonitoringDevice" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean">
@@ -76,16 +76,33 @@
 	<!-- UPDATE Monitoring Device -->
 	<update id="updateMonitoringDevice" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean">
         UPDATE ibs_monitoring_device
-        SET dev_code=#{devCode},dev_name=#{devName},dev_type=#{devType},
-        longitude=#{longitude},latitude=#{latitude},ip_addr=#{ipAddr},
-        mac_addr=#{macAddr},dev_port=#{devPort},dev_version=#{devVersion},
-        dev_status=#{devStatus},video_url=#{videoUrl},company_id=#{monitoringCompany.id},
-        platform_id=#{companyIds},platform_mn=#{platformMN},update_time=#{updateTime},
-        updater=#{updater},version=version+1,camera_id=#{cameraId},phone_card=#{phoneCard},
-        forward_type=#{forwardType},forward_frequency=#{forwardFrequency},
-        video_user=#{videoUser}, password=#{password},camera_index_code=#{cameraIndexCode}
+        <set>
+			<if test="devCode != null">dev_code=#{devCode},</if>
+			<if test="devName != null">dev_name=#{devName},</if>
+			<if test="devType != null">dev_type=#{devType},</if>
+			<if test="longitude != null">longitude=#{longitude},</if>
+			<if test="latitude != null">latitude=#{latitude},</if>
+			<if test="ipAddr != null">ip_addr=#{ipAddr},</if>
+			<if test="macAddr != null">mac_addr=#{macAddr},</if>
+			<if test="devPort != null">dev_port=#{devPort},</if>
+			<if test="devVersion != null">dev_version=#{devVersion},</if>
+			<if test="devStatus != null">dev_status=#{devStatus},</if>
+			<if test="videoUrl != null">video_url=#{videoUrl},</if>
+			<if test="monitoringCompany != null">company_id=#{monitoringCompany.id},</if>
+			<if test="companyIds != null">platform_id=#{companyIds},</if>
+			<if test="platformMN != null">platform_mn=#{platformMN},</if>
+			<if test="updateTime != null">update_time=#{updateTime},</if>
+			<if test="updater != null">updater=#{updater},</if>
+			<if test="cameraId != null">camera_id=#{cameraId},</if>
+			<if test="phoneCard != null">phone_card=#{phoneCard},</if>
+			<if test="forwardType != null">forward_type=#{forwardType},</if>
+			<if test="forwardFrequency != null">forward_frequency=#{forwardFrequency},</if>
+			<if test="videoUser != null">video_user=#{videoUser},</if>
+			<if test="password != null">password=#{password},</if>
+			<if test="cameraIndexCode != null">camera_index_code=#{cameraIndexCode},</if>
+			version=version+1,
+		</set>
         WHERE id=#{id}
-
 	</update>
 	<!-- BATCH SAVE Monitoring Device -->
 	<insert id="saveMonitoringDeviceBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
@@ -103,24 +120,21 @@
 		</foreach>
 	</delete>
 
-	<!-- 查询传感器列表 -->
-
+	<!--查询传感器列表-->
 	<select id="findMonitoringDeviceList" resultMap="MonitoringDeviceResult">
         SELECT * FROM ibs_monitoring_device
 		order BY create_time DESC
 	</select>
 
-    <!--<select id="findMonitoringDeviceRecentDataList"
-            parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultMap="DeviceRecentDataResult">
-        SELECT device.id,device.dev_code,device.dev_name,device.dev_status,device_group.id as device_group_id,
-        device_group.dev_group_code,device_group.dev_group_name,
+	<!--根据近10min数据查询设备-->
+    <select id="findMonitoringDeviceRecentDataList" resultMap="DeviceRecentDataResult">
+        SELECT device.id,device.dev_code,device.dev_name,device.dev_status,
         (select data_copy.id from ibs_monitoring_data_copy data_copy where data_copy.device_id = device.id and
         data_copy.col_time>(NOW() - INTERVAL 10 MINUTE ) limit 1) data_id
-        FROM ibs_monitoring_device device,ibs_monitoring_device_group device_group
-        where device.device_group_id = device_group.id
-        order BY device.create_time DESC
+		FROM ibs_monitoring_device device
+		order BY device.create_time DESC
     </select>
--->
+
     <select id="findMonitoringDeviceShList" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultMap="MonitoringDeviceResult">
     	SELECT d.id id,d.dev_code devCode,d.pro_code proCode,d.vendor_code vendorCode FROM ibs_monitoring_project p,ibs_monitoring_device d
     	<where>

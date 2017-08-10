@@ -76,7 +76,41 @@
     ORDER BY ad.alarm_time desc
 
   </select>
-<!--
+
+  <select id="findMonitoringAlarmList" parameterType="com.capinfo.framework.web.vo.MonitoringAlarmQueryBean" resultMap="BaseResultMap">
+    SELECT *
+    FROM ibs_alarm_devp ad
+    WHERE alarm_status != 2
+    <if test="devId!=null and devId!=''">
+      AND ad.device_id = #{devId}
+    </if>
+    <if test="alarmType!=null and alarmType!=''">
+      AND ad.alarm_type = #{alarmType}
+    </if>
+  </select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
+    update ibs_alarm_devp
+    <set >
+      <if test="deviceId != null" >
+        device_id = #{deviceId},
+      </if>
+      <if test="alarmStatus != null" >
+        alarm_status = #{alarmStatus},
+      </if>
+      <if test="alarmType != null" >
+        alarm_type = #{alarmType},
+      </if>
+      <if test="alarmCause != null" >
+        alarm_cause = #{alarmCause},
+      </if>
+      <if test="alarmTime != null" >
+        alarm_time = #{alarmTime},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <!--
   <sql id="Base_Column_List" >
     id, device_id, alarm_status, alarm_type, alarm_cause, alarm_time
   </sql>
@@ -155,15 +189,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
-    update ibs_alarm_devp
-    set device_id = #{deviceId,jdbcType=INTEGER},
-      alarm_status = #{alarmStatus,jdbcType=BIT},
-      alarm_type = #{alarmType,jdbcType=BIT},
-      alarm_cause = #{alarmCause,jdbcType=BIT},
-      alarm_time = #{alarmTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 -->
 
 
