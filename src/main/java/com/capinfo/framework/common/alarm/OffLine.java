@@ -43,7 +43,7 @@ public class OffLine extends BaseMethod{
     @Override
     public void run() throws Exception{
         //System.out.println("start scan !");
-        List<DeviceRecentData>dataList = deviceService.findMonitoringDeviceRecentDataList();
+        /*List<DeviceRecentData>dataList = deviceService.findMonitoringDeviceRecentDataList();
         for (DeviceRecentData item:dataList) {
             if (item.getDataId() == null) {
                 if ("1".equals(item.getDevStatus())) {
@@ -61,7 +61,6 @@ public class OffLine extends BaseMethod{
                         alarmService.saveMonitoringAlarmRecord(alarmQueryBean);
                 }
             }
-        }
-
+        }*/
     }
 }

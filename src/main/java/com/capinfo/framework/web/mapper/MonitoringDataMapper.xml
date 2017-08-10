@@ -49,7 +49,41 @@
                  javaType="com.capinfo.framework.web.pojo.MonitoringDevice"
                  select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringDeviceById"/>
   </resultMap>
-  <sql id="Base_Column_List" >
+
+  <resultMap id="DeviceRecentDataResult" type="com.capinfo.framework.web.pojo.DeviceRecentData">
+    <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+    <id column="project_id" property="projectId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+    <id column="last_week_avg_temperature" property="lastWeekAvgTemperature" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
+    <collection column="id" property="dataList" javaType="java.util.ArrayList"
+                select="com.capinfo.framework.web.mapper.MonitoringDataMapper.findDataListByDevId"/>
+  </resultMap>
+  
+  <select id="findLastWeekAvgTemperature" resultMap="DeviceRecentDataResult">
+    SELECT md.id,md.project_id,temp.last_week_avg_temperature
+    FROM ibs_monitoring_device md RIGHT JOIN	(
+      SELECT project_id, AVG(actual_temperature) AS last_week_avg_temperature
+	  FROM ibs_data_day
+	  WHERE col_time BETWEEN DATE_SUB(NOW(), INTERVAL 1 week ) AND NOW()
+	  GROUP BY project_id) temp ON md.project_id = temp.project_id
+    WHERE md.dev_type IN(5,7) AND md.dev_status = 1
+  </select>
+
+
+  <select id="findDeviceListWithData" resultMap="DeviceRecentDataResult">
+    SELECT md.id AS id
+    FROM ibs_monitoring_device md
+    WHERE md.dev_type IN(5,7) AND md.dev_status = 1
+  </select>
+
+  <select id="findDataListByDevId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT *
+    FROM ibs_monitoring_data_copy
+    WHERE device_id = #{deviceId}
+    ORDER BY col_time
+    LIMIT 10
+  </select>
+
+  <!--<sql id="Base_Column_List" >
     id, actual_tsp, calibration_tsp, actual_two_pm, calibration_two_pm, actual_ten_pm, 
     calibration_ten_pm, actual_noise, calibration_noise, actual_bg_noise, calibration_bg_noise, 
     actual_02, calibration_02, actual_NO2, calibration_NO2, actual_03, calibration_03, 
@@ -544,8 +578,5 @@
       sh_sign = #{shSign,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="findMonitoringDataList" resultMap="BaseResultMap">
-    SELECT * FROM ibs_monitoring_data
-    ORDER BY create_time
-  </select>
+-->
 </mapper>

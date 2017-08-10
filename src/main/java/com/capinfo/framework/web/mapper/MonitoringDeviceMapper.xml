@@ -57,9 +57,6 @@
         <result column="dev_code" property="devCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
         <result column="dev_name" property="devName" jdbcType="VARCHAR" javaType="java.lang.String"/>
         <result column="dev_status" property="devStatus" jdbcType="VARCHAR" javaType="java.lang.String"/>
-        <result column="device_group_id" property="devGroupId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-        <result column="dev_group_code" property="devGroupCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
-        <result column="dev_group_name" property="devGroupName" jdbcType="VARCHAR" javaType="java.lang.String"/>
         <result column="data_id" property="dataId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
     </resultMap>
 

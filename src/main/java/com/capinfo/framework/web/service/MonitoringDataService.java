@@ -1,6 +1,7 @@
 package com.capinfo.framework.web.service;
 
 import com.capinfo.framework.web.mapper.MonitoringDataMapper;
+import com.capinfo.framework.web.pojo.DeviceRecentData;
 import com.capinfo.framework.web.pojo.MonitoringData;
 //import com.capinfo.framework.web.vo.MonitoringDataQueryBean;
 import com.capinfo.modules.orm.Page;
@@ -24,6 +25,18 @@ public class MonitoringDataService{
 
     public List<MonitoringData> findMonitoringDataList() throws Exception {
         return dataMapper.findMonitoringDataList();
+    }
+
+    public List<DeviceRecentData> findLastWeekAvgTemperature() throws Exception{
+        return dataMapper.findLastWeekAvgTemperature();
+    }
+
+    public List<DeviceRecentData> findDeviceListWithData() throws Exception{
+        return dataMapper.findDeviceListWithData();
+    }
+
+    public List<MonitoringData> findDataListByDevId(Integer id) throws Exception{
+        return dataMapper.findDataListByDevId(id);
     }
     /*
     @Override

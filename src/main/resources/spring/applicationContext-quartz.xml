@@ -16,6 +16,12 @@
     <bean id="powerOff" class="com.capinfo.framework.common.alarm.OffLine">
         <constructor-arg ref="checkData"></constructor-arg>
     </bean>
+    <bean id="abnormalTemperature" class="com.capinfo.framework.common.alarm.AbnormalTemperature">
+        <constructor-arg ref="checkData"></constructor-arg>
+    </bean>
+    <bean id="constValue" class="com.capinfo.framework.common.alarm.ConstValue">
+        <constructor-arg ref="checkData"></constructor-arg>
+    </bean>
     <bean id="checkDataJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
             <ref bean="checkData"/>
@@ -31,7 +37,7 @@
     <bean id="myTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
         <property name="jobDetail" ref="checkDataJobDetail"/>
         <property name="startDelay" value="5000"/>
-        <property name="repeatInterval" value="15000"/>
+        <property name="repeatInterval" value="10000"/>
         <property name="repeatCount" value="1"/>
     </bean>
     <!--<bean id="pushData" class="com.capinfo.framework.web.common.job.PushDataJob"></bean>

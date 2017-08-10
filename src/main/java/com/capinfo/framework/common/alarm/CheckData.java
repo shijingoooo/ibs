@@ -26,7 +26,6 @@ public class CheckData {
     }
     //通知方法
     public void notifyMethod() throws Exception{
-        System.out.println(methods.size());
         for(int i = 0; i < methods.size(); i++){
             BaseMethod baseMethod = (BaseMethod)methods.get(i);
             baseMethod.run();
