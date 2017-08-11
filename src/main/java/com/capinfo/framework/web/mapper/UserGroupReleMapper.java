@@ -20,4 +20,6 @@ public interface UserGroupReleMapper {
     int deleteByUserId(Integer id);
 
     List<UserGroupRele> findUserGroupReleList(Integer id);
+
+    int findUserGroupCountByUserId(Integer id);
 }

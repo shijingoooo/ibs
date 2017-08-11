@@ -20,6 +20,8 @@ public class MonitoringDeviceQueryBean {
 	protected String devName;
 	//设备名称查询
 	protected String devNameForLike;
+	//站点查询
+	protected String devProNameForLike;
 	//设备类型
 	protected Integer devType;
 	//手机卡号
@@ -345,5 +347,13 @@ public class MonitoringDeviceQueryBean {
 
 	public void setMonitoringCompany(MonitoringCompany monitoringCompany) {
 		this.monitoringCompany = monitoringCompany;
+	}
+
+	public String getDevProNameForLike() {
+		return devProNameForLike;
+	}
+
+	public void setDevProNameForLike(String devProNameForLike) {
+		this.devProNameForLike = devProNameForLike;
 	}
 }

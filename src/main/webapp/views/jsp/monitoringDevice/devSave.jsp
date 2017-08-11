@@ -17,7 +17,7 @@
         }
     }
     function checkDevName() {
-        if ($("#devCode").val().length > 0) {
+        if ($("#devName").val().length > 0) {
             $.getJSON("${ctx}/monitoringDevice/checkDevName.action?devName=" + $("#devName").val(), function (data) {
                 if (data.deviceId != "" && data.deviceId != "${device.id}") {
                     $("#devNameMsg").html("设备名称已使用");
@@ -33,11 +33,16 @@
         var val = $("input[name='phoneCard']").val();
         var re = /(^1\d{12})|(^1\d{10})$/g;
         var myArray = re.exec(val);
-        if(!myArray && val.length >= 10 && val.length <= 12){
-            $("#phoneCardMsg").text("请以数字“1”开头的纯数字串，重新填写手机卡号！");
+        if( val.length == 11 || val.length == 13){
+            if (!myArray){
+                $("#phoneCardMsg").text("请以数字“1”开头的纯数字串，重新填写手机卡号！");
+            }
+            else{
+                $("#phoneCardMsg").text("");
+            }
         }
         else{
-            $("#phoneCardMsg").text("");
+            $("#phoneCardMsg").text("手机卡号位数要求11位或者13位！");
         }
     }
     //初始化转发因子
@@ -363,7 +368,7 @@
                         <p class="nowrap">
                             <label style="width: 60px;">手机卡号</label>
                             <input id="phoneCard" name="phoneCard" value="<c:out value='${device.phoneCard}'/>" type="text"
-                                   size="30" minlength="11" maxlength="13" style="margin-left: 25px;" onblur="checkPhoneCard()"/>
+                                   size="30" maxlength="13" style="margin-left: 25px;" onblur="checkPhoneCard()"/>
                             <span id="phoneCardMsg"></span>
                         </p>
                         <p class="nowrap">

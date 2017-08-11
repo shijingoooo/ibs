@@ -91,4 +91,9 @@
     WHERE ugr.group_id = gd.id
     AND ugr.user_id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="findUserGroupCountByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT COUNT(id)
+    FROM ibs_user_group_rele
+    WHERE user_id = #{id}
+  </select>
 </mapper>

@@ -25,7 +25,10 @@ public class MonitoringDevice {
 	
 	// 报建号
 	protected String proCode;
-	
+
+	//站点名称
+	protected String projectName;
+
 	// 厂商编号
 	protected String vendorCode;
 	
@@ -436,5 +439,13 @@ public class MonitoringDevice {
 
 	public void setMaintainCount(Integer maintainCount) {
 		this.maintainCount = maintainCount;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 }

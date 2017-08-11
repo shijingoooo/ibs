@@ -90,8 +90,8 @@
                             <tr>
                                 <td>设备编号：<input type="text" name="devCodeForLike"
                                                  value="<c:out value='${deviceQueryBean.devCodeForLike }'/>" onblur="valiStr(this)"/></td>
-                                <td>设备名称：<input type="text" name="devNameForLike"
-                                                 value="<c:out value='${deviceQueryBean.devNameForLike }'/>" onblur="valiStr(this)"/></td>
+                                <td>站点名称：<input type="text" name="devProNameForLike"
+                                                 value="<c:out value='${deviceQueryBean.devProNameForLike}'/>" onblur="valiStr(this)"/></td>
                                 <td>设备组：<input type="text" name="devGroupNameForLike"
                                                  value="<c:out value='${deviceQueryBean.devGroupNameForLike }'/>" onblur="valiStr(this)"/></td>
                                 <td>
@@ -99,7 +99,7 @@
                                     <label><input name="devStatus" type="checkbox" value="0" />离线 </label>
                                 </td>
                                 <td><button type="submit" id="modelSearchDevice">查询</button></td>
-                                <td><button type="button" id="modelExportDevice">导出数据</button></td>
+                                <td><button type="button" id="">导出数据</button></td>
                             </tr>
                         </table>
                     </div>
@@ -160,9 +160,11 @@
                 </div>
                 </td>
                 <td class="devCode">
-                    <self:a code="ibs_device_page_update" name="${obj.devCode}"
-                            parameter="?deviceId=${obj.id}" style="icon" target="dialog"
-                            mask="true" rel="newdevice" width="620" height="600"></self:a>
+                    <c:if test="${obj.devCode != null and obj.devCode !=''}">
+                        <self:a code="ibs_device_page_update" name="${obj.devCode}"
+                                parameter="?deviceId=${obj.id}" style="icon" target="dialog"
+                                mask="true" rel="newdevice" width="620" height="600"></self:a>
+                    </c:if>
                 </td>
                 <td class="maintainCount">
                     <a id="maintain" href="<c:out value='${ctx}/monitoringMaintain/listByPage.action?devId=${obj.id}'/>"
@@ -220,13 +222,13 @@
                     ${obj.monitoringProject.proName}
                 </td>
                 <td>
-                    <a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
+                    <%--<a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
                        target="navTab" rel="<c:out value='ibs_statistics_data_page'/>">统计数据</a>
-                    |
+                    |--%>
                     <a id="checkRule" href="<c:out value='${ctx}/monitoringDevice/devDataCalibrationListByPage.action?devId=${obj.id}'/>"
                        target="navTab" rel="<c:out value='ibs_data_calibration_page'/>">校准</a>
-                    |
-                    控制
+
+                    <%--|控制--%>
                 </td>
 
                     <%--<td>

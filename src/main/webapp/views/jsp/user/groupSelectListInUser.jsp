@@ -23,7 +23,7 @@
         });
     });
 
-    function backVal() {
+    function backVal(clickCount) {
         var ids = "";
         var names = "";
         $("input[name='groupId']").each(function (i, n) {
@@ -34,10 +34,33 @@
             /*alert(ids);
             alert(names);*/
         });
-        $.bringBack({
-            "groupIds": ids.substring(0, ids.length - 1),
-            "groupNames": names.substring(0, names.length - 1),
-        });
+        if (clickCount == "1"){
+            //保存设备组
+            $.ajax({
+                type : "post",
+                url : "${ctx}/user/saveGroupInUserList.action",
+                data: {
+                    "userId":${userId},
+                    "groupIds":ids
+                },
+                success:function(str){
+                    $("#pagerForm", window.parent.document).submit();
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown)
+                {
+                    //alert(XMLHttpRequest.readyState);
+                    alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.responseText);
+                }
+            });
+            $.bringBack();
+        }else{
+            $.bringBack({
+                "groupIds": ids.substring(0, ids.length - 1),
+                "groupNames": names.substring(0, names.length - 1),
+            });
+        }
+
     }
 </script>
 <div id="deviceSelectBox" layoutH="40">
@@ -65,7 +88,7 @@
         <div class="panelBar" width="100%">
             <ul class="toolBar">
                 <li>
-                    <a class="add" href="javascript:backVal();"><span>确定</span></a>
+                    <a class="add" href="javascript:backVal(${clickCount});"><span>确定</span></a>
                 </li>
             </ul>
         </div>

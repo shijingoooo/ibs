@@ -38,6 +38,8 @@
 		<result column="phone_card" property="phoneCard" jdbcType="VARCHAR" javaType="java.lang.String"/>
 		<result column="forward_type" property="forwardType" jdbcType="VARCHAR" javaType="java.lang.String"/>
 		<result column="forward_frequency" property="forwardFrequency" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="pro_name" property="projectName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+
 		<association column="company_id" property="monitoringCompany" javaType="com.capinfo.framework.web.pojo.MonitoringCompany" select="com.capinfo.framework.web.mapper.MonitoringCompanyMapper.findMonitoringCompanyById"/>
 		<association column="project_id" property="monitoringProject" javaType="com.capinfo.framework.web.pojo.MonitoringProject" select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringProjectById"/>
 		<association column="id" property="maintainCount" javaType="java.lang.Integer" select="com.capinfo.framework.web.mapper.MonitoringMaintainMapper.findMaintainCount"/>
@@ -156,12 +158,15 @@
 		<if test="query.devGroupNameForLike!=null and query.devGroupNameForLike!=''">
 			AND group_dev_name LIKE "%"#{query.devGroupNameForLike}"%"
 		</if>
+		<if test="query.devProNameForLike!=null and query.devProNameForLike!=''">
+			AND pro_name LIKE "%"#{query.devProNameForLike}"%"
+		</if>
 
 	</sql>
 	<select id="findMonitoringDevicePage" parameterType="java.util.Map" resultMap="MonitoringDeviceResult">
-    	SELECT md.id AS id,dev_code,pro_code,vendor_code,dev_name,dev_type,longitude,latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,paramstr,serial,start_time,end_time,install_time,creater,updater,md.create_time AS create_time,update_time,version,project_id,platform_id,platform_mn,camera_id,video_user,password,camera_index_code,phone_card,forward_type,forward_frequency,company_id,md.id AS devId
+		SELECT md.id AS id,dev_code,md.pro_code,vendor_code,dev_name,dev_type,md.longitude,md.latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,paramstr,serial,start_time,end_time,install_time,md.creater,md.updater,md.create_time AS create_time,md.update_time,md.version,project_id,md.platform_id,platform_mn,camera_id,video_user,password,camera_index_code,phone_card,forward_type,forward_frequency,md.company_id,md.id AS devId,mp.pro_name
 		FROM ((ibs_group_device_rele gdr LEFT JOIN ibs_group_device gd ON gdr.group_id = gd.id)
-		RIGHT JOIN ibs_monitoring_device md ON md.id = gdr.device_id)
+		RIGHT JOIN ibs_monitoring_device md ON md.id = gdr.device_id) LEFT JOIN ibs_monitoring_project mp ON md.project_id = mp.id
 		<where>
 			<include refid="query_device_page_where"></include>
 		</where>
@@ -187,6 +192,9 @@
 		<if test="devGroupNameForLike!=null and devGroupNameForLike!=''">
 			AND group_dev_name LIKE "%"#{devGroupNameForLike}"%"
 		</if>
+		<if test="devProNameForLike!=null and devProNameForLike!=''">
+			AND pro_name LIKE "%"#{devProNameForLike}"%"
+		</if>
 
 	</sql>
 	<select id="findMonitoringDeviceCount" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultType="java.lang.Integer">
@@ -194,7 +202,7 @@
 		FROM (
 		(SELECT md.id
 			FROM ((ibs_group_device_rele gdr LEFT JOIN ibs_group_device gd ON gdr.group_id = gd.id)
-			RIGHT JOIN ibs_monitoring_device md ON md.id = gdr.device_id)
+			RIGHT JOIN ibs_monitoring_device md ON md.id = gdr.device_id) LEFT JOIN ibs_monitoring_project mp ON md.project_id = mp.id
 			<where>
 				<include refid="query_device_count_where"></include>
 			</where>

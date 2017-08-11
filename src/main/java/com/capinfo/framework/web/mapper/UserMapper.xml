@@ -19,6 +19,7 @@
 		<result column="create_time" property="createTime" javaType="java.util.Date"/>
 		<result column="update_time" property="updateTime" javaType="java.util.Date"/>
 		<result column="version" property="version" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<association column="id" property="groupCount" jdbcType="INTEGER" javaType="java.lang.Integer" select="com.capinfo.framework.web.mapper.UserGroupReleMapper.findUserGroupCountByUserId"/>
 		<collection property="userRoles" column="id" javaType="java.util.ArrayList" select="com.capinfo.framework.web.mapper.UserRoleReleMapper.findUserRoleReleByUserId" />
 	</resultMap>
 	

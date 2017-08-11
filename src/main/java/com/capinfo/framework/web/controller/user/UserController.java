@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.capinfo.framework.common.controller.BaseController;
@@ -197,12 +198,34 @@ public class UserController extends BaseController {
 
 	//点击跳转到分组选择页面
 	@RequestMapping(value = "/groupSelectListInUser", method = {RequestMethod.GET,RequestMethod.POST})
-	public String groupSelectListInUser(Model model, MonitoringDeviceGroupQueryBean groupQueryBean, Integer userId,String groupIds,String groupNames) throws Exception {
+	public String groupSelectListInUser(Model model, MonitoringDeviceGroupQueryBean groupQueryBean, Integer userId,String groupIds,String groupNames,String clickCount) throws Exception {
 		List<MonitoringDeviceGroup> gourps = groupService.findMonitoringGroupList(groupQueryBean);
+		if ("1".equals(clickCount) && userId != null) {
+			List<UserGroupRele> userGroupReles = userService.findUserGroupReleList(userId);
+			StringBuffer Names = new StringBuffer();
+			StringBuffer Ids = new StringBuffer();
+			for (UserGroupRele item : userGroupReles) {
+				Names.append(item.getGroupName()).append(",");
+				Ids.append(item.getGroupId()).append(",");
+			}
+			if (!Ids.toString().equals("")) {
+				groupNames = Names.substring(0, Names.length() - 1);
+				groupIds = Ids.substring(0, Ids.length() - 1);
+			}
+		}
+		model.addAttribute("userId",userId);
+		model.addAttribute("clickCount",clickCount);
 		model.addAttribute("groups", gourps);
 		model.addAttribute("groupQueryBean", groupQueryBean);
 		model.addAttribute("groupIds", groupIds);
 		model.addAttribute("groupNames", groupNames);
 		return "user/groupSelectListInUser";
+	}
+
+	//保存设备组
+	@RequestMapping(value = "/saveGroupInUserList", method = {RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public void saveGroupInUserList(Integer userId,String groupIds) throws Exception {
+		userService.updateUserGroupRele(userId,groupIds);
 	}
 }

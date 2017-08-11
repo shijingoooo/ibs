@@ -42,6 +42,8 @@ public class User {
 	protected Integer updater;
 	
 	protected Integer version;
+	//管理设备组数
+	protected Integer groupCount;
 	
 	protected List<UserRoleRele> userRoles;
 	
@@ -200,4 +202,11 @@ public class User {
 				+ ", version=" + version + "]";
 	}
 
+	public Integer getGroupCount() {
+		return groupCount;
+	}
+
+	public void setGroupCount(Integer groupCount) {
+		this.groupCount = groupCount;
+	}
 }

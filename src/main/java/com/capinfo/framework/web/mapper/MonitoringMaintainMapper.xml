@@ -106,7 +106,8 @@
   </sql>
   <select id="findMonitoringDeviceList" parameterType="com.capinfo.framework.web.vo.MonitoringMaintainQueryBean" resultType="com.capinfo.framework.web.pojo.MonitoringDevice">
     SELECT md.id,md.dev_code AS devCode,md.dev_name AS devName,md.dev_status AS devStatus,md.dev_type AS devType
-    FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
+    FROM ((ibs_group_device_rele gdr LEFT JOIN ibs_group_device gd ON gdr.group_id = gd.id)
+    RIGHT JOIN ibs_monitoring_device md ON md.id = gdr.device_id)
     <where>
       <include refid="query_where"></include>
     </where>

@@ -105,7 +105,7 @@
                             APP服务商
                         </c:when>
                         <c:otherwise>
-                            为指定
+                            未指定
                         </c:otherwise>
                     </c:choose>
                 </td>

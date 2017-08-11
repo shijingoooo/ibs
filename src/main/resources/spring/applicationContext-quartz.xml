@@ -142,7 +142,7 @@
                 <!-- <ref bean="dataBaseTrigger"/>-->
                 <!--2017/1/18 新思 彭  结束-->
                 <!--<ref bean="statusScanTrigger"/>-->
-                <ref bean="checkDataJobDetail"/>
+                <!--<ref bean="checkDataJobDetail"/>-->
             </list>
         </property>
         <property name="triggers">

@@ -16,11 +16,26 @@
 			$(this).attr("href",hrefVal+"?userIds="+dateIds.substring(0,dateIds.length-1)+"&rel=ibs_user_page");
 		});
 	});
+    function clickA(node) {
+        var $node = $(node);
+        $node.parent().children("a").click();
+
+    }
 </script>
 <style type="text/css">
 	.userName a{
 		color: #00f;
 		text-decoration: underline;
+	}
+	td{
+		position: relative;
+	}
+	.count{
+		color: #00f;
+		text-decoration: underline;
+		cursor: pointer;
+		position: absolute;
+		top:25%;
 	}
 </style>
 <div class="pageHeader">
@@ -86,7 +101,11 @@
 							parameter="?userId=${obj.id}" style="icon" target="dialog"
 							mask="true" rel="newuser" width="560" height="380"></self:a>
 					</td>
-					<td>${obj.companyName}</td>
+					<td>
+						<a href="${ctx}/user/groupSelectListInUser.action?userId=${obj.id}&groupIds=${groupIds}&clickCount=1"
+						   lookupGroup="" mask="true" width="800" height="500" style="display: none">选择设备组</a>
+						<span class="count" onclick="clickA(this)">${obj.groupCount}</span>
+					</td>
 					<td>
 						<c:choose>
 							<c:when test="${obj.userType==1}">

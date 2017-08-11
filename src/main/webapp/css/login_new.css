@@ -1,0 +1,103 @@
+/*默认样式*/
+*{
+	margin: 0;
+	padding: 0;
+	border: none;
+	list-style: none;
+}
+html{font-size: 100px;}
+a{text-decoration: none;}
+body{background: #3a8cd8;}
+
+/*整体居中*/
+.login{
+	height: 45vh;
+	width: 20%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin:auto;
+	font-size: .16rem;
+}
+
+/*标题*/
+.login>.title{
+	text-align: center;
+	color: #fff;
+}
+.login>.title>h1{font-weight: normal;}
+
+/*用户表单*/
+.login>.login-form{
+	background: #fff;
+	border-radius: .07rem;
+	box-sizing: border-box;
+	padding: .25rem;
+	margin-top: .3rem;
+}
+
+/*账号及密码输入框*/
+.login>.login-form>input{border-radius: 5px;}
+.login>.login-form>input[name="userName"],
+.login>.login-form>input[name="password"]{
+	box-sizing: border-box;
+	border: 1px solid #aaa;
+	display: block;
+	height:.45rem;
+	width: 100%;
+	margin-top: .2rem;
+	padding-left: .4rem;
+}
+.login>.login-form>input[name="userName"]{
+	background: url("../img/9.png") no-repeat 10px center;
+	background-size: .2rem .2rem;
+}
+.login>.login-form>input[name="password"]{
+	margin-top: .3rem;
+	background: url("../img/9.png") no-repeat 10px center;
+	background-size: .2rem .2rem;
+}
+
+/*验证码框*/
+.login>.login-form>input[name="checked"]{
+	border: 1px solid #aaa;
+	width: 50%;
+	height: .35rem;
+	display: inline-block;
+	margin-top: .25rem;
+	padding-left: .1rem;
+}
+
+/*验证码图片*/
+.login>.login-form>img{
+	width: 40%;
+	height: .37rem;
+	display: inline-block;
+	float: right;
+	margin-top: .25rem;
+}
+
+/*登录按钮*/
+.login>.login-form>input[name="submit"]{
+	display: inline-block;
+	width: 70%;
+	height: .45rem;
+	background: #e46254;
+	color: #fff;
+	letter-spacing: .05rem;
+	border-radius: .05rem;
+	margin-top: .25rem;
+}
+.login>.login-form>input[name="submit"]:hover{cursor: pointer;}
+
+/*忘记密码*/
+.login>.login-form>a{
+	height: .45rem;
+	line-height: .45rem;
+	display: block;
+	color: #e46254;
+	float: right;
+	margin-top: .25rem;
+}

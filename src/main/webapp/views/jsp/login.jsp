@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/common/taglibs.jsp"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%--<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">--%>
+<%--<html>--%>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″ />
 		<title>扬尘噪声监控</title>
-		<link type="text/css" rel="stylesheet" href="${ctx}/css/login_htc.css"/>
+		<%--<link type="text/css" rel="stylesheet" href="${ctx}/css/login_htc.css"/>--%>
 <!-- 		<link type="image/x-icon" rel="icon" href="${ctx}/images/favicon.ico"/> -->
+		<link type="text/css" rel="stylesheet" href="${ctx}/css/login_new.css">
 		<script type="text/javascript" src="${ctx}/js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="${ctx}/js/MD5Utils.js"></script>
 		<script type="text/javascript" src="${ctx}/js/jquery.form.js"></script>
@@ -18,15 +21,24 @@
 					$("#password").val(hex_md5($("#password_input").val())) ;
 					$("#mainForm").submit();		
 			    });
-			})
-			
-			document.onkeydown = function(e){ 
+			});
+            $(window).resize(function() {
+                var width = $(this).width();
+                var $a = $(".forgetPassword");
+                var fontSize = 16;
+                if(width>800 && width<1450)
+                {
+                    $a.css("font-size",(fontSize-(1450-width)/50));
+                }else if(width >1450)
+                    $a.css("font-size",16);
+            });
+			/*document.onkeydown = function(e){
 			    var ev = document.all ? window.event : e;
 			    if(ev.keyCode==13) {
 			    	$("#password").val(hex_md5($("#password_input").val())) ;
 			    	$("#mainForm").submit();
 			     }
-			}
+			}*/
 			
 			/////////////鼠标滑过文本框变色、、、、、、、、、、、开始
 			window.onload=function change(){
@@ -79,8 +91,7 @@
 	</head>
 	<body id="userlogin_body">
 		<br />
-		<form id="mainForm" action="${ctx}/login/home.action"
-			method="post">
+		<%--<form id="mainForm" action="${ctx}/login/home.action" method="post">
 			<div class="container">
 		    	<div class="wrap">
 		        	<div class="formDiv clearfix">
@@ -109,6 +120,23 @@
 		            </div>
 		        </div>
 		    </div>
-		</form>
+		</form>--%>
+		<div class="login">
+			<!-- 标题 -->
+			<div class="title">
+				<h1>设备云管理系统</h1>
+				<p>cloudcloudcloudcloud</p>
+			</div>
+			<!-- 表单区域 -->
+			<form class="login-form" id="mainForm" action="${ctx}/login/home.action" method="post">
+				<input type="text" class="user" placeholder="User" id="user.loginName" name="userName" tabindex="1" value="">
+				<input type="password" name="password" class="password" placeholder="Password" id="password_input" tabindex="2" value="">
+				<input type="hidden" id="password" name="userPassword" />
+				<input type="text" name="checked" class="checked" placeholder="请输入验证码">
+				<img src="img/verify.png">
+				<input type="submit" name="submit" class="submit" value="登录" id="button1">
+				<a class="forgetPassword" href="">忘记密码?</a>
+			</form>
+		</div>
 	</body>
 </html>
