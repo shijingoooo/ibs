@@ -7,12 +7,18 @@
 }
 html{font-size: 100px;}
 a{text-decoration: none;}
-body{background: #3a8cd8;}
+body{
+	background-image:url(img/bg.jpg);
+	background-position: center 0;
+	background-repeat: no-repeat;
+	background-attachment:fixed;
+	background-size: cover;
+}
 
 /*整体居中*/
 .login{
-	height: 45vh;
-	width: 20%;
+	height: 34.72vh;
+	width: 22.65%;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -26,16 +32,17 @@ body{background: #3a8cd8;}
 .login>.title{
 	text-align: center;
 	color: #fff;
+	font-family:"微软雅黑",serif ;
 }
 .login>.title>h1{font-weight: normal;}
 
 /*用户表单*/
 .login>.login-form{
-	background: #fff;
+	background: #FFFFFF;
 	border-radius: .07rem;
 	box-sizing: border-box;
 	padding: .25rem;
-	margin-top: .3rem;
+	/*margin-top: .3rem;*/
 }
 
 /*账号及密码输入框*/
@@ -45,50 +52,93 @@ body{background: #3a8cd8;}
 	box-sizing: border-box;
 	border: 1px solid #aaa;
 	display: block;
-	height:.45rem;
+	height:.50rem;
 	width: 100%;
 	margin-top: .2rem;
 	padding-left: .4rem;
+	font-size: .18rem;
+	font-family:"微软雅黑",serif ;
 }
+/*设置input框placeholder样式*/
+::-webkit-input-placeholder { /* WebKit browsers */
+	color:    #DBE2E5;
+	font-family:"微软雅黑",serif ;
+	font-size: .18rem;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color:    #DBE2E5;
+	font-family:"微软雅黑",serif ;
+	font-size: .18rem;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color:    #DBE2E5;
+	font-family:"微软雅黑",serif ;
+	font-size: .18rem;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+	color:    #DBE2E5;
+	font-family:"微软雅黑",serif ;
+	font-size: .18rem;
+}
+
+.login>.login-form>input[name="checked"]::-webkit-input-placeholder{
+	font-size: .15rem;
+}
+.login>.login-form>input[name="checked"]:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	font-size: .15rem;
+}
+.login>.login-form>input[name="checked"]::-moz-placeholder { /* Mozilla Firefox 19+ */
+	font-size: .15rem;
+}
+.login>.login-form>input[name="checked"]:-ms-input-placeholder { /* Internet Explorer 10+ */
+	font-size: .15rem;
+}
+
+
 .login>.login-form>input[name="userName"]{
-	background: url("../img/9.png") no-repeat 10px center;
+	background: url("img/user.png") no-repeat 10px center;
 	background-size: .2rem .2rem;
 }
 .login>.login-form>input[name="password"]{
 	margin-top: .3rem;
-	background: url("../img/9.png") no-repeat 10px center;
+	background: url("img/password.png") no-repeat 10px center;
 	background-size: .2rem .2rem;
 }
 
 /*验证码框*/
 .login>.login-form>input[name="checked"]{
 	border: 1px solid #aaa;
-	width: 50%;
-	height: .35rem;
+	width: 54%;
+	height: .40rem;
 	display: inline-block;
-	margin-top: .25rem;
+	margin-top: .20rem;
 	padding-left: .1rem;
+	font-size: .15rem;
 }
 
 /*验证码图片*/
 .login>.login-form>img{
-	width: 40%;
+	width: 35%;
 	height: .37rem;
 	display: inline-block;
 	float: right;
-	margin-top: .25rem;
+	margin-top: .20rem;
+	cursor: pointer;
 }
 
 /*登录按钮*/
 .login>.login-form>input[name="submit"]{
 	display: inline-block;
-	width: 70%;
-	height: .45rem;
-	background: #e46254;
+	width: 73%;
+	height: .52rem;
+	background: #e46255;
 	color: #fff;
-	letter-spacing: .05rem;
+	letter-spacing: .10rem;
 	border-radius: .05rem;
-	margin-top: .25rem;
+	margin-top: .20rem;
+	font-family:"微软雅黑",serif ;
+	font-size: .18rem;
+
 }
 .login>.login-form>input[name="submit"]:hover{cursor: pointer;}
 
@@ -97,7 +147,26 @@ body{background: #3a8cd8;}
 	height: .45rem;
 	line-height: .45rem;
 	display: block;
-	color: #e46254;
+	color: #a2a2a2;
 	float: right;
-	margin-top: .25rem;
+	margin-top: .20rem;
+	margin-right: .10rem;
+	font-family:"微软雅黑",serif ;
+	-webkit-text-size-adjust:none;
+}
+/*忘记密码*/
+.forgetPassword{
+	height: .45rem;
+	line-height: .45rem;
+	float: right;
+	width: 20%;
+	margin-top: .20rem;
+	margin-right: .10rem;
+	background-color: transparent;
+	color: #a2a2a2;
+	font-family:"微软雅黑",serif ;
+	cursor: pointer;
+}
+.forgetPassword:focus{
+	outline:none;
 }
