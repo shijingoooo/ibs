@@ -22,18 +22,20 @@
 					$("#mainForm").submit();		
 			    });
 			});
-            /*$(window).resize(function() {
-                /!*var width = $(this).width();
+            $(window).resize(function() {
+                var width = $(this).width();
                 var height = $(this).height();
                 var scale = 1;
                 var scaleW = width/1920;
                 var scaleH = height/1080;
                 scale = scaleW <= scaleH ? scaleW : scaleH;
                 //console.log(scale);
-                var $body = $("body");
-                $body.css("font-size",100*scale);
-                console.log($body.css("font-size"));*!/
-                var width = $(this).width();
+
+                var $html = $("html");
+                $html.css("font-size",100*scale);
+                console.log($html.css("font-size"));
+
+                /*var width = $(this).width();
                 var $a = $(".forgetPassword");
                 var fontSize = 15;
                 if(width>800 && width<1500)
@@ -41,7 +43,8 @@
                     $a.css("font-size",(fontSize-(1500-width)/40));
                 }else if(width >1500)
                     $a.css("font-size",15);
-            });*/
+            */
+            });
 			/*document.onkeydown = function(e){
 			    var ev = document.all ? window.event : e;
 			    if(ev.keyCode==13) {
@@ -142,11 +145,12 @@
 				<input type="text" class="user" placeholder="User" id="user.loginName" name="userName" tabindex="1" value="">
 				<input type="password" name="password" class="password" placeholder="Password" id="password_input" tabindex="2" value="">
 				<input type="hidden" id="password" name="userPassword" />
-				<input type="text" name="checked" class="checked" placeholder="请输入验证码">
-				<img src="${ctx}/css/img/verify.png">
+				<input type="text" name="valiCode" class="valiCode" placeholder="请输入验证码">
+				<img id="imgCode" src="${ctx}/validationCode" onclick="document.getElementById('imgCode').src='${ctx}/validationCode?r='+Math.random()">
 				<input type="submit" name="submit" class="submit" value="登录" id="button1">
-				<input type="button" class="forgetPassword" value="忘记密码？" id="button">
-				<%--<a class="forgetPassword" href="">忘记密码?</a>--%>
+				<%--<input type="button" class="forgetPassword" value="忘记密码？" id="button">--%>
+				<a class="forgetPassword" href="">忘记密码?</a>
+				<div>${msg}</div>
 			</form>
 		</div>
 	</body>

@@ -81,16 +81,16 @@ body{
 	font-size: .18rem;
 }
 
-.login>.login-form>input[name="checked"]::-webkit-input-placeholder{
+.login>.login-form>input[name="valiCode"]::-webkit-input-placeholder{
 	font-size: .15rem;
 }
-.login>.login-form>input[name="checked"]:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+.login>.login-form>input[name="valiCode"]:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 	font-size: .15rem;
 }
-.login>.login-form>input[name="checked"]::-moz-placeholder { /* Mozilla Firefox 19+ */
+.login>.login-form>input[name="valiCode"]::-moz-placeholder { /* Mozilla Firefox 19+ */
 	font-size: .15rem;
 }
-.login>.login-form>input[name="checked"]:-ms-input-placeholder { /* Internet Explorer 10+ */
+.login>.login-form>input[name="valiCode"]:-ms-input-placeholder { /* Internet Explorer 10+ */
 	font-size: .15rem;
 }
 
@@ -106,7 +106,7 @@ body{
 }
 
 /*验证码框*/
-.login>.login-form>input[name="checked"]{
+.login>.login-form>input[name="valiCode"]{
 	border: 1px solid #aaa;
 	width: 54%;
 	height: .40rem;
@@ -153,9 +153,10 @@ body{
 	margin-right: .10rem;
 	font-family:"微软雅黑",serif ;
 	-webkit-text-size-adjust:none;
+	font-size: .16rem;
 }
 /*忘记密码*/
-.forgetPassword{
+/*.forgetPassword{
 	height: .45rem;
 	line-height: .45rem;
 	float: right;
@@ -169,4 +170,4 @@ body{
 }
 .forgetPassword:focus{
 	outline:none;
-}
+}*/

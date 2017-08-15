@@ -2,6 +2,7 @@ package com.capinfo.framework.web.controller.login;
 
 import com.capinfo.framework.common.controller.BaseController;
 import com.capinfo.framework.common.util.LogUtil;
+import com.capinfo.framework.common.util.ValidationCodeHelper;
 import com.capinfo.framework.web.pojo.*;
 import com.capinfo.framework.web.service.*;
 import com.capinfo.framework.web.vo.*;
@@ -403,7 +404,13 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping(value = "/home", method = {RequestMethod.POST, RequestMethod.GET})
-    public String home(Model model, HttpSession session, UserQueryBean queryBean) throws Exception {
+    public String home(Model model, HttpSession session, UserQueryBean queryBean, String valiCode) throws Exception {
+
+        String sessionCode = ValidationCodeHelper.getValidationCodeFromSession(session);
+        if (valiCode == null || !valiCode.equals(sessionCode)) {
+            model.addAttribute("msg", "验证码输入错误！");
+            return "login";
+        }
 
         Object object = userService.login(queryBean);
         if (object instanceof User) {
@@ -414,11 +421,13 @@ public class LoginController extends BaseController {
         }
         else
         {
+            model.addAttribute("msg", "用户名或密码错误！");
             return "login";
         }
         Integer userId = (Integer) session.getAttribute("userid");
         User user = userService.findUserById(userId);
         if (user == null) {
+            model.addAttribute("msg", "用户名或密码错误！");
             return "login";
         }
         UserRoleReleQueryBean userRoleReleQueryBean = new UserRoleReleQueryBean();
