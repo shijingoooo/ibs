@@ -143,7 +143,7 @@
 	
 	<!-- 查询传感器分页列表 -->
 	<sql id="query_device_page_where">
-		<if test="query.userId != 1" >
+		<if test="query.userType != 1" >
 			AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{query.userId})
 		</if>
 		<if test="query.devCodeForLike!=null and query.devCodeForLike!=''">
@@ -177,7 +177,7 @@
 	
 	<!-- 查询传感器总数 -->
 	<sql id="query_device_count_where">
-		<if test="userId != 1" >
+		<if test="userType != 1" >
 			AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{userId})
 		</if>
 		<if test="devCodeForLike!=null and devCodeForLike!=''">

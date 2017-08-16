@@ -39,6 +39,7 @@ public class MonitoringAlarmController extends BaseController {
         }
         alarmQueryBean.setDevId(devId);
         alarmQueryBean.setUserId((Integer) session.getAttribute("userid"));
+        alarmQueryBean.setUserType((Integer) session.getAttribute("usertype"));
         monitoringAlarmService.findMonitoringAlarmPage(page, alarmQueryBean);
         model.addAttribute("page", page);
         model.addAttribute("alarmQueryBean", alarmQueryBean);

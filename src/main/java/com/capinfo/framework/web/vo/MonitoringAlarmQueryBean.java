@@ -8,6 +8,8 @@ public class MonitoringAlarmQueryBean {
     protected Integer id;
     //用户ID
     protected Integer userId;
+    //用户类型
+    protected Integer userType;
     //设备ID
     protected Integer devId;
     //设备编号
@@ -35,6 +37,14 @@ public class MonitoringAlarmQueryBean {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
     public Integer getUserId() {

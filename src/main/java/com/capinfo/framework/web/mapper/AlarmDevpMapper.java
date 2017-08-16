@@ -1,6 +1,7 @@
 package com.capinfo.framework.web.mapper;
 
 import com.capinfo.framework.web.pojo.AlarmDevp;
+import com.capinfo.framework.web.pojo.MonitoringData;
 import com.capinfo.framework.web.vo.MonitoringAlarmQueryBean;
 import com.capinfo.framework.web.vo.MonitoringDeviceQueryBean;
 
@@ -25,4 +26,6 @@ public interface AlarmDevpMapper {
     int findMonitoringAlarmCount(MonitoringAlarmQueryBean alarmQueryBean);
 
     List<AlarmDevp> findMonitoringAlarmList(MonitoringAlarmQueryBean alarmQueryBean);
+
+    List<AlarmDevp> findConstValueAlarmList(MonitoringAlarmQueryBean alarmQueryBean);
 }

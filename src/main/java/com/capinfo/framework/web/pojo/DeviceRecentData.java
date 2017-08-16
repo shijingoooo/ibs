@@ -12,6 +12,7 @@ public class DeviceRecentData {
     private String devCode;
     private String devName;
     private String devStatus;
+    private Integer devType;
     //OffLine
     private Integer dataId;
     //AbnormalTemperature
@@ -81,5 +82,13 @@ public class DeviceRecentData {
 
     public void setDataList(List<MonitoringData> dataList) {
         this.dataList = dataList;
+    }
+
+    public Integer getDevType() {
+        return devType;
+    }
+
+    public void setDevType(Integer devType) {
+        this.devType = devType;
     }
 }

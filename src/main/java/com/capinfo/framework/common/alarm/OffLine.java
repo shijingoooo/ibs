@@ -54,7 +54,7 @@ public class OffLine extends BaseMethod{
                     //查找该设备有没有同类型的告警记录：有则更新，无则新增
                     MonitoringAlarmQueryBean alarmQueryBean = new MonitoringAlarmQueryBean();
                     alarmQueryBean.setDevId(item.getId());
-                    alarmQueryBean.setAlarmType(0);
+                    alarmQueryBean.setAlarmType(1);
                     List<AlarmDevp> alarmList = alarmService.findMonitoringAlarmList(alarmQueryBean);
                     if (alarmList.size() == 0)
                         //新增

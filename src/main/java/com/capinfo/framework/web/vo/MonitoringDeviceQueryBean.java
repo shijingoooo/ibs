@@ -8,6 +8,8 @@ import java.util.Date;
 public class MonitoringDeviceQueryBean {
 	//用户ID
 	protected Integer userId;
+	//用户类型
+	protected Integer userType;
 	//设备ID
 	protected Integer id;
 	//设备编码
@@ -83,6 +85,14 @@ public class MonitoringDeviceQueryBean {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public Integer getUserType() {
+		return userType;
+	}
+
+	public void setUserType(Integer userType) {
+		this.userType = userType;
 	}
 
 	public Integer getId() {

@@ -52,6 +52,7 @@
 
   <resultMap id="DeviceRecentDataResult" type="com.capinfo.framework.web.pojo.DeviceRecentData">
     <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+    <id column="dev_type" property="devType" jdbcType="INTEGER" javaType="java.lang.Integer"/>
     <id column="project_id" property="projectId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
     <id column="last_week_avg_temperature" property="lastWeekAvgTemperature" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
     <collection column="id" property="dataList" javaType="java.util.ArrayList"
@@ -70,7 +71,7 @@
 
 
   <select id="findDeviceListWithData" resultMap="DeviceRecentDataResult">
-    SELECT md.id AS id
+    SELECT md.id AS id,md.dev_type
     FROM ibs_monitoring_device md
     WHERE md.dev_type IN(5,7) AND md.dev_status = 1
   </select>
@@ -79,7 +80,7 @@
     SELECT *
     FROM ibs_monitoring_data_copy
     WHERE device_id = #{deviceId}
-    ORDER BY col_time
+    ORDER BY col_time DESC
     LIMIT 10
   </select>
 

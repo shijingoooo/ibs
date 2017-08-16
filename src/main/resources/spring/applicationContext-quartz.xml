@@ -13,7 +13,7 @@
     <!--有参数构造方法注入-->
     <bean id="checkData" class="com.capinfo.framework.common.alarm.CheckData">
     </bean>
-    <bean id="powerOff" class="com.capinfo.framework.common.alarm.OffLine">
+    <bean id="offLine" class="com.capinfo.framework.common.alarm.OffLine">
         <constructor-arg ref="checkData"></constructor-arg>
     </bean>
     <bean id="abnormalTemperature" class="com.capinfo.framework.common.alarm.AbnormalTemperature">
@@ -142,7 +142,7 @@
                 <!-- <ref bean="dataBaseTrigger"/>-->
                 <!--2017/1/18 新思 彭  结束-->
                 <!--<ref bean="statusScanTrigger"/>-->
-                <!--<ref bean="checkDataJobDetail"/>-->
+                <ref bean="checkDataJobDetail"/>
             </list>
         </property>
         <property name="triggers">

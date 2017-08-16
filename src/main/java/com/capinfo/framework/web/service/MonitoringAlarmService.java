@@ -51,6 +51,10 @@ public class MonitoringAlarmService {
 		return alarmDevpMapper.findMonitoringAlarmList(alarmQueryBean);
 	}
 
+	public List<AlarmDevp> findConstValueAlarmList(MonitoringAlarmQueryBean alarmQueryBean) throws Exception{
+		return alarmDevpMapper.findConstValueAlarmList(alarmQueryBean);
+	}
+
 	public void saveMonitoringAlarmRecord(MonitoringAlarmQueryBean alarmQueryBean) throws Exception{
 		AlarmDevp alarmDevp = new AlarmDevp();
 		//id自增

@@ -36,6 +36,7 @@ public class MonitoringMaintainController extends BaseController {
         }
         monitoringMaintainQueryBean.setDevId(devId);
         monitoringMaintainQueryBean.setUserId((Integer) session.getAttribute("userid"));
+        monitoringMaintainQueryBean.setUserType((Integer) session.getAttribute("usertype"));
         monitoringMaintainService.findMonitoringMaintainPage(page, monitoringMaintainQueryBean);
         model.addAttribute("page", page);
         model.addAttribute("maintainQueryBean", monitoringMaintainQueryBean);

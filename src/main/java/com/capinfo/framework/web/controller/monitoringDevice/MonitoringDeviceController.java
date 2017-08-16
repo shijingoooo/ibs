@@ -35,6 +35,7 @@ public class MonitoringDeviceController extends BaseController {
     public String listByPage(Model model,HttpSession session, MonitoringDeviceQueryBean deviceQueryBean, Page<MonitoringDevice> page, Integer pageNum) throws Exception {
         //MonitoringDeviceGroupQueryBean deviceGroupQueryBean = new MonitoringDeviceGroupQueryBean();
         deviceQueryBean.setUserId((Integer)session.getAttribute("userid"));
+        deviceQueryBean.setUserType((Integer)session.getAttribute("usertype"));
         if (page != null && pageNum != null) {
             page.setPageNo(pageNum);
         }
