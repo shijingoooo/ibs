@@ -21,8 +21,9 @@
 					$("#password").val(hex_md5($("#password_input").val())) ;
 					$("#mainForm").submit();		
 			    });
+                reSizeForgetPassword();
 			});
-            $(window).resize(function() {
+			function reSizeForgetPassword() {
                 var width = $(this).width();
                 var height = $(this).height();
                 var scale = 1;
@@ -34,17 +35,8 @@
                 var $html = $("html");
                 $html.css("font-size",100*scale);
                 console.log($html.css("font-size"));
-
-                /*var width = $(this).width();
-                var $a = $(".forgetPassword");
-                var fontSize = 15;
-                if(width>800 && width<1500)
-                {
-                    $a.css("font-size",(fontSize-(1500-width)/40));
-                }else if(width >1500)
-                    $a.css("font-size",15);
-            */
-            });
+            }
+            $(window).resize(reSizeForgetPassword);
 			/*document.onkeydown = function(e){
 			    var ev = document.all ? window.event : e;
 			    if(ev.keyCode==13) {

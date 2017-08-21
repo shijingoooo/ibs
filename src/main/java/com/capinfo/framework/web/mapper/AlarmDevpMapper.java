@@ -28,4 +28,7 @@ public interface AlarmDevpMapper {
     List<AlarmDevp> findMonitoringAlarmList(MonitoringAlarmQueryBean alarmQueryBean);
 
     List<AlarmDevp> findConstValueAlarmList(MonitoringAlarmQueryBean alarmQueryBean);
+
+    List<AlarmDevp> findDayCountByType(Integer type);
+
 }

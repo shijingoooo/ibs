@@ -17,6 +17,8 @@ public class AlarmDevp {
 
     private Date alarmTime;
 
+    private Integer count;
+
     private MonitoringProject monitoringProject;
 
     public Integer getId() {
@@ -81,5 +83,13 @@ public class AlarmDevp {
 
     public void setMonitoringProject(MonitoringProject monitoringProject) {
         this.monitoringProject = monitoringProject;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

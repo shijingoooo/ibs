@@ -15,6 +15,8 @@ public class MonitoringAlarmService {
 	@Autowired
 	private AlarmDevpMapper alarmDevpMapper;
 
+	public enum type {设备断电,设备下线,数据恒值,数据0值,温湿度异常}
+
 	public void findMonitoringAlarmPage(Page<AlarmDevp> page, MonitoringAlarmQueryBean alarmQueryBean)
 			throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -72,6 +74,15 @@ public class MonitoringAlarmService {
 		alarmDevp.setAlarmType(alarmQueryBean.getAlarmType());
 		alarmDevp.setAlarmTime(new Date());
 		alarmDevpMapper.updateByPrimaryKeySelective(alarmDevp);
+	}
+	//根据告警类型获取每天的告警数量
+	public Map<String,List<AlarmDevp>> findDayCountByType() throws Exception{
+		Map<String,List<AlarmDevp>> result = new HashMap<String,List<AlarmDevp>>();
+		for (type item: type.values()) {
+			List<AlarmDevp> alarmDevpList = alarmDevpMapper.findDayCountByType(item.ordinal());
+			result.put(item.toString(),alarmDevpList);
+		}
+		return result;
 	}
 	/*public MonitoringMaintain findMonitoringMaintainById(Integer recordId) throws Exception {
 

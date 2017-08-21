@@ -34,7 +34,7 @@ public class AbnormalTemperature extends BaseMethod {
     }
     @Override
     public void run() throws Exception{
-        /*System.out.println("AbnormalTemperature !!!");
+        System.out.println("AbnormalTemperature !!!");
         //获取扬尘噪声和AQI设备的站点ID以及近一周内设备收集的平均温度值
         List<DeviceRecentData> dataList = dataService.findLastWeekAvgTemperature();
         for (DeviceRecentData data:dataList) {
@@ -53,6 +53,6 @@ public class AbnormalTemperature extends BaseMethod {
                     //新增
                     alarmService.saveMonitoringAlarmRecord(alarmQueryBean);
             }
-        }*/
+        }
     }
 }

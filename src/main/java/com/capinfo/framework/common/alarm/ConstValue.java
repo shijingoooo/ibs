@@ -40,9 +40,9 @@ public class ConstValue extends BaseMethod {
 
         List<DeviceRecentData> dataList = dataService.findDeviceListWithData();
         //判断0值
-        //checkZeroValue(dataList);
+        checkZeroValue(dataList);
         //判断恒值
-        //checkConstValue(dataList);
+        checkConstValue(dataList);
         /*for (DeviceRecentData data:dataList) {
             if(data.getDevType() == 7){
                 //扬尘噪声：PM10、PM2.5、TSP

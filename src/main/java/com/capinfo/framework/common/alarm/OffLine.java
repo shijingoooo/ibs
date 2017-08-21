@@ -42,14 +42,14 @@ public class OffLine extends BaseMethod{
     }
     @Override
     public void run() throws Exception{
-        //System.out.println("start scan !");
-        /*List<DeviceRecentData>dataList = deviceService.findMonitoringDeviceRecentDataList();
+        System.out.println("start scan !");
+        List<DeviceRecentData>dataList = deviceService.findMonitoringDeviceRecentDataList();
         for (DeviceRecentData item:dataList) {
             if (item.getDataId() == null) {
                 if ("1".equals(item.getDevStatus())) {
-                    MonitoringDeviceQueryBean deviceQueryBean = new MonitoringDeviceQueryBean();
-                    deviceQueryBean.setDevStatus("0");
-                    deviceService.updateMonitoringDevice(item.getId(), deviceQueryBean);
+                    //MonitoringDeviceQueryBean deviceQueryBean = new MonitoringDeviceQueryBean();
+                    //deviceQueryBean.setDevStatus("0");
+                    //deviceService.updateMonitoringDevice(item.getId(), deviceQueryBean);
                     //更新告警，告警类型修改为0，告警消除
                     //查找该设备有没有同类型的告警记录：有则更新，无则新增
                     MonitoringAlarmQueryBean alarmQueryBean = new MonitoringAlarmQueryBean();
@@ -61,6 +61,6 @@ public class OffLine extends BaseMethod{
                         alarmService.saveMonitoringAlarmRecord(alarmQueryBean);
                 }
             }
-        }*/
+        }
     }
 }

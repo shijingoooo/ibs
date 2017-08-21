@@ -2,26 +2,18 @@ package com.capinfo.framework.web.controller.monitoringMaintain;
 
 import com.capinfo.framework.common.controller.BaseController;
 import com.capinfo.framework.web.pojo.AlarmDevp;
-import com.capinfo.framework.web.pojo.MonitoringDevice;
-import com.capinfo.framework.web.pojo.MonitoringMaintain;
 import com.capinfo.framework.web.service.MonitoringAlarmService;
-import com.capinfo.framework.web.service.MonitoringMaintainService;
 import com.capinfo.framework.web.vo.MonitoringAlarmQueryBean;
-import com.capinfo.framework.web.vo.MonitoringMaintainQueryBean;
 import com.capinfo.modules.orm.Page;
-import net.sf.json.JSONObject;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/monitoringAlarm")
@@ -41,6 +33,38 @@ public class MonitoringAlarmController extends BaseController {
         alarmQueryBean.setUserId((Integer) session.getAttribute("userid"));
         alarmQueryBean.setUserType((Integer) session.getAttribute("usertype"));
         monitoringAlarmService.findMonitoringAlarmPage(page, alarmQueryBean);
+
+        Calendar c = Calendar.getInstance();
+        Date date = new Date();
+        c.setTime(date);
+        int day = c.get(Calendar.DATE);
+        String[] week = new String[7];
+        for (int i = 0; i < 7; i++) {
+            c.set(Calendar.DATE, day--);
+            week[i] = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+        }
+        //获取每个告警类型，每天的告警数量
+        Map<String,List<AlarmDevp>> map = monitoringAlarmService.findDayCountByType();
+        //创建Map，方便页面读取数据
+        Map<String,String[]>countMap = new HashMap<String,String[]>();
+        for (String key: map.keySet()) {
+            String[] strArr = {"0","0","0","0","0","0","0","0"} ;
+            Integer total = 0;
+            for(int i = 0;i < 7; i++){
+                for(AlarmDevp item: map.get(key)){
+                    String time = new SimpleDateFormat("yyyy-MM-dd").format(item.getAlarmTime());
+                    if (week[i].equals(time)) {
+                        strArr[i] = item.getCount().toString();
+                        total += item.getCount();
+                        break;
+                    }
+                }
+            }
+            strArr[7] = total.toString();
+            countMap.put(key,strArr);
+        }
+        model.addAttribute("countMap",countMap);
+        model.addAttribute("week",week);
         model.addAttribute("page", page);
         model.addAttribute("alarmQueryBean", alarmQueryBean);
 

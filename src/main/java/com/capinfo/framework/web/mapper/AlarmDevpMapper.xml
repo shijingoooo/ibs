@@ -9,10 +9,12 @@
     <result column="alarm_type" property="alarmType" jdbcType="INTEGER" />
     <result column="alarm_cause" property="alarmCause" jdbcType="INTEGER" />
     <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
+    <result column="count" property="count" jdbcType="INTEGER" />
     <association column="project_id" property="monitoringProject" javaType="com.capinfo.framework.web.pojo.MonitoringProject" select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringProjectById"/>
   </resultMap>
+
   <!--获取告警记录列表-->
-<select id="findMonitoringAlarmPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <select id="findMonitoringAlarmPage" parameterType="java.util.Map" resultMap="BaseResultMap">
   SELECT ad.id AS id,device_id,dev_code,alarm_status,alarm_type,alarm_cause,alarm_time,project_id
   FROM ibs_alarm_devp ad,ibs_monitoring_device md
   WHERE md.id = ad.device_id
@@ -41,12 +43,21 @@
   ORDER BY ad.alarm_time desc
   LIMIT #{pageNum},#{pageSize}
 </select>
-<!--保存记录-->
+
+  <select id="findDayCountByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT *,DATE_FORMAT(alarm_time,'%Y-%m-%d') AS format_time,COUNT(id) AS count
+    FROM ibs_alarm_devp
+    WHERE alarm_type = #{type} AND alarm_time BETWEEN (NOW()-INTERVAL 7 day) AND NOW()
+    GROUP BY format_time
+    ORDER BY format_time DESC
+    LIMIT 7
+  </select>
+  <!--保存记录-->
   <insert id="insert" parameterType="com.capinfo.framework.web.pojo.AlarmDevp" >
     insert into ibs_alarm_devp (device_id, alarm_status,alarm_type, alarm_cause, alarm_time)
     values (#{deviceId}, #{alarmStatus},#{alarmType}, #{alarmCause}, #{alarmTime})
   </insert>
-<!--获取总数-->
+  <!--获取总数-->
   <select id="findMonitoringAlarmCount" parameterType="com.capinfo.framework.web.vo.MonitoringAlarmQueryBean" resultType="java.lang.Integer">
     SELECT COUNT(ad.id)
     FROM ibs_alarm_devp ad,ibs_monitoring_device md
