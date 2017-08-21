@@ -37,48 +37,11 @@ public class ConstValue extends BaseMethod {
         System.out.println("ConstValue!!!");
         //先判断0值再判断恒值
         //获取设备最新十条数据
-
         List<DeviceRecentData> dataList = dataService.findDeviceListWithData();
         //判断0值
         checkZeroValue(dataList);
         //判断恒值
         checkConstValue(dataList);
-        /*for (DeviceRecentData data:dataList) {
-            if(data.getDevType() == 7){
-                //扬尘噪声：PM10、PM2.5、TSP
-                boolean flag = true;//false:不告警;true:告警
-                for (MonitoringData item:data.getDataList()) {
-                    if(item.getActualTenPm().doubleValue()==0
-                        &&item.getActualTwoPm().doubleValue()==0
-                        &&item.getActualTsp().doubleValue()==0){
-                    }else {
-                        flag = false;
-                        break;
-                    }
-                }
-                //告警
-                insertAlarmRecord(flag,data);
-            }else if(data.getDevType() == 5){
-                //AQI：PM10、PM2.5、SO2、NO2、O3、CO
-                boolean flag = true;//false:不告警;true:告警
-                for (MonitoringData item:data.getDataList()) {
-                    if(item.getActualTenPm().doubleValue()==0
-                            &&item.getActualTwoPm().doubleValue()==0
-                            &&item.getActual02().doubleValue()==0
-                            &&item.getActualNo2().doubleValue()==0
-                            &&item.getActual03().doubleValue()==0
-                            &&item.getActual04().doubleValue()==0){
-                    }else {
-                        flag = false;
-                        break;
-                    }
-                }
-                //告警
-                insertAlarmRecord(flag,data);
-            }
-            //System.out.println(data.getDevType());
-        }*/
-
     }
     public void insertAlarmRecord(boolean flag,DeviceRecentData data,Integer type) throws Exception{
         if(flag&&data.getDataList().size()>0){

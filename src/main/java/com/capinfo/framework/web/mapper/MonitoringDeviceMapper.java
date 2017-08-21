@@ -2,6 +2,7 @@ package com.capinfo.framework.web.mapper;
 
 //import com.capinfo.framework.web.pojo.DeviceRecentData;
 import com.capinfo.framework.web.pojo.DeviceRecentData;
+import com.capinfo.framework.web.pojo.GroupDevice;
 import com.capinfo.framework.web.pojo.MonitoringDevice;
 //import com.capinfo.framework.web.pojo.MonitoringDeviceXsl;
 import com.capinfo.framework.web.pojo.MonitoringProject;
@@ -30,6 +31,8 @@ public interface MonitoringDeviceMapper {
 
     public List<DeviceRecentData> findMonitoringDeviceRecentDataList() throws Exception;
 
+	public List<DeviceRecentData> findDevicePowerType() throws Exception;
+
 	public List<MonitoringDevice> findMonitoringDeviceShList(MonitoringDeviceQueryBean deviceQueryBean) throws Exception;
 	
 	public List<MonitoringDevice> findMonitoringDevicePage(Map<String, Object> map) throws Exception;
@@ -42,4 +45,6 @@ public interface MonitoringDeviceMapper {
 
 	//public void insertMonitoringDeviceList(List<MonitoringDeviceXsl> ids) throws Exception;
 	public MonitoringProject findMonitoringProjectById(Integer id) throws Exception;
+
+    List<MonitoringDevice> findMonitoringDeviceListByGID(GroupDevice groupDevice);
 }

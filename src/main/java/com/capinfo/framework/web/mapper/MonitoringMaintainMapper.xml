@@ -42,6 +42,12 @@
     ORDER BY mm.create_time desc
     LIMIT #{pageNum},#{pageSize}
   </select>
+  <!--根据设备id获取该设备运维记录-->
+  <select id="findMonitoringMaintainList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT *
+    FROM ibs_monitoring_maintain mm
+    WHERE mm.device_id = #{id}
+  </select>
 <!--获取维护次数，设备列表显示调用-->
   <select id="findMaintainCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     SELECT count(1)

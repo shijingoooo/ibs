@@ -11,6 +11,9 @@
     <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
     <result column="count" property="count" jdbcType="INTEGER" />
     <association column="project_id" property="monitoringProject" javaType="com.capinfo.framework.web.pojo.MonitoringProject" select="com.capinfo.framework.web.mapper.MonitoringDeviceMapper.findMonitoringProjectById"/>
+    <collection column="device_id" property="maintainRecord" javaType="java.util.ArrayList"
+                select="com.capinfo.framework.web.mapper.MonitoringMaintainMapper.findMonitoringMaintainList"/>
+
   </resultMap>
 
   <!--获取告警记录列表-->
@@ -95,7 +98,7 @@
     <if test="devId!=null and devId!=''">
       AND ad.device_id = #{devId}
     </if>
-    <if test="alarmType!=null and alarmType!=''">
+    <if test="alarmType!=null">
       AND ad.alarm_type = #{alarmType}
     </if>
   </select>
@@ -132,16 +135,17 @@
     </set>
     where id = #{id}
   </update>
-  <!--
+
   <sql id="Base_Column_List" >
     id, device_id, alarm_status, alarm_type, alarm_cause, alarm_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from ibs_alarm_devp
-    where id = #{id,jdbcType=INTEGER}
+    SELECT ad.id AS id,ad.device_id AS device_id,dev_code,alarm_status,alarm_type,alarm_cause,alarm_time
+    FROM ibs_alarm_devp ad, ibs_monitoring_device md
+    WHERE ad.device_id = md.id AND ad.id = #{id}
+
   </select>
+   <!--
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from ibs_alarm_devp
     where id = #{id,jdbcType=INTEGER}

@@ -5,12 +5,14 @@ import com.capinfo.framework.web.pojo.AlarmDevp;
 import com.capinfo.framework.web.service.MonitoringAlarmService;
 import com.capinfo.framework.web.vo.MonitoringAlarmQueryBean;
 import com.capinfo.modules.orm.Page;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -69,6 +71,24 @@ public class MonitoringAlarmController extends BaseController {
         model.addAttribute("alarmQueryBean", alarmQueryBean);
 
         return "monitoringMaintain/alarmListByPage";
+    }
+
+    @RequestMapping(value = "/openHandle", method = {RequestMethod.POST, RequestMethod.GET})
+    public String openHandle(Model model, MonitoringAlarmQueryBean alarmQueryBean, Integer id) throws Exception{
+        AlarmDevp alarmRecord = monitoringAlarmService.findAlarmRecordById(id);
+        model.addAttribute("alarmRecord",alarmRecord);
+        return "monitoringMaintain/handleAlarm";
+    }
+    @RequestMapping(value = "/handle", method = {RequestMethod.POST, RequestMethod.GET})
+    public void updateHandle(Model model, HttpServletResponse response, MonitoringAlarmQueryBean alarmQueryBean, String callbackType, String rel) throws Exception{
+        monitoringAlarmService.updateMonitoringAlarmRecord(alarmQueryBean);
+        JSONObject jo = new JSONObject();
+        jo.put("navTabId", rel);
+        jo.put("callbackType", callbackType);
+        jo.put("rel", rel);
+        jo.put("statusCode", "200");
+        jo.put("message", "操作成功");
+        super.rendText(response, jo.toString());
     }
     /*//点击新增或修改按钮
     @RequestMapping(value = "/savePage", method = {RequestMethod.GET})

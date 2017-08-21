@@ -13,6 +13,8 @@ public class DeviceRecentData {
     private String devName;
     private String devStatus;
     private Integer devType;
+    //PowerOff
+    private Integer electricQuantity;
     //OffLine
     private Integer dataId;
     //AbnormalTemperature
@@ -90,5 +92,13 @@ public class DeviceRecentData {
 
     public void setDevType(Integer devType) {
         this.devType = devType;
+    }
+
+    public Integer getElectricQuantity() {
+        return electricQuantity;
+    }
+
+    public void setElectricQuantity(Integer electricQuantity) {
+        this.electricQuantity = electricQuantity;
     }
 }

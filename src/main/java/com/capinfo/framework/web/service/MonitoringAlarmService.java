@@ -72,6 +72,8 @@ public class MonitoringAlarmService {
 		AlarmDevp alarmDevp = new AlarmDevp();
 		alarmDevp.setId(alarmQueryBean.getId());
 		alarmDevp.setAlarmType(alarmQueryBean.getAlarmType());
+		alarmDevp.setAlarmCause(alarmQueryBean.getAlarmCause());
+		alarmDevp.setAlarmStatus(alarmQueryBean.getAlarmStatus());
 		alarmDevp.setAlarmTime(new Date());
 		alarmDevpMapper.updateByPrimaryKeySelective(alarmDevp);
 	}
@@ -84,6 +86,16 @@ public class MonitoringAlarmService {
 		}
 		return result;
 	}
+
+	public AlarmDevp findAlarmRecordById(Integer recordId)throws Exception{
+
+		if(recordId!=null && recordId!=0){
+			AlarmDevp data = alarmDevpMapper.selectByPrimaryKey(recordId);
+			return data;
+		}
+		return null;
+	}
+
 	/*public MonitoringMaintain findMonitoringMaintainById(Integer recordId) throws Exception {
 
 		if(recordId!=null && recordId!=0){

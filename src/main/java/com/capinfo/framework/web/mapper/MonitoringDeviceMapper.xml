@@ -60,7 +60,8 @@
         <result column="dev_name" property="devName" jdbcType="VARCHAR" javaType="java.lang.String"/>
         <result column="dev_status" property="devStatus" jdbcType="VARCHAR" javaType="java.lang.String"/>
         <result column="data_id" property="dataId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-    </resultMap>
+    	<result column="electric_quantity" property="electricQuantity" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+	</resultMap>
 
     <!-- SAVE Monitoring Device -->
 	<insert id="saveMonitoringDevice" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean">
@@ -133,6 +134,16 @@
 		FROM ibs_monitoring_device device
 		order BY device.create_time DESC
     </select>
+	
+	<!--查询最近数据中的电源类型-->
+	<select id="findDevicePowerType" resultMap="DeviceRecentDataResult">
+		SELECT device.id,device.dev_code,device.dev_name,device.dev_status,
+        (select data_copy.electric_quantity from ibs_monitoring_data_copy data_copy where data_copy.device_id = device.id and
+        data_copy.col_time>(NOW() - INTERVAL 10 MINUTE ) limit 1) electric_quantity
+		FROM ibs_monitoring_device device
+		order BY device.create_time DESC
+	</select>
+	
 
     <select id="findMonitoringDeviceShList" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean" resultMap="MonitoringDeviceResult">
     	SELECT d.id id,d.dev_code devCode,d.pro_code proCode,d.vendor_code vendorCode FROM ibs_monitoring_project p,ibs_monitoring_device d
@@ -333,5 +344,12 @@
 		<where>
 			id=#{value}
 		</where>
+	</select>
+
+	<!--根据设备组id查询该设备组的所有设备信息-->
+	<select id="findMonitoringDeviceListByGID" parameterType="GroupDevice" resultMap="MonitoringDeviceResult" >
+		SELECT * FROM ibs_monitoring_device
+			WHERE id IN (SELECT device_id FROM ibs_group_device_rele WHERE group_id=#{id})
+
 	</select>
 </mapper>

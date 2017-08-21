@@ -1,20 +1,34 @@
 package com.capinfo.framework.web.controller.monitoringDevice;
 
 import com.capinfo.framework.common.controller.BaseController;
-import com.capinfo.framework.common.util.*;
-import com.capinfo.framework.web.pojo.*;
-import com.capinfo.framework.web.service.*;
-import com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean;//设备组
+import com.capinfo.framework.common.util.ExportExcel;
+import com.capinfo.framework.common.util.StringUtil;
+import com.capinfo.framework.web.pojo.GroupDevice;
+import com.capinfo.framework.web.pojo.MonitoringDevice;
+import com.capinfo.framework.web.pojo.MonitoringDeviceGroup;
+import com.capinfo.framework.web.pojo.MonitoringDeviceGroupRele;
+import com.capinfo.framework.web.service.GroupDeviceService;
+import com.capinfo.framework.web.service.MonitoringDeviceGroupService;
+import com.capinfo.framework.web.service.MonitoringDeviceService;
+import com.capinfo.framework.web.vo.MonitoringDeviceGroupQueryBean;
 import com.capinfo.modules.orm.Page;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/monitoringDevice")
@@ -22,6 +36,11 @@ public class MonitoringDeviceGroupController extends BaseController {
 
     @Resource
     private MonitoringDeviceGroupService monitoringDeviceGroupService;
+    @Resource
+    private MonitoringDeviceService mds;
+    @Resource
+    private GroupDeviceService groupDeviceService;
+
     //设备组列表
     @RequestMapping(value = "/devGrouplistByPage", method = {RequestMethod.POST, RequestMethod.GET})
     public String devGrouplistByPage(Model model, HttpSession session, MonitoringDeviceGroupQueryBean deviceGroupQueryBean, Page<MonitoringDeviceGroup> page, Integer pageNum) throws Exception {
@@ -137,5 +156,35 @@ public class MonitoringDeviceGroupController extends BaseController {
         super.rendText(response, jo.toString());
     }
 
+    /**
+     * @Author: Zhang Chuanjia
+     * @Date: 2017/8/21 16:45
+     * @Description: 设备组数据导出
+     */
+    @RequestMapping("/export")
+    public void export(HttpServletRequest request, HttpServletResponse response, Integer deviceGroupId)
+            throws Exception{
+        /**通过组的id查询该组信息*/
+        GroupDevice groupDevice = groupDeviceService.findGroupDevice(deviceGroupId);
+        /**通过设备组的id查询该组下面的所有的设备信息*/
+        List<MonitoringDevice> monitoringDevices = mds.findMonitoringDeviceListByGID(groupDevice);
+
+        ExportExcel<MonitoringDevice> ee= new ExportExcel<MonitoringDevice>();
+        //通过反射获取类或者接口的所有已经声明的字段
+        MonitoringDevice monitoringDevice = new MonitoringDevice();
+        Class clzz = monitoringDevice.getClass();
+        Field[] fields = clzz.getDeclaredFields();
+
+        //将已经获取的字段列表存在数组中
+        String [] headers = new String[fields.length];
+        for (int i = 0; i < headers.length; i++) {
+            headers[i] = fields[i].getName().toString();
+        }
+        //设定导出的文件名
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmss");
+        Date date = new Date();
+        String fileName = "设备组报表（"+format.format(date).toString()+"）";
+        ee.exportExcel(fields,headers,monitoringDevices,fileName,response);
+    }
 
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.capinfo.framework.web.mapper.GroupDeviceMapper">
+    <select id="findGroupDevice" parameterType="java.lang.Integer" resultType="GroupDevice">
+        SELECT * FROM ibs_group_device WHERE id=#{value};
+    </select>
+</mapper>

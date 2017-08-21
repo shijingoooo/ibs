@@ -1,6 +1,7 @@
 package com.capinfo.framework.web.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class AlarmDevp {
     private Integer id;
@@ -20,6 +21,8 @@ public class AlarmDevp {
     private Integer count;
 
     private MonitoringProject monitoringProject;
+
+    private List<MonitoringMaintain> maintainRecord;
 
     public Integer getId() {
         return id;
@@ -91,5 +94,13 @@ public class AlarmDevp {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public List<MonitoringMaintain> getMaintainRecord() {
+        return maintainRecord;
+    }
+
+    public void setMaintainRecord(List<MonitoringMaintain> maintainRecord) {
+        this.maintainRecord = maintainRecord;
     }
 }

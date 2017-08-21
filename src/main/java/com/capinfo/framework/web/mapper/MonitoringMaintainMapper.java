@@ -22,6 +22,8 @@ public interface MonitoringMaintainMapper {
 
     List<MonitoringMaintain> findMonitoringMaintainPage(Map<String,Object> map);
 
+    List<MonitoringMaintain> findMonitoringMaintainList(Integer deviceId);
+
     int findMonitoringMaintainCount(MonitoringMaintainQueryBean maintainQueryBean);
 
     MonitoringMaintain findMonitoringMaintainById(Integer recordId);

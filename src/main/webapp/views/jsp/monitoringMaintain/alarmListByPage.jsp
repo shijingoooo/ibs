@@ -122,7 +122,6 @@
                 <tbody>
                 <c:forEach var="obj" items="${page.result}" varStatus="index">
                     <tr target="tr_form" rel="${obj.id}">
-                        <input name="deviceId" type="hidden" value="${obj.deviceId}">
                         <td>
                                 ${obj.deviceCode}
                         </td>
@@ -181,7 +180,11 @@
                         <td>
                             <self:a code="ibs_device_maintain_add" name="添加运维记录"
                                     parameter="?deviceId=${obj.deviceId}&deviceCode=${obj.deviceCode}&alarmTime=${obj.alarmTime}" style="icon" target="dialog"
-                                    mask="true" rel="addRecord" width="620" height="600"></self:a></td>
+                                    mask="true" rel="addRecord" width="620" height="600"></self:a>
+                            |<self:a code="ibs_alarm_handle" name="处理"
+                                     parameter="?id=${obj.id}" style="icon" target="dialog"
+                                     mask="true" rel="handleRecord" width="400" height="350"></self:a>
+
                         </td>
                     </tr>
                 </c:forEach>

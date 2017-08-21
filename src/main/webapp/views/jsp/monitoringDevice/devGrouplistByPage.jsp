@@ -154,7 +154,7 @@
                 <td>${obj.groupDevDescription}</td>
                 <td>${obj.devCount}</td>
                 <td><fmt:formatDate value="${obj.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                <td>导出数据</td>
+                <td><a href="${ctx }/monitoringDevice/export.action?deviceGroupId=${obj.id}">导出数据</a></td>
             </tr>
         </c:forEach>
         </tbody>

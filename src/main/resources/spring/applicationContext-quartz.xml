@@ -13,6 +13,9 @@
     <!--有参数构造方法注入-->
     <bean id="checkData" class="com.capinfo.framework.common.alarm.CheckData">
     </bean>
+    <bean id="PowerOff" class="com.capinfo.framework.common.alarm.PowerOff">
+        <constructor-arg ref="checkData"></constructor-arg>
+    </bean>
     <bean id="offLine" class="com.capinfo.framework.common.alarm.OffLine">
         <constructor-arg ref="checkData"></constructor-arg>
     </bean>

@@ -188,6 +188,15 @@ public class MonitoringDeviceService {
 		return deviceMapper.findMonitoringDeviceRecentDataList();
 	}
 
+	public List<DeviceRecentData> findDevicePowerType() throws Exception{
+		return deviceMapper.findDevicePowerType();
+	}
+
+	public List<MonitoringDevice> findMonitoringDeviceListByGID(GroupDevice groupDevice) {
+		return deviceMapper.findMonitoringDeviceListByGID(groupDevice);
+	}
+
+
 	/**
 	 * 导入传感器数据
 	 * @param ids
