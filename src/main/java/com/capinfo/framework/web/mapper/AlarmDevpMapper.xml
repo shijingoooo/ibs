@@ -30,10 +30,10 @@
   <if test="query.devCodeForLike!=null and query.devCodeForLike!=''">
     AND md.dev_code LIKE "%"#{query.devCodeForLike}"%"
   </if>
-  <if test="query.alarmType!=null and query.alarmType!=''">
+  <if test="query.alarmType!=null">
     AND ad.alarm_type = #{query.alarmType}
   </if>
-  <if test="query.alarmStatus!=null and query.alarmStatus!=''">
+  <if test="query.alarmStatus!=null">
     AND ad.alarm_status = #{query.alarmStatus}
   </if>
 
@@ -47,6 +47,12 @@
   LIMIT #{pageNum},#{pageSize}
 </select>
 
+  <!--获取每种类型的告警数量-->
+  <select id="findAlarmCountByType" resultMap="BaseResultMap">
+    SELECT *
+    FROM ibs_alarm_devp ad
+    WHERE ad.alarm_type = #{type}
+  </select>
   <select id="findDayCountByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT *,DATE_FORMAT(alarm_time,'%Y-%m-%d') AS format_time,COUNT(id) AS count
     FROM ibs_alarm_devp

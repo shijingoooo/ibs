@@ -100,7 +100,7 @@
 <div style="margin-top: 5px;">
     <div class="button">
         <div class="buttonContent">
-            <button id="save" type="button" onclick="save()">保存</button>
+            <button id="save" type="button" onclick="save()">确定</button>
         </div>
     </div>
 </div>

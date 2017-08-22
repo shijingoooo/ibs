@@ -14,9 +14,9 @@ public class MonitoringAlarmService {
 
 	@Autowired
 	private AlarmDevpMapper alarmDevpMapper;
-
+	//枚举类型，索引对应数据库存储的类型值
 	public enum type {设备断电,设备下线,数据恒值,数据0值,温湿度异常}
-
+	//获取告警分页数据
 	public void findMonitoringAlarmPage(Page<AlarmDevp> page, MonitoringAlarmQueryBean alarmQueryBean)
 			throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -48,15 +48,15 @@ public class MonitoringAlarmService {
 		page.setTotalCount(alarmDevpMapper.findMonitoringAlarmCount(alarmQueryBean));
 
 	}
-
+	//定时器使用：每种类型的告警只能存在一个
 	public List<AlarmDevp> findMonitoringAlarmList(MonitoringAlarmQueryBean alarmQueryBean) throws Exception{
 		return alarmDevpMapper.findMonitoringAlarmList(alarmQueryBean);
 	}
-
+	//定时器使用：数据恒值与数据零值互斥
 	public List<AlarmDevp> findConstValueAlarmList(MonitoringAlarmQueryBean alarmQueryBean) throws Exception{
 		return alarmDevpMapper.findConstValueAlarmList(alarmQueryBean);
 	}
-
+	//保存
 	public void saveMonitoringAlarmRecord(MonitoringAlarmQueryBean alarmQueryBean) throws Exception{
 		AlarmDevp alarmDevp = new AlarmDevp();
 		//id自增
@@ -67,7 +67,7 @@ public class MonitoringAlarmService {
 		alarmDevp.setAlarmTime(new Date());
 		alarmDevpMapper.insert(alarmDevp);
 	}
-
+	//更新：处理按钮使用
 	public void updateMonitoringAlarmRecord(MonitoringAlarmQueryBean alarmQueryBean) throws Exception{
 		AlarmDevp alarmDevp = new AlarmDevp();
 		alarmDevp.setId(alarmQueryBean.getId());
@@ -86,38 +86,21 @@ public class MonitoringAlarmService {
 		}
 		return result;
 	}
-
+	//获取某一条记录信息
 	public AlarmDevp findAlarmRecordById(Integer recordId)throws Exception{
-
 		if(recordId!=null && recordId!=0){
 			AlarmDevp data = alarmDevpMapper.selectByPrimaryKey(recordId);
 			return data;
 		}
 		return null;
 	}
-
-	/*public MonitoringMaintain findMonitoringMaintainById(Integer recordId) throws Exception {
-
-		if(recordId!=null && recordId!=0){
-			MonitoringMaintain data = maintainMapper.findMonitoringMaintainById(recordId);
-			return data;
+	//获取每种类型告警总数
+	public Map<String,Integer> findAlarmCountByType() throws Exception{
+		Map<String,Integer> map = new HashMap<>();
+		for(type item: type.values()){
+			List<AlarmDevp> result = alarmDevpMapper.findAlarmCountByType(item.ordinal());
+			map.put(item.toString(),result.size());
 		}
-		return null;
+		return map;
 	}
-
-	public void updateMonitoringMaintianRecord(MonitoringMaintainQueryBean maintainQueryBean) throws Exception{
-		//maintainQueryBean.setCreateTime(new Date());
-		maintainMapper.updateMonitoringMaintianRecord(maintainQueryBean);
-	}
-
-
-	public List<MonitoringDevice> findMonitoringDeviceList(MonitoringMaintainQueryBean maintainQueryBean) throws Exception{
-		List result = new ArrayList();
-		result = maintainMapper.findMonitoringDeviceList(maintainQueryBean);
-		return  result;
-	}
-	public void deleteMaintainRecordBatch(List<String> ids)
-			throws Exception {
-		maintainMapper.deleteMaintainRecordBatch(ids);
-	}*/
 }
