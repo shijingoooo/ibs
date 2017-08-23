@@ -18,76 +18,64 @@
             }
         });
 
+        $(".tabs").attr("currentindex",${currentIndex});
+
         $("#modelImportDeviceGroup").click(function () {
             $("#ImportDeviceGroupForm").submit();
         });
-
-
     });
+
+    function changeTab(index) {
+        var $tabs = $(".tabs");
+        $tabs.attr("currentindex",index);
+        $("input[name='currentIndex']").attr("value",index);
+
+        var $form = $(".pagerForm");
+        $form.submit();
+    }
 </script>
 <style type="text/css">
     .devCode a{
         color: #00f;
         text-decoration: underline;
     }
+    .heading{
+        margin-left: 20px;
+        font-size: 14px;
+    }
 </style>
-<%--<div class="pageHeader">
-    <table>
-        <tr>
-            <td>
-                <form class="Form" id="pagerForm" onsubmit="return navTabSearch(this);"
-                      action="${ctx}/monitoringDevice/devDataCalibrationListByPage.action?devId=${dataCalibrationQueryBean.deviceId}" method="post">
-                    <input type="hidden" name="pageNum" value="1"/>
-                    <input type="hidden" name="numPerPage" value=""/>
-                    <input name="deviceId" type="hidden" value=""/>
-
-                        <table class="searchContent">
-                            <tr>
-                                &lt;%&ndash;<td>设备编号：<input type="text" name="deviceCodeForLike"
-                                                 value="<c:out value='${dataCalibrationQueryBean.deviceCodeForLike }'/>"
-                                                 onblur="valiStr(this)"/></td>
-                                <td>
-                                    <button type="submit" id="modelSearchDeviceGroup">检索</button>
-                                </td>&ndash;%&gt;
-                                &lt;%&ndash;暂时注释&ndash;%&gt;
-                                &lt;%&ndash;<c:if test="${ sessionScope.usertype==4 }">
-                                    <td><input type="button" value="模板导出" style="cursor: pointer;"
-                                               id="modelExportDeviceGroup"></td>
-                                </c:if>&ndash;%&gt;
-                            </tr>
-                        </table>
-                </form>
-            </td>
-            &lt;%&ndash;暂时注释&ndash;%&gt;
-            &lt;%&ndash; <c:if test="${ sessionScope.usertype==4 }">
-                 <td>
-                     <form onsubmit="return iframeCallback(this, FileUpload);"
-                           action="${ctx}/monitoringDevice/importDeviceGroup.action" method="post"
-                           enctype="multipart/form-data" id="ImportDeviceGroupForm">
-                         <input type="file" name="file" id="file" style="width: 150px;cursor: pointer;">
-                         <input type="button" value="数据导入" style="cursor: pointer;" id="modelImportDeviceGroup"></form>
-                 </td>
-             </c:if>&ndash;%&gt;
-        </tr>
-    </table>
-</div>--%>
 <div class="pageContent">
     <div class="tabs" currentIndex="0" eventType="click">
+        <form id="pagerForm" class="pagerForm" onsubmit="return navTabSearch(this);"
+              action="${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${device.id}" method="post">
+            <input type="hidden" name="pageNum" value="1" />
+            <input type="hidden" name="numPerPage" value="<c:out value="${numPerPage}"></c:out>" />
+            <input type="hidden" name="currentIndex" value="${currentIndex}">
+        </form>
         <div class="tabsHeader">
             <div class="tabsHeaderContent">
                 <ul>
-                    <li><a href="javascript:;"><span>实时数据</span></a></li>
-                    <li><a href="javascript:;"><span>小时数据</span></a></li>
-                    <li><a href="javascript:;"><span>天数据</span></a></li>
+                    <li class="tab"><a href="javascript:;" onclick="changeTab('0');"><span>实时数据</span></a></li>
+                    <li class="tab"><a href="javascript:;" onclick="changeTab('1');"><span>小时数据</span></a></li>
+                    <li class="tab"><a href="javascript:;" onclick="changeTab('2');"><span>天数据</span></a></li>
                 </ul>
             </div>
         </div>
-        <div class="tabsContent" style="height:795px;">
+        <div class="tabsContent" style="height:834px;">
             <div class="now">
-                <label>设备编号：20161027000016</label>
-                <label>设备类型：AQI</label>
-                <label>设备分组：A组</label>
-                <label>设备厂商：山东金叶</label>
+                <span class="heading">设备编号：${device.devCode}</span>
+                <span class="heading">设备类型：
+                    <c:choose>
+                        <c:when test="${device.devType == 3}">视频</c:when>
+                        <c:when test="${device.devType == 4}">扬尘噪声</c:when>
+                        <c:when test="${device.devType == 5}">AQI</c:when>
+                        <c:when test="${device.devType == 6}">VOC</c:when>
+                        <c:when test="${device.devType == 7}">扬尘噪声（基础）</c:when>
+                        <c:otherwise>未指定类型</c:otherwise>
+                    </c:choose>
+                </span>
+                <span class="heading">设备分组：${device.belongGroups}</span>
+                <span class="heading">设备厂商：${device.monitoringCompany.companyName}</span>
                 <button type="button" class="modelExportDevice" style="margin-left: 100px">导出数据</button>
                 <table class="table" width="100%" layoutH="112" rel="statistics_data_list">
                     <thead>
@@ -113,40 +101,45 @@
                         <th width="80">电源状态（?）</th>
                     </tr>
                     </thead>
-                    <%--<tbody>
-                    <c:forEach var="obj" items="${page.result}" varStatus="index">
-                        <tr target="tr_form" rel="${obj.id}">
-                            <td>
-                                <input class="ruleIds" name="ruleIds" type="checkbox" value="${obj.id}"/>
-                            </td>
-                            <td class="devCode">
-                                <self:a code="ibs_data_calibration_page_update" name="${obj.deviceCode}"
-                                        parameter="?ruleId=${obj.id}&deviceId=${obj.deviceId}" style="icon" target="dialog"
-                                        mask="true" rel="newdeviceRule" width="560" height="380"></self:a>
-                            </td>
-                            <td>${obj.type}</td>
-                            <td>单位：ug/m3</td>
-                            <td>${obj.min}</td>
-                            <td>${obj.max}</td>
-                            <td>${obj.calibrationFactor}</td>
-                            <td>
-                                <c:if test="${obj.status eq 0}">
-                                    <a class="status" href="javascript:void(0);" onclick="firm(this);">启用</a>
-                                </c:if>
-                                <c:if test="${obj.status eq 1 }">
-                                    <a class="status" href="javascript:void(0);" onclick="firm(this);">停用</a>
-                                </c:if>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>--%>
+                    <tbody>
+                        <c:forEach var="obj" items="${page.result}" varStatus="index">
+                            <tr target="tr_form" rel="${obj.id}">
+                                <td>
+                                    <input name="ruleIds" type="checkbox" value="${obj.id}"/>
+                                </td>
+                                <td><fmt:formatDate value="${obj.colTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                <td>${obj.actualTenPm}</td>
+                                <td>${obj.actualTwoPm}</td>
+                                <td>${obj.actual02}</td>
+                                <td>${obj.actualNO2}</td>
+                                <td>${obj.actual03}</td>
+                                <td>${obj.actual04}</td>
+                                <td>${obj.actualNoise}</td>
+                                <td>${obj.actualWindSpeed}</td>
+                                <td>${obj.actualWindDirection}</td>
+                                <td>${obj.actualTemperature}</td>
+                                <td>${obj.actualRainfall}</td>
+                                <td>${obj.actualPressure}</td>
+                                <td>${obj.electricQuantity}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
+                <self:pager page="${page}"></self:pager>
             </div>
             <div class="hour">
-                <label>设备编号：20161027000016</label>
-                <label>设备类型：AQI</label>
-                <label>设备分组：A组</label>
-                <label>设备厂商：山东金叶</label>
+                <span class="heading">设备编号：${device.devCode}</span>
+                <span class="heading">设备类型：
+                <c:choose>
+                    <c:when test="${device.devType == 3}">视频</c:when>
+                    <c:when test="${device.devType == 4}">扬尘噪声</c:when>
+                    <c:when test="${device.devType == 5}">AQI</c:when>
+                    <c:when test="${device.devType == 6}">VOC</c:when>
+                    <c:when test="${device.devType == 7}">扬尘噪声（基础）</c:when>
+                    <c:otherwise>未指定类型</c:otherwise>
+                </c:choose></span>
+                <span class="heading">设备分组：${device.belongGroups}</span>
+                <span class="heading">设备厂商：${device.monitoringCompany.companyName}</span>
                 <button type="button" class="modelExportDevice" style="margin-left: 100px">导出数据</button>
                 <table class="table" width="100%" layoutH="112" rel="statistics_data_list">
                     <thead>
@@ -172,40 +165,45 @@
                         <th width="80">电源状态（?）</th>
                     </tr>
                     </thead>
-                    <%--<tbody>
-                    <c:forEach var="obj" items="${page.result}" varStatus="index">
+                    <tbody>
+                    <c:forEach var="obj" items="${hourDataPage.result}" varStatus="index">
                         <tr target="tr_form" rel="${obj.id}">
                             <td>
-                                <input class="ruleIds" name="ruleIds" type="checkbox" value="${obj.id}"/>
+                                <input name="ruleIds" type="checkbox" value="${obj.id}"/>
                             </td>
-                            <td class="devCode">
-                                <self:a code="ibs_data_calibration_page_update" name="${obj.deviceCode}"
-                                        parameter="?ruleId=${obj.id}&deviceId=${obj.deviceId}" style="icon" target="dialog"
-                                        mask="true" rel="newdeviceRule" width="560" height="380"></self:a>
-                            </td>
-                            <td>${obj.type}</td>
-                            <td>单位：ug/m3</td>
-                            <td>${obj.min}</td>
-                            <td>${obj.max}</td>
-                            <td>${obj.calibrationFactor}</td>
-                            <td>
-                                <c:if test="${obj.status eq 0}">
-                                    <a class="status" href="javascript:void(0);" onclick="firm(this);">启用</a>
-                                </c:if>
-                                <c:if test="${obj.status eq 1 }">
-                                    <a class="status" href="javascript:void(0);" onclick="firm(this);">停用</a>
-                                </c:if>
-                            </td>
+                            <td><fmt:formatDate value="${obj.colTime}" pattern="yyyy-MM-dd HH:00:00" /></td>
+                            <td>${obj.actualTenPm}</td>
+                            <td>${obj.actualTwoPm}</td>
+                            <td>${obj.actual02}</td>
+                            <td>${obj.actualNO2}</td>
+                            <td>${obj.actual03}</td>
+                            <td>${obj.actual04}</td>
+                            <td>${obj.actualNoise}</td>
+                            <td></td>
+                            <td></td>
+                            <td>${obj.actualTemperature}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </c:forEach>
-                    </tbody>--%>
+                    </tbody>
                 </table>
+                <self:pager page="${hourDataPage}"></self:pager>
             </div>
             <div class="day">
-                <label>设备编号：20161027000016</label>
-                <label>设备类型：AQI</label>
-                <label>设备分组：A组</label>
-                <label>设备厂商：山东金叶</label>
+                <span class="heading">设备编号：${device.devCode}</span>
+                <span class="heading">设备类型：
+                <c:choose>
+                    <c:when test="${device.devType == 3}">视频</c:when>
+                    <c:when test="${device.devType == 4}">扬尘噪声</c:when>
+                    <c:when test="${device.devType == 5}">AQI</c:when>
+                    <c:when test="${device.devType == 6}">VOC</c:when>
+                    <c:when test="${device.devType == 7}">扬尘噪声（基础）</c:when>
+                    <c:otherwise>未指定类型</c:otherwise>
+                </c:choose></span>
+                <span class="heading">设备分组：${device.belongGroups}</span>
+                <span class="heading">设备厂商：${device.monitoringCompany.companyName}</span>
                 <button type="button" class="modelExportDevice" style="margin-left: 100px">导出数据</button>
                 <table class="table" width="100%" layoutH="112" rel="statistics_data_list">
                     <thead>
@@ -231,34 +229,31 @@
                         <th width="80">电源状态（?）</th>
                     </tr>
                     </thead>
-                    <%--<tbody>
-                    <c:forEach var="obj" items="${page.result}" varStatus="index">
+                    <tbody>
+                    <c:forEach var="obj" items="${dayDataPage.result}" varStatus="index">
                         <tr target="tr_form" rel="${obj.id}">
                             <td>
-                                <input class="ruleIds" name="ruleIds" type="checkbox" value="${obj.id}"/>
+                                <input name="ruleIds" type="checkbox" value="${obj.id}"/>
                             </td>
-                            <td class="devCode">
-                                <self:a code="ibs_data_calibration_page_update" name="${obj.deviceCode}"
-                                        parameter="?ruleId=${obj.id}&deviceId=${obj.deviceId}" style="icon" target="dialog"
-                                        mask="true" rel="newdeviceRule" width="560" height="380"></self:a>
-                            </td>
-                            <td>${obj.type}</td>
-                            <td>单位：ug/m3</td>
-                            <td>${obj.min}</td>
-                            <td>${obj.max}</td>
-                            <td>${obj.calibrationFactor}</td>
-                            <td>
-                                <c:if test="${obj.status eq 0}">
-                                    <a class="status" href="javascript:void(0);" onclick="firm(this);">启用</a>
-                                </c:if>
-                                <c:if test="${obj.status eq 1 }">
-                                    <a class="status" href="javascript:void(0);" onclick="firm(this);">停用</a>
-                                </c:if>
-                            </td>
+                            <td><fmt:formatDate value="${obj.colTime}" pattern="yyyy-MM-dd" /></td>
+                            <td>${obj.actualTenPm}</td>
+                            <td>${obj.actualTwoPm}</td>
+                            <td>${obj.actual02}</td>
+                            <td>${obj.actualNO2}</td>
+                            <td>${obj.actual03}</td>
+                            <td>${obj.actual04}</td>
+                            <td>${obj.actualNoise}</td>
+                            <td></td>
+                            <td></td>
+                            <td>${obj.actualTemperature}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </c:forEach>
-                    </tbody>--%>
+                    </tbody>
                 </table>
+                <self:pager page="${dayDataPage}"></self:pager>
             </div>
         </div>
         <div class="tabsFooter">
@@ -282,5 +277,5 @@
         </ul>
     </div>--%>
 
-    <self:pager page="${page}"></self:pager>
+
 </div>

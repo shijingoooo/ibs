@@ -86,12 +86,46 @@
                   action="${ctx}/monitoringAlarm/listByPage.action" method="post">
                 <input type="hidden" name="pageNum" value="1"/>
                 <input type="hidden" name="numPerPage" value=""/>
+
+<%--
+                设备编号：<input type="text" name="devCodeForLike" value=""/>
+                站点：<input type="text" name="proNameForLike" value="">
+                类型：
+                    <select id="type" name="alarmType" >
+                        <option value="" selected="selected">全部</option>
+                        <option value="0">设备断电</option>
+                        <option value="1">设备下线</option>
+                        <option value="2">数据恒值</option>
+                        <option value="3">数据0值</option>
+                        <option value="4">温湿度异常</option>
+                    </select>
+
+                状态：
+                    <select id="status" name="alarmStatus" >
+                        <option value="" selected="selected">全部</option>
+                        <option value="0">未处理</option>
+                        <option value="1">处理中</option>
+                        <option value="2">已完成</option>
+                    </select>
+                    <div class="col-md-5">
+                    开始时间：
+                    <input type="text" name="startTime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;"/>
+                    <a class="inputDateButton" href="javascript:;" style="float: right">选择</a>
+                    到
+                    <input type="text" name="endTime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;"/>
+                    <a class="inputDateButton" href="javascript:;" style="float: right">选择</a></td>
+                    </div>
+
+                    <button type="submit">查询</button>
+--%>
+
+
                 <div class="searchBar">
                     <table class="searchContent">
                         <tr>
-                            <td>设备编号：<input type="text" name="devCodeForLike" value=""/></td>
-                            <td>站点：<input type="text" name="proNameForLike" value=""></td>
-                            <td>类型：
+                            <td><span>设备编号：</span><input type="text" name="devCodeForLike" value=""/></td>
+                            <td><span>站点：</span><input type="text" name="proNameForLike" value=""></td>
+                            <td><span>类型：</span>
                                 <select id="type" name="alarmType" >
                                     <option value="" selected="selected">全部</option>
                                     <option value="0">设备断电</option>
@@ -101,7 +135,7 @@
                                     <option value="4">温湿度异常</option>
                                 </select>
                             </td>
-                            <td>状态：
+                            <td><span>状态：</span>
                                 <select id="status" name="alarmStatus" >
                                     <option value="" selected="selected">全部</option>
                                     <option value="0">未处理</option>
@@ -110,12 +144,12 @@
                                 </select>
                             </td>
                             <td>
-                                开始时间：
-                                <input type="text" name="startTime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;"/>
+                                <span>开始时间：</span>
+                                <input type="text" name="startTime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="width:80px;"/>
                                 <a class="inputDateButton" href="javascript:;" style="float: right">选择</a>
                             </td>
-                            <td>到
-                                <input type="text" name="endTime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;"/>
+                            <td><span>到</span>
+                                <input type="text" name="endTime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="width:80px;"/>
                                 <a class="inputDateButton" href="javascript:;" style="float: right">选择</a></td>
                             </td>
                             <td>

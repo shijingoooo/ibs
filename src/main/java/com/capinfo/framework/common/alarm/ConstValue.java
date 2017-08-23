@@ -76,7 +76,7 @@ public class ConstValue extends BaseMethod {
                     if(item.getActualTenPm().doubleValue()==0
                             &&item.getActualTwoPm().doubleValue()==0
                             &&item.getActual02().doubleValue()==0
-                            &&item.getActualNo2().doubleValue()==0
+                            &&item.getActualNO2().doubleValue()==0
                             &&item.getActual03().doubleValue()==0
                             &&item.getActual04().doubleValue()==0){
                     }else {
@@ -120,7 +120,7 @@ public class ConstValue extends BaseMethod {
                     BigDecimal pm10 = (data.getDataList()).get(0).getActualTenPm();
                     BigDecimal pm25 = (data.getDataList()).get(0).getActualTwoPm();
                     BigDecimal so2 = (data.getDataList()).get(0).getActual02();
-                    BigDecimal no2 = (data.getDataList()).get(0).getActualNo2();
+                    BigDecimal no2 = (data.getDataList()).get(0).getActualNO2();
                     BigDecimal o3 = (data.getDataList()).get(0).getActual03();
                     BigDecimal co = (data.getDataList()).get(0).getActual04();
 
@@ -129,7 +129,7 @@ public class ConstValue extends BaseMethod {
                         if (item.getActualTenPm().compareTo(pm10) == 0
                                 && item.getActualTwoPm().compareTo(pm25) == 0
                                 && item.getActual02().compareTo(so2) == 0
-                                && item.getActualNo2().compareTo(no2) == 0
+                                && item.getActualNO2().compareTo(no2) == 0
                                 && item.getActual03().compareTo(o3) == 0
                                 && item.getActual04().compareTo(co) == 0) {
                         } else {

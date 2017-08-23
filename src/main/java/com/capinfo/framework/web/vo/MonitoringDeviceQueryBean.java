@@ -7,6 +7,9 @@ import java.util.Date;
 
 public class MonitoringDeviceQueryBean {
 	//用户ID
+
+
+
 	protected Integer userId;
 	//用户类型
 	protected Integer userType;

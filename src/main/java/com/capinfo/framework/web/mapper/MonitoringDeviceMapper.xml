@@ -1,7 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.capinfo.framework.web.mapper.MonitoringDeviceMapper" >
-	
+
+	<resultMap id="MonitoringDataCopy" type="com.capinfo.framework.web.pojo.MonitoringData">
+		<id column="id" property="id"/>
+		<result column="actual_tsp" property="actualTsp"/>
+		<result column="calibration_tsp" property="calibrationTsp" />
+		<result column="actual_two_pm" property="actualTwoPm" />
+		<result column="calibration_two_pm" property="calibrationTwoPm"/>
+		<result column="actual_ten_pm" property="actualTenPm"  />
+		<result column="calibration_ten_pm" property="calibrationTenPm" />
+		<result column="col_time" property="colTime" />
+		<result column="actual_noise" property="actualNoise" />
+		<result column="actual_wind_speed" property="actualWindSpeed" />
+		<result column="actual_wind_direction" property="actualWindDirection" />
+		<result column="actual_temperature" property="actualTemperature" />
+		<result column="actual_rainfall" property="actualRainfall" />
+		<result column="actual_pressure" property="actualPressure" />
+		<result column="electric_quantity" property="electricQuantity" />
+
+	</resultMap>
+	<resultMap id="MonitoringHourData" type="com.capinfo.framework.web.pojo.MonitoringHourData">
+		<id column="id" property="id"/>
+		<id column="project_id" property="projectId"/>
+		<result column="actual_tsp" property="actualTsp"/>
+		<result column="actual_two_pm" property="actualTwoPm" />
+		<result column="actual_ten_pm" property="actualTenPm" />
+		<result column="actual_noise" property="actualNoise"/>
+		<result column="actual_02" property="actual02"  />
+		<result column="actual_NO2" property="actualNO2" />
+		<result column="col_time" property="colTime" />
+		<result column="actual_noise" property="actualNoise" />
+		<result column="actual_temperature" property="actualTemperature" />
+	</resultMap>
+	<resultMap id="MonitoringDayData" type="com.capinfo.framework.web.pojo.MonitoringDayData">
+		<id column="id" property="id"/>
+		<id column="project_id" property="projectId"/>
+		<result column="actual_tsp" property="actualTsp"/>
+		<result column="actual_two_pm" property="actualTwoPm" />
+		<result column="actual_ten_pm" property="actualTenPm" />
+		<result column="actual_noise" property="actualNoise"/>
+		<result column="actual_02" property="actual02"  />
+		<result column="actual_NO2" property="actualNO2" />
+		<result column="actual_03" property="actual03" />
+		<result column="actual_04" property="actual04" />
+		<result column="actual_AQI" property="actualAQI" />
+		<result column="actual_temperature" property="actualTemperature" />
+		<result column="col_time" property="colTime" />
+	</resultMap>
+
 	<resultMap id="MonitoringDeviceResult" type="com.capinfo.framework.web.pojo.MonitoringDevice">
 		<id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
 		<result column="dev_code" property="devCode" jdbcType="VARCHAR" javaType="java.lang.String"/>
@@ -185,12 +232,45 @@
 		ORDER BY md.create_time desc
 		LIMIT #{pageNum},#{pageSize}
 	</select>
-	
+<!--统计数据-实时数据-->
+	<select id="findStatisticalDataPage" parameterType="java.util.Map" resultMap="MonitoringDataCopy">
+	SELECT *
+	FROM ibs_monitoring_data_copy
+	WHERE 1=1
+	<if test="query.deviceId != null and query.deviceId != ''">
+		AND device_id = #{query.deviceId}
+	</if>
+	LIMIT #{pageNum},#{pageSize}
+</select>
+<!--统计数据-小时数据-->
+	<select id="findMonitoringHourDatePage" parameterType="java.util.Map" resultMap="MonitoringHourData">
+	SELECT * FROM ibs_data_hour
+	WHERE project_id IN
+			(
+			select project_id from ibs_monitoring_device
+			where id=#{query.deviceId}
+			)
+	LIMIT #{pageNum},#{pageSize}
+</select>
+<!--统计数据-天数据-->
+	<select id="findMonitoringDayDatePage" parameterType="java.util.Map" resultMap="MonitoringDayData">
+	/*SELECT *
+	FROM ibs_data_hour*/
+	SELECT * FROM ibs_data_day
+			WHERE project_id IN
+			(
+			select project_id from ibs_monitoring_device
+			where id=#{query.deviceId}
+			)
+	LIMIT #{pageNum},#{pageSize}
+</select>
+
 	<!-- 查询传感器总数 -->
 	<sql id="query_device_count_where">
 		<if test="userType != 1" >
 			AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{userId})
 		</if>
+
 		<if test="devCodeForLike!=null and devCodeForLike!=''">
 			AND dev_code LIKE "%"#{devCodeForLike}"%"
 		</if>
@@ -220,6 +300,69 @@
 			GROUP BY md.id)AS tempTable
 		)
 	</select>
+	<sql id="query_data_count_where">
+		<if test="deviceId !=null">
+			AND device_id = #{deviceId}
+		</if>
+	</sql>
+<!--实时数据 -->
+	<select id="findMonitoringDataCount" parameterType="com.capinfo.framework.web.vo.MonitoringDataQueryBean" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ibs_monitoring_data_copy
+		<where>
+			<include refid="query_data_count_where"></include>
+		</where>
+
+	</select>
+<!--小时数据 -->
+	<select id="findMonitoringHourCount" parameterType="com.capinfo.framework.web.vo.MonitoringDataQueryBean" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ibs_data_hour
+		WHERE project_id IN
+		(
+		select project_id from ibs_monitoring_device
+		where id=#{deviceId}
+		)
+
+	</select>
+	<!--天数据-->
+	<select id="findMonitoringDayCount" parameterType="com.capinfo.framework.web.vo.MonitoringDataQueryBean" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ibs_data_day
+		WHERE project_id IN
+		(
+		select project_id from ibs_monitoring_device
+		where id=#{deviceId}
+		)
+
+	</select>
+
+	<!-- 根据设备编号查询实时数据-->
+<!--	<select id="findStatisticalData" parameterType="java.lang.Integer" resultMap="MonitoringDataCopy">
+		SELECT * FROM  ibs_monitoring_data_copy
+		where
+			id =#{value}
+	</select>-->
+	<!-- 根据设备编号查询小时数据-->
+	<select id="findHourData" parameterType="java.lang.Integer" resultMap="MonitoringHourData">
+		/*SELECT * FROM  ibs_data_hour
+		where
+			id =#{value}*/
+		SELECT * FROM ibs_data_hour
+			WHERE project_id IN
+			(
+			select project_id from ibs_monitoring_device
+			where id=#{value}
+			)
+	</select>
+	<!-- 根据设备编号查询天数据-->
+	<select id="findDayData" parameterType="java.lang.Integer" resultMap="MonitoringDayData">
+		SELECT * FROM  ibs_data_day
+		where
+			id =#{value}
+	</select>
+
+<!-- select * from ibs_monitoring_data_copy
+where id IN (select id from ibs_monitoring_device where dev_code='20170817000001')-->
 	
 	<!-- 根据id查询传感器 -->
 	<!--2017/1/9 新思 彭佳佳 开始-->
@@ -229,6 +372,7 @@
 			id=#{value}
 		</where>
 	</select>
+
 
 	<!--<select id="findMonitoringDeviceById" parameterType="java.lang.Integer" resultMap="MonitoringDeviceResult">
 		SELECT
@@ -264,7 +408,7 @@
     	<where>
     		<include refid="query_device_unique_where"></include>
     	</where>
-    	LIMIT 1 
+    	LIMIT 1
 	</select>
 	
 	<!-- 根据工地id查询设备数据 -->

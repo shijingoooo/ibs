@@ -225,6 +225,10 @@
                     <%--<a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
                        target="navTab" rel="<c:out value='ibs_statistics_data_page'/>">统计数据</a>
                     |--%>
+
+                        <a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
+                           target="navTab" rel="<c:out value='ibs_statistics_data_page'/>">统计数据</a>
+
                     <a id="checkRule" href="<c:out value='${ctx}/monitoringDevice/devDataCalibrationListByPage.action?devId=${obj.id}'/>"
                        target="navTab" rel="<c:out value='ibs_data_calibration_page'/>">校准</a>
 

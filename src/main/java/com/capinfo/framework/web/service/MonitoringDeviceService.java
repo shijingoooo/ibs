@@ -1,6 +1,5 @@
 package com.capinfo.framework.web.service;
 
-import com.capinfo.framework.common.util.LogUtil;
 import com.capinfo.framework.web.mapper.MonitoringCompanyMapper;
 import com.capinfo.framework.web.mapper.MonitoringDeviceGroupMapper;
 import com.capinfo.framework.web.mapper.MonitoringDeviceMapper;
@@ -8,10 +7,6 @@ import com.capinfo.framework.web.mapper.UserMapper;
 import com.capinfo.framework.web.pojo.*;
 import com.capinfo.framework.web.vo.*;
 import com.capinfo.modules.orm.Page;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +55,60 @@ public class MonitoringDeviceService {
 		}
 		page.setResult(datas);
 		page.setTotalCount(deviceMapper.findMonitoringDeviceCount(deviceQueryBean));
+	}
+	//统计实时数据分页
+	public void findStatisticalDataPage(Page<MonitoringData> page, MonitoringDataQueryBean dataQueryBean)
+			throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNo", page.getPageNo()-1);
+		map.put("pageSize", page.getPageSize());
+		map.put("query", dataQueryBean);
+		map.put("pageNum", (page.getPageNo()-1)*page.getPageSize());
+		List<MonitoringData> datas = deviceMapper.findStatisticalDataPage(map);
+		page.setResult(datas);
+		page.setTotalCount(deviceMapper.findMonitoringDataCount(dataQueryBean));
+	}
+	//统计小时数据分页
+	public void findMonitoringHourDatePage(Page<MonitoringHourData> page, MonitoringDataQueryBean hourQueryBean)
+			throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNo", page.getPageNo()-1);
+		map.put("pageSize", page.getPageSize());
+		map.put("query", hourQueryBean);
+		map.put("pageNum", (page.getPageNo()-1)*page.getPageSize());
+		List<MonitoringHourData> datas = deviceMapper.findMonitoringHourDatePage(map);
+		page.setResult(datas);
+		page.setTotalCount(deviceMapper.findMonitoringHourCount(hourQueryBean));
+	}
+	//统计天数据分页
+	public void findMonitoringDayDatePage(Page<MonitoringDayData> page, MonitoringDataQueryBean dayQueryBean)
+			throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNo", page.getPageNo()-1);
+		map.put("pageSize", page.getPageSize());
+		map.put("query", dayQueryBean);
+		map.put("pageNum", (page.getPageNo()-1)*page.getPageSize());
+		List<MonitoringDayData> datas = deviceMapper.findMonitoringDayDatePage(map);
+		page.setResult(datas);
+		page.setTotalCount(deviceMapper.findMonitoringDayCount(dayQueryBean));
+	}
+
+/*	//统计数据--实时数据
+	public List<MonitoringData> findStatisticalData(Integer devId) throws Exception {
+		//System.out.println("devId-->"+devId);
+		System.out.println("size()----->"+deviceMapper.findStatisticalData(devId).size());
+		return deviceMapper.findStatisticalData(devId);
+	}*/
+	//统计数据--小时数据
+	public List<MonitoringHourData> findHourData(Integer devId) throws Exception {
+		return deviceMapper.findHourData(devId);
+	}
+	//统计数据--天数据
+	public List<MonitoringDayData> findDayData(Integer devId) throws Exception {
+		return deviceMapper.findDayData(devId);
 	}
 
 	public MonitoringDevice findMonitoringDeviceById(Integer id) throws Exception {

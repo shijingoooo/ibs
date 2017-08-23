@@ -30,7 +30,7 @@ public class MonitoringData {
 
     private BigDecimal calibration02;
 
-    private BigDecimal actualNo2;
+    private BigDecimal actualNO2;
 
     private BigDecimal calibrationNo2;
 
@@ -196,12 +196,12 @@ public class MonitoringData {
         this.calibration02 = calibration02;
     }
 
-    public BigDecimal getActualNo2() {
-        return actualNo2;
+    public BigDecimal getActualNO2() {
+        return actualNO2;
     }
 
-    public void setActualNo2(BigDecimal actualNo2) {
-        this.actualNo2 = actualNo2;
+    public void setActualNO2(BigDecimal actualNO2) {
+        this.actualNO2 = actualNO2;
     }
 
     public BigDecimal getCalibrationNo2() {

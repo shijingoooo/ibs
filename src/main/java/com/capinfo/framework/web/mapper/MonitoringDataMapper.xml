@@ -15,7 +15,7 @@
     <result column="calibration_bg_noise" property="calibrationBgNoise" jdbcType="DECIMAL" />
     <result column="actual_02" property="actual02" jdbcType="DECIMAL" />
     <result column="calibration_02" property="calibration02" jdbcType="DECIMAL" />
-    <result column="actual_NO2" property="actualNo2" jdbcType="DECIMAL" />
+    <result column="actual_NO2" property="actualNO2" jdbcType="DECIMAL" />
     <result column="calibration_NO2" property="calibrationNo2" jdbcType="DECIMAL" />
     <result column="actual_03" property="actual03" jdbcType="DECIMAL" />
     <result column="calibration_03" property="calibration03" jdbcType="DECIMAL" />
