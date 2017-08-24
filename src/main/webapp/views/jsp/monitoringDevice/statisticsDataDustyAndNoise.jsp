@@ -86,17 +86,17 @@
                                 <input class="checkboxCtrl" type="checkbox" group="ruleIds">
                             </div>
                         </th>
-                        <th width="80">时间</th>
+                        <th width="100">时间</th>
                         <th width="80">PM10（ug/m³）</th>
                         <th width="80">PM2.5（ug/m³）</th>
                         <th width="80">TSP（ug/m³）</th>
                         <th width="80">噪声（dB(A)）</th>
-                        <th width="80">风速（m/s）</th>
-                        <th width="80">风向</th>
-                        <th width="80">温度（℃）</th>
-                        <th width="80">湿度（%RH）</th>
-                        <th width="80">气压（KPa）</th>
-                        <th width="80">电源状态（?）</th>
+                        <th width="60">风速（m/s）</th>
+                        <th width="60">风向</th>
+                        <th width="60">温度（℃）</th>
+                        <th width="60">湿度（%RH）</th>
+                        <th width="60">气压（KPa）</th>
+                        <th width="40">电源状态（?）</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -145,16 +145,16 @@
                                 <input class="checkboxCtrl" type="checkbox" group="ruleIds">
                             </div>
                         </th>
-                        <th width="80">时间</th>
+                        <th width="100">时间</th>
                         <th width="80">PM10（ug/m³）</th>
                         <th width="80">PM2.5（ug/m³）</th>
                         <th width="80">TSP（ug/m³）</th>
                         <th width="80">噪声（dB(A)）</th>
-                        <th width="80">风速（m/s）</th>
-                        <th width="80">风向</th>
-                        <th width="80">温度（℃）</th>
-                        <th width="80">湿度（%RH）</th>
-                        <th width="80">气压（KPa）</th>
+                        <th width="60">风速（m/s）</th>
+                        <th width="60">风向</th>
+                        <th width="60">温度（℃）</th>
+                        <th width="60">湿度（%RH）</th>
+                        <th width="60">气压（KPa）</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -177,6 +177,7 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                <self:pager page="${hourDataPage}"></self:pager>
             </div>
             <div class="day">
                 <span class="heading">设备编号：${device.devCode}</span>
@@ -201,16 +202,16 @@
                                 <input class="checkboxCtrl" type="checkbox" group="ruleIds">
                             </div>
                         </th>
-                        <th width="80">时间</th>
+                        <th width="100">时间</th>
                         <th width="80">PM10（ug/m³）</th>
                         <th width="80">PM2.5（ug/m³）</th>
                         <th width="80">TSP（ug/m³）</th>
                         <th width="80">噪声（dB(A)）</th>
-                        <th width="80">风速（m/s）</th>
-                        <th width="80">风向</th>
-                        <th width="80">温度（℃）</th>
-                        <th width="80">湿度（%RH）</th>
-                        <th width="80">气压（KPa）</th>
+                        <th width="60">风速（m/s）</th>
+                        <th width="60">风向</th>
+                        <th width="60">温度（℃）</th>
+                        <th width="60">湿度（%RH）</th>
+                        <th width="60">气压（KPa）</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -233,6 +234,7 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                <self:pager page="${dayDataPage}"></self:pager>
             </div>
         </div>
         <div class="tabsFooter">

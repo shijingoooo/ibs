@@ -85,20 +85,20 @@
                                 <input class="checkboxCtrl" type="checkbox" group="ruleIds">
                             </div>
                         </th>
-                        <th width="80">时间</th>
-                        <th width="80">PM10（ug/m³）</th>
-                        <th width="80">PM2.5（ug/m³）</th>
-                        <th width="80">SO₂（ug/m³）</th>
-                        <th width="80">NO₂（ug/m³）</th>
-                        <th width="80">O₃（ug/m³）</th>
-                        <th width="80">CO（ug/m³）</th>
-                        <th width="80">噪声（dB(A)）</th>
-                        <th width="80">风速（m/s）</th>
-                        <th width="80">风向</th>
-                        <th width="80">温度（℃）</th>
-                        <th width="80">湿度（%RH）</th>
-                        <th width="80">气压（KPa）</th>
-                        <th width="80">电源状态（?）</th>
+                        <th width="120">时间</th>
+                        <th width="70">PM10（ug/m³）</th>
+                        <th width="70">PM2.5（ug/m³）</th>
+                        <th width="70">SO₂（ug/m³）</th>
+                        <th width="70">NO₂（ug/m³）</th>
+                        <th width="70">O₃（ug/m³）</th>
+                        <th width="70">CO（ug/m³）</th>
+                        <th width="70">噪声（dB(A)）</th>
+                        <th width="60">风速（m/s）</th>
+                        <th width="40">风向</th>
+                        <th width="60">温度（℃）</th>
+                        <th width="60">湿度（%RH）</th>
+                        <th width="60">气压（KPa）</th>
+                        <th width="40">电源状态（?）</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -149,20 +149,19 @@
                                 <input class="checkboxCtrl" type="checkbox" group="ruleIds">
                             </div>
                         </th>
-                        <th width="80">时间</th>
-                        <th width="80">PM10（ug/m³）</th>
-                        <th width="80">PM2.5（ug/m³）</th>
-                        <th width="80">SO₂（ug/m³）</th>
-                        <th width="80">NO₂（ug/m³）</th>
-                        <th width="80">O₃（ug/m³）</th>
-                        <th width="80">CO（ug/m³）</th>
-                        <th width="80">噪声（dB(A)）</th>
-                        <th width="80">风速（m/s）</th>
-                        <th width="80">风向</th>
-                        <th width="80">温度（℃）</th>
-                        <th width="80">湿度（%RH）</th>
-                        <th width="80">气压（KPa）</th>
-                        <th width="80">电源状态（?）</th>
+                        <th width="120">时间</th>
+                        <th width="70">PM10（ug/m³）</th>
+                        <th width="70">PM2.5（ug/m³）</th>
+                        <th width="70">SO₂（ug/m³）</th>
+                        <th width="70">NO₂（ug/m³）</th>
+                        <th width="70">O₃（ug/m³）</th>
+                        <th width="70">CO（ug/m³）</th>
+                        <th width="70">噪声（dB(A)）</th>
+                        <th width="60">风速（m/s）</th>
+                        <th width="40">风向</th>
+                        <th width="60">温度（℃）</th>
+                        <th width="60">湿度（%RH）</th>
+                        <th width="60">气压（KPa）</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -172,17 +171,16 @@
                                 <input name="ruleIds" type="checkbox" value="${obj.id}"/>
                             </td>
                             <td><fmt:formatDate value="${obj.colTime}" pattern="yyyy-MM-dd HH:00:00" /></td>
-                            <td>${obj.actualTenPm}</td>
-                            <td>${obj.actualTwoPm}</td>
-                            <td>${obj.actual02}</td>
-                            <td>${obj.actualNO2}</td>
-                            <td>${obj.actual03}</td>
-                            <td>${obj.actual04}</td>
+                            <td>${obj.actualIAQIPM10}</td>
+                            <td>${obj.actualIAQIPM25}</td>
+                            <td>${obj.actualIAQI02}</td>
+                            <td>${obj.actualIAQINO2}</td>
+                            <td>${obj.actualIAQI03}</td>
+                            <td>${obj.actualIAQI04}</td>
                             <td>${obj.actualNoise}</td>
                             <td></td>
                             <td></td>
                             <td>${obj.actualTemperature}</td>
-                            <td></td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -213,20 +211,19 @@
                                 <input class="checkboxCtrl" type="checkbox" group="ruleIds">
                             </div>
                         </th>
-                        <th width="80">时间</th>
-                        <th width="80">PM10（ug/m³）</th>
-                        <th width="80">PM2.5（ug/m³）</th>
-                        <th width="80">SO₂（ug/m³）</th>
-                        <th width="80">NO₂（ug/m³）</th>
-                        <th width="80">O₃（ug/m³）</th>
-                        <th width="80">CO（ug/m³）</th>
-                        <th width="80">噪声（dB(A)）</th>
-                        <th width="80">风速（m/s）</th>
-                        <th width="80">风向</th>
-                        <th width="80">温度（℃）</th>
-                        <th width="80">湿度（%RH）</th>
-                        <th width="80">气压（KPa）</th>
-                        <th width="80">电源状态（?）</th>
+                        <th width="120">时间</th>
+                        <th width="70">PM10（ug/m³）</th>
+                        <th width="70">PM2.5（ug/m³）</th>
+                        <th width="70">SO₂（ug/m³）</th>
+                        <th width="70">NO₂（ug/m³）</th>
+                        <th width="70">O₃（ug/m³）</th>
+                        <th width="70">CO（ug/m³）</th>
+                        <th width="70">噪声（dB(A)）</th>
+                        <th width="60">风速（m/s）</th>
+                        <th width="40">风向</th>
+                        <th width="60">温度（℃）</th>
+                        <th width="60">湿度（%RH）</th>
+                        <th width="60">气压（KPa）</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -246,7 +243,6 @@
                             <td></td>
                             <td></td>
                             <td>${obj.actualTemperature}</td>
-                            <td></td>
                             <td></td>
                             <td></td>
                         </tr>

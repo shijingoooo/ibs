@@ -35,7 +35,7 @@ public class MonitoringHourData {
 
     private String actualIAQI04;
 
-    private String actualIAQLNO2;
+    private String actualIAQINO2;
 
     private BigDecimal actualTemperature;
 
@@ -169,12 +169,12 @@ public class MonitoringHourData {
         this.actualIAQI04 = actualIAQI04;
     }
 
-    public String getActualIAQLNO2() {
-        return actualIAQLNO2;
+    public String getActualIAQINO2() {
+        return actualIAQINO2;
     }
 
-    public void setActualIAQLNO2(String actualIAQLNO2) {
-        this.actualIAQLNO2 = actualIAQLNO2;
+    public void setActualIAQINO2(String actualIAQINO2) {
+        this.actualIAQINO2 = actualIAQINO2;
     }
 
     public BigDecimal getActualTemperature() {

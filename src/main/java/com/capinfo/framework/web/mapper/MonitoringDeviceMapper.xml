@@ -29,8 +29,16 @@
 		<result column="actual_noise" property="actualNoise"/>
 		<result column="actual_02" property="actual02"  />
 		<result column="actual_NO2" property="actualNO2" />
+		<result column="actual_03" property="actual03" />
+		<result column="actual_04" property="actual04" />
+		<result column="actual_AQI" property="actualAQI" />
+		<result column="actual_IAQI_PM10" property="actualIAQIPM10" />
+		<result column="actual_IAQI_PM25" property="actualIAQIPM25" />
+		<result column="actual_IAQI_02" property="actualIAQI02" />
+		<result column="actual_IAQI_03" property="actualIAQI03" />
+		<result column="actual_IAQI_04" property="actualIAQI04" />
+		<result column="actual_IAQL_NO2" property="actualIAQINO2" />
 		<result column="col_time" property="colTime" />
-		<result column="actual_noise" property="actualNoise" />
 		<result column="actual_temperature" property="actualTemperature" />
 	</resultMap>
 	<resultMap id="MonitoringDayData" type="com.capinfo.framework.web.pojo.MonitoringDayData">
@@ -344,9 +352,6 @@
 	</select>-->
 	<!-- 根据设备编号查询小时数据-->
 	<select id="findHourData" parameterType="java.lang.Integer" resultMap="MonitoringHourData">
-		/*SELECT * FROM  ibs_data_hour
-		where
-			id =#{value}*/
 		SELECT * FROM ibs_data_hour
 			WHERE project_id IN
 			(
