@@ -70,8 +70,9 @@ public class MonitoringMaintainController extends BaseController {
     }
     //设备列表
     @RequestMapping(value = "/devSelectListInMaintain", method = {RequestMethod.POST, RequestMethod.GET})
-    public String devSelectListInGroup(Model model, HttpSession session, MonitoringMaintainQueryBean maintainQueryBean, Integer deviceGroupId, String deviceId, String deviceName) throws Exception {
+    public String devSelectListInMaintain(Model model, HttpSession session, MonitoringMaintainQueryBean maintainQueryBean, Integer deviceGroupId, String deviceId, String deviceName) throws Exception {
         maintainQueryBean.setUserId((Integer) session.getAttribute("userid"));
+        maintainQueryBean.setUserType((Integer) session.getAttribute("usertype"));
         List<MonitoringDevice> devices = monitoringMaintainService.findMonitoringDeviceList(maintainQueryBean);
         model.addAttribute("devices", devices);
         model.addAttribute("deviceQueryBean", maintainQueryBean);

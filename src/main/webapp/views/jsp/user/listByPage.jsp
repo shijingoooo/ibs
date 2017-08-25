@@ -39,7 +39,7 @@
 	}
 </style>
 <div class="pageHeader">
-	<form id="pagerForm" onsubmit="return navTabSearch(this);"
+	<form id="pagerForm" class="userManagement" onsubmit="return navTabSearch(this);"
 		action="${ctx}/user/listByPage.action" method="post">
 		<input type="hidden" name="pageNum" value="1" /> <input type="hidden"
 			name="numPerPage" value="<c:out value="${numPerPage}"></c:out>" />

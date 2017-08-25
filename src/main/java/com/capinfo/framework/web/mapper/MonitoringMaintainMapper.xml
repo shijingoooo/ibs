@@ -102,7 +102,7 @@
   
   <!--获取设备列表-->
   <sql id="query_where">
-    <if test="userId != 1" >
+    <if test="userType != 1" >
       AND gdr.group_id IN (SELECT group_id FROM ibs_user_group_rele WHERE user_id=#{userId})
     </if>
     <if test="devIdForLike!=null and devIdForLike!=''">

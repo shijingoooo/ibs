@@ -171,12 +171,12 @@
                                 <input name="ruleIds" type="checkbox" value="${obj.id}"/>
                             </td>
                             <td><fmt:formatDate value="${obj.colTime}" pattern="yyyy-MM-dd HH:00:00" /></td>
-                            <td>${obj.actualIAQIPM10}</td>
-                            <td>${obj.actualIAQIPM25}</td>
-                            <td>${obj.actualIAQI02}</td>
-                            <td>${obj.actualIAQINO2}</td>
-                            <td>${obj.actualIAQI03}</td>
-                            <td>${obj.actualIAQI04}</td>
+                            <td>${obj.actualTenPm}</td>
+                            <td>${obj.actualTwoPm}</td>
+                            <td>${obj.actual02}</td>
+                            <td>${obj.actualNO2}</td>
+                            <td>${obj.actual03}</td>
+                            <td>${obj.actual04}</td>
                             <td>${obj.actualNoise}</td>
                             <td></td>
                             <td></td>

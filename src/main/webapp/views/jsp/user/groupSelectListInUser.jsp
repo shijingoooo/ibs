@@ -40,11 +40,12 @@
                 type : "post",
                 url : "${ctx}/user/saveGroupInUserList.action",
                 data: {
-                    "userId":${userId},
+                    "userId":"${userId}",
                     "groupIds":ids
                 },
                 success:function(str){
-                    $("#pagerForm", window.parent.document).submit();
+                    var $form = $(".userManagement", window.parent.document);
+                    $form.submit();
                 },
                 error:function(XMLHttpRequest, textStatus, errorThrown)
                 {
