@@ -5,20 +5,24 @@
     $(document).ready(function () {
         $(".addRule").click(function(){
             $(".nowrap:last").append($(".nowrap:last").clone(true));
+            setDeleteRuleButton();
         });
         $(".deleteRule").click(function(){
             //默认一条规则，无法删除
             if( $(".deleteRule").length > 1)
                 $(this).parent().remove();
-        })
-        $("[name='deviceType']").change(function(){
-
         });
-
     });
 
-    function saveRule() {
+    function setDeleteRuleButton() {
+        var $deleteRuleButton = $(".deleteRule");
+        $deleteRuleButton.each(function () {
+            $(this).removeAttr("disabled");
+        });
+        $deleteRuleButton.eq(0).attr("disabled",true);
+    }
 
+    function saveRule() {
         //添加表单验证
         if(checkRule())
             $("#deviceRuleForm").submit();
