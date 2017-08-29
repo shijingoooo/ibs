@@ -63,9 +63,8 @@
             <td>
                 <form id="pagerForm" onsubmit="return navTabSearch(this);"
                       action="${ctx}/monitoringDevice/devGrouplistByPage.action" method="post">
-                    <input type="hidden" name="pageNum" value="1"/> <input type="hidden"
-                                                                           name="numPerPage"
-                                                                           value="<c:out value="${numPerPage}"></c:out>"/>
+                    <input type="hidden" name="pageNum" value="1"/>
+                    <input type="hidden" name="numPerPage" value="<c:out value="${numPerPage}"></c:out>"/>
 
                     <div class="searchBar">
                         <table class="searchContent">
@@ -154,7 +153,13 @@
                 <td>${obj.groupDevDescription}</td>
                 <td>${obj.devCount}</td>
                 <td><fmt:formatDate value="${obj.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                <td><a href="${ctx }/monitoringDevice/export.action?deviceGroupId=${obj.id}">导出数据</a></td>
+                <td>
+                    <%--<a href="${ctx }/monitoringDevice/goGroupExport.action?deviceGroupId=${obj.id}">导出数据</a>--%>
+                    <self:a code="ibs_device_group2_page_export" name="数据导出"
+                            parameter="?deviceGroupId=${obj.id}" style="icon" target="dialog"
+                            mask="true" rel="newdeviceGroup" width="455" height="345"></self:a>
+
+                </td>
             </tr>
         </c:forEach>
         </tbody>

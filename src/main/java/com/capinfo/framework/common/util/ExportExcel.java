@@ -5,18 +5,17 @@ import org.apache.poi.xssf.usermodel.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Zhang Chuanjia
  * @Date: 2017/8/21 16:49
  * @Description:
  */
-public class ExportExcel<T> {
-    public void exportExcel(Field[] fields,String[] headers,List<T> dataset, String fileName,HttpServletResponse response) {
+public class ExportExcel{
+    public void exportExcel(String[] header, String[] subHeader,String fileName, Object[] dataArr,List<Map<String, Object>> dataList,HttpServletResponse response) {
         //声明表格类
         XSSFWorkbook workbook = new XSSFWorkbook();
         //创建名称为fileName的表格
@@ -34,54 +33,44 @@ public class ExportExcel<T> {
         //加入到风格
         style.setFont(font);
 
+        List<Object[]> dataRList = new ArrayList<Object[]>();
+        for (Map<String, Object> map: dataList){
+            Object[] obj = dataArr.clone();
+            for (Map.Entry<String, Object> entry : map.entrySet()){
+                for(int index = 0; index < subHeader.length; index++){
+                    if (subHeader[index].equals(entry.getKey())){
+                        obj[index] = entry.getValue();
+                        break;
+                    }
+                }
+            }
+            dataRList.add(obj);
+        }
+
         //创建行
-        XSSFRow row = sheet.createRow(0);
+        XSSFRow row = null;
         XSSFCell cell;
-//        /** 设置表头行*/
-//        for (int i = 0; i < headers.length; i++) {
-//            cell = row.createCell(i);
-//            if(i == 0){
-//                cell.setCellValue("小组设备信息");
-//            }
-//            cell.setCellStyle(style);
-//            sheet.autoSizeColumn(i);//自动设宽
-//        }
-//        //横向：合并第一行的第2列到第4列
-//        sheet.addMergedRegion(new CellRangeAddress(0,0,1,36));
 
         //创建表格列标题行
-        row = sheet.createRow(0);
-        for (short i = 4; i < headers.length; i++) {
+        int rowIndex = 0;
+        row = sheet.createRow(rowIndex++);
+        for (short i = 4; i < header.length; i++) {
             cell = row.createCell(i-4);
             cell.setCellStyle(style);
-            XSSFRichTextString text = new XSSFRichTextString(headers[i]);
+            XSSFRichTextString text = new XSSFRichTextString(header[i]);
             cell.setCellValue(text);
         }
         try {
-            //将查询到的数据遍历在表格中
-            Iterator it = dataset.iterator();
-            //标识创建表格的index
-            int index = 0;
-            while (it.hasNext()) {
-                index++;
-                row = sheet.createRow(index);
-                T t = (T) it.next();
-                for (short i = 4; i < headers.length; i++) {
-                    cell = row.createCell(i-4);
+            for (Object[] objArr: dataRList){
+                row = sheet.createRow(rowIndex++);
+                for (int j = 0; j < objArr.length; j++){
+                    cell = row.createCell(j+1);
                     cell.setCellStyle(style);
-                    Field field = fields[i];
-                    String fieldName = field.getName();
-                    String getMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);  
-                    Class tCls = t.getClass();
-                    //返回指定的method，后面是参数列表（没有参数可不写）
-                    Method getMethod = tCls.getMethod(getMethodName);
-                    //对带有指定参数的指定对象调用由此 Method 对象表示的底层方法，后面是参数列表（没有参数可以不写）
-                    Object value = getMethod.invoke(t);
-                    //用于接收转换后的参数
+
                     String textValue = null;
                     //判断数据不为空的话就转换成string
-                    if(value != null && value != ""){
-                        textValue = value.toString();
+                    if(objArr[j] != null && objArr[j] != ""){
+                        textValue = objArr[j].toString();
                     }
                     if (textValue != null) {
                         XSSFRichTextString richString = new XSSFRichTextString(textValue);
@@ -89,7 +78,7 @@ public class ExportExcel<T> {
                     }
                 }
             }
-            getExportedFile(workbook, fileName,response);
+            getExportedFile(workbook,fileName,response);
         } catch (Exception e) {
             e.printStackTrace();
         }

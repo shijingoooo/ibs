@@ -4,4 +4,8 @@
     <select id="findGroupDevice" parameterType="java.lang.Integer" resultType="GroupDevice">
         SELECT * FROM ibs_group_device WHERE id=#{value};
     </select>
+    <!--通过设备组id查询该组下面的设备id-->
+    <select id="findDevices" parameterType="GroupDevice" resultType="java.lang.Integer">
+        SELECT device_id FROM ibs_group_device_rele WHERE group_id= #{id}
+    </select>
 </mapper>

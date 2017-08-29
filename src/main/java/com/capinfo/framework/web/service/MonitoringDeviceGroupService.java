@@ -115,10 +115,11 @@ public class MonitoringDeviceGroupService {
 		if(monitoringDeviceGroup != null)
 			monitoringDeviceGroupQueryBean.setId(monitoringDeviceGroup.getId());
 		else
+
 			monitoringDeviceGroupQueryBean.setId(null);
 		return monitoringDeviceGroupQueryBean;
 	}
-		//获取分组列表（用户页面添加管理用户组时使用）
+	//获取分组列表（用户页面添加管理用户组时使用）
 	public List<MonitoringDeviceGroup> findMonitoringGroupList(MonitoringDeviceGroupQueryBean groupQueryBean) throws Exception{
 		List result = new ArrayList();
 		result = groupMapper.findMonitoringGroupList(groupQueryBean);

@@ -82,7 +82,7 @@
     <div class="panel" defH="540">
         <h1>告警情况</h1>
         <div>
-            <form id="alarmPagerForm" onsubmit="return navTabSearch(this);"
+            <form id="pagerForm" onsubmit="return navTabSearch(this);"
                   action="${ctx}/monitoringAlarm/listByPage.action" method="post">
                 <input type="hidden" name="pageNum" value="1"/>
                 <input type="hidden" name="numPerPage" value=""/>

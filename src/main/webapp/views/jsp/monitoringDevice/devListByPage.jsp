@@ -3,6 +3,7 @@
 <script type="text/javascript" src="${ctx}/js/jquery.form.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $("#dwz_export_a").hide();
         $(".delete").click(function(){
             var dateIds = "";
             $("input[name='deviceIds']").each(function(index, item) {
@@ -17,7 +18,7 @@
             $(this).attr("href",hrefVal+"?deviceIds="+dateIds.substring(0,dateIds.length-1)+"&rel=ibs_device_page");
         });
 
-
+        //数据导出
         $("#modelExportDevice").click(function () {
             var dateIds = "";
             $("input[name='deviceIds']").each(function(index, item) {
@@ -28,11 +29,21 @@
             if (dateIds == ""){
                 alert("请选择要导出的数据！");
             } else{
-                var hrefVal = "${ctx}/monitoringDevice/downloadDevice.action";
-                location.href = hrefVal+"?deviceIds="+dateIds.substring(0,dateIds.length-1)+"&rel=ibs_device_page";
+                /*原本的直接导出的连接*/
+                //var hrefVal = "\${ctx}/monitoringDevice/downloadDevice.action";
+                //location.href = hrefVal+"?deviceIds="+dateIds.substring(0,dateIds.length-1)+"&rel=ibs_device_page";
+                /*尝试button打开self的标签*/
+                //$("#modelExportDevice").next().attr("parameter","?deviceIds="+dateIds.substring(0,dateIds.length-1));
+                //$("#modelExportDevice").next().click();
+                /*button打开dwz的a标签*/
+                $("#dwz_export_a").attr("href","${ctx}/monitoringDevice/goExport.action?deviceIds="+dateIds.substring(0,dateIds.length-1))
+                $("#dwz_export_a").click();
+
+
             }
         });
 
+        //数据导入
         $("#modelImportDevice").click(function () {
             $("#ImportDeviceForm").submit();
         });
@@ -99,7 +110,15 @@
                                     <label><input name="devStatus" type="checkbox" value="0" />离线 </label>
                                 </td>
                                 <td><button type="submit" id="modelSearchDevice">查询</button></td>
-                                <td><button type="button" id="">导出数据</button></td>
+                                <td>
+
+                                    <button type="button" id="modelExportDevice">导出数据</button>
+                                    <a id="dwz_export_a" class="button" href="" target="dialog" rel="dlg_page8" max="false" title="采集信息报表" width="455" height="345"></a>
+                                    <%--<a id="dwz_export_a" class="button" href="../views/jsp/monitoringDevice/devExport.jsp" target="dialog" rel="dlg_page8"><span>打开窗口8</span></a>--%>
+                                    <%--<self:a code="ibs_device_data_export" name=""
+                                            parameter="" style="icon" target="dialog"
+                                            mask="true" rel="newdevice" width="500" height="400"></self:a >--%>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -163,7 +182,7 @@
                     <c:if test="${obj.devCode != null and obj.devCode !=''}">
                         <self:a code="ibs_device_page_update" name="${obj.devCode}"
                                 parameter="?deviceId=${obj.id}" style="icon" target="dialog"
-                                mask="true" rel="newdevice" width="620" height="600"></self:a>
+                                mask="true" rel="newdevice" width="620" height="600"></self:a >
                     </c:if>
                 </td>
                 <td class="maintainCount">
