@@ -32,9 +32,6 @@
                 /*原本的直接导出的连接*/
                 //var hrefVal = "\${ctx}/monitoringDevice/downloadDevice.action";
                 //location.href = hrefVal+"?deviceIds="+dateIds.substring(0,dateIds.length-1)+"&rel=ibs_device_page";
-                /*尝试button打开self的标签*/
-                //$("#modelExportDevice").next().attr("parameter","?deviceIds="+dateIds.substring(0,dateIds.length-1));
-                //$("#modelExportDevice").next().click();
                 /*button打开dwz的a标签*/
                 $("#dwz_export_a").attr("href","${ctx}/monitoringDevice/goExport.action?deviceIds="+dateIds.substring(0,dateIds.length-1))
                 $("#dwz_export_a").click();

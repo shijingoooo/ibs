@@ -12,6 +12,16 @@
 		<result column="calibration_ten_pm" property="calibrationTenPm" />
 		<result column="col_time" property="colTime" />
 		<result column="actual_noise" property="actualNoise" />
+		<result column="calibration_noise" property="calibrationNoise" />
+		<result column="actual_02" property="actual02" />
+		<result column="calibration_02" property="calibration02" />
+		<result column="actual_NO2" property="actualNO2" />
+		<result column="calibration_NO2" property="calibrationNo2" />
+		<result column="actual_03" property="actual03" />
+		<result column="calibration_03" property="calibration03" />
+		<result column="actual_04" property="actual04" />
+		<result column="calibration_04" property="calibration04" />
+
 		<result column="actual_wind_speed" property="actualWindSpeed" />
 		<result column="actual_wind_direction" property="actualWindDirection" />
 		<result column="actual_temperature" property="actualTemperature" />
@@ -248,6 +258,7 @@
 	<if test="query.deviceId != null and query.deviceId != ''">
 		AND device_id = #{query.deviceId}
 	</if>
+	ORDER BY create_time desc
 	LIMIT #{pageNum},#{pageSize}
 </select>
 <!--统计数据-小时数据-->

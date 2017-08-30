@@ -54,8 +54,8 @@ public class ExportExcel{
         //创建表格列标题行
         int rowIndex = 0;
         row = sheet.createRow(rowIndex++);
-        for (short i = 4; i < header.length; i++) {
-            cell = row.createCell(i-4);
+        for (short i = 0; i < header.length; i++) {
+            cell = row.createCell(i);
             cell.setCellStyle(style);
             XSSFRichTextString text = new XSSFRichTextString(header[i]);
             cell.setCellValue(text);
@@ -64,7 +64,7 @@ public class ExportExcel{
             for (Object[] objArr: dataRList){
                 row = sheet.createRow(rowIndex++);
                 for (int j = 0; j < objArr.length; j++){
-                    cell = row.createCell(j+1);
+                    cell = row.createCell(j);
                     cell.setCellStyle(style);
 
                     String textValue = null;
@@ -96,8 +96,11 @@ public class ExportExcel{
         try {  
             String fileName = name + ".xls";  
             response.setContentType("application/vnd.ms-excel");
+            response.setCharacterEncoding("utf-8");//后加的
+            response.setContentType("application/octet-stream;charset=utf-8");//后加的
             response.setHeader("Content-Disposition", "attachment;filename=" + new String( fileName.getBytes("gb2312"), "ISO8859-1" ));
             fos = new BufferedOutputStream(response.getOutputStream());
+
             workbook.write(fos);
         } catch (Exception e) {
             e.printStackTrace();

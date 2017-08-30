@@ -41,7 +41,7 @@
         <property name="jobDetail" ref="checkDataJobDetail"/>
         <property name="startDelay" value="5000"/>
         <property name="repeatInterval" value="10000"/>
-        <property name="repeatCount" value="1"/>
+        <!--<property name="repeatCount" value="1"/>-->
     </bean>
     <!--<bean id="pushData" class="com.capinfo.framework.web.common.job.PushDataJob"></bean>
     <bean id="pushDataJob"

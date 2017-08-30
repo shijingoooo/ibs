@@ -108,13 +108,13 @@
                                     <input name="ruleIds" type="checkbox" value="${obj.id}"/>
                                 </td>
                                 <td><fmt:formatDate value="${obj.colTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                                <td>${obj.actualTenPm}</td>
-                                <td>${obj.actualTwoPm}</td>
-                                <td>${obj.actual02}</td>
-                                <td>${obj.actualNO2}</td>
-                                <td>${obj.actual03}</td>
-                                <td>${obj.actual04}</td>
-                                <td>${obj.actualNoise}</td>
+                                <td>${obj.calibrationTenPm}</td>
+                                <td>${obj.calibrationTwoPm}</td>
+                                <td>${obj.calibration02}</td>
+                                <td>${obj.calibrationNo2}</td>
+                                <td>${obj.calibration03}</td>
+                                <td>${obj.calibration04}</td>
+                                <td>${obj.calibrationNoise}</td>
                                 <td>${obj.actualWindSpeed}</td>
                                 <td>${obj.actualWindDirection}</td>
                                 <td>${obj.actualTemperature}</td>

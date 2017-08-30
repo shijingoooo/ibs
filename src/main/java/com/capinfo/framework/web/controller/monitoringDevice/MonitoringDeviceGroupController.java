@@ -237,34 +237,7 @@ public class MonitoringDeviceGroupController extends BaseController {
         //获取mongodb的连接
         getConnection();
         //通过设备组的id查询该组下面的所有设备的信息，在根据所有设备的id查询每个设备采集的数据信息
-        //List<Map<String, Object>> dataList = groupDeviceService.exportMonitoringData(collection,devIds,startDate,endDate);
-
-        /*测试数据开始*/
-        List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
-        Map<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("_id","1");
-        map1.put("actual_ten_pm","3.2");
-        map1.put("calibration_ten_pm","3.1");
-        map1.put("actual_wind_direction","西北");
-        map1.put("_id","1");
-        map1.put("actual_ten_pm","3.2");
-        map1.put("calibration_ten_pm","3.1");
-        map1.put("actual_wind_direction","西北");
-
-        Map<String, Object> map2 = new HashMap<String, Object>();
-        map2.put("_id","1");
-        map2.put("actual_ten_pm","3.2");
-        map2.put("calibration_ten_pm","3.1");
-        map2.put("actual_wind_direction","西北");
-        map2.put("_id","1");
-        map2.put("actual_ten_pm","3.2");
-        map2.put("calibration_ten_pm","3.1");
-        map2.put("actual_wind_direction","西北");
-
-        dataList.add(map1);
-        dataList.add(map2);
-        /*测试数据结束*/
-
+        List<Map<String, Object>> dataList = groupDeviceService.exportMonitoringDataMongo(collection,devIds,startDate,endDate);
         int a = 0;
         List size = new ArrayList();
         //为了找到选择要导出的个数，对应实时数据和校准数据
@@ -282,18 +255,15 @@ public class MonitoringDeviceGroupController extends BaseController {
         for(int i = 0; i < size.size()+5; i++) {
             dataArr[i] = "";
         }
-        //中文名
-        String [] header = new String[size.size()+5];
-        //英文名
-        String [] subHeader = new String[size.size()+5];
-        a = 0;
         //构建中文英文名称的数组
+        String [] header = new String[size.size()+5];//中文名
+        String [] subHeader = new String[size.size()+5];//英文名
+        a = 0;
         header[a] = "_id";subHeader[a] = "_id";a++;
         header[a] = "col_time";subHeader[a] = "col_time";a++;
         header[a] = "创建时间";subHeader[a] = "create_time";a++;
         header[a] = "版本";subHeader[a] = "version";a++;
         header[a] = "设备id";subHeader[a] = "device_id";a++;
-
         if(TSP != null && !"".equals(TSP)){
             header[a] = "实际TSP"; subHeader[a] = "actual_tsp";  a++;
             header[a] = "校准TSP"; subHeader[a] = "calibration_tsp";  a++;
@@ -338,13 +308,5 @@ public class MonitoringDeviceGroupController extends BaseController {
         String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         ExportExcel ee = new ExportExcel();
         ee.exportExcel(header,subHeader,"设备组数据"+fileName,dataArr,dataList,response);
-
-        JSONObject jo = new JSONObject();
-        jo.put("navTabId", rel);
-        jo.put("callbackType", callbackType);
-        jo.put("rel", rel);
-        jo.put("statusCode", "200");
-        jo.put("message", "操作成功");
-        super.rendText(response, jo.toString());
     }
 }

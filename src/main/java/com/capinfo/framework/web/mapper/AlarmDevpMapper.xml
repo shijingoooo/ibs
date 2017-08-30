@@ -22,7 +22,7 @@
   FROM ibs_alarm_devp ad,ibs_monitoring_device md
   WHERE md.id = ad.device_id
   <if test="query.userType!=1">
-    AND mm.device_id IN (SELECT md.id
+    AND md.device_id IN (SELECT md.id
     FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
     WHERE ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{query.userId}
     GROUP BY md.id)
@@ -72,7 +72,7 @@
     FROM ibs_alarm_devp ad,ibs_monitoring_device md
     WHERE md.id = ad.device_id
     <if test="userType!=1">
-      AND mm.device_id IN (SELECT md.id
+      AND md.device_id IN (SELECT md.id
       FROM ibs_user_group_rele ugr,ibs_group_device_rele gdr,ibs_monitoring_device md
       WHERE ugr.group_id=gdr.group_id AND gdr.device_id = md.id AND ugr.user_id = #{userId}
       GROUP BY md.id)
