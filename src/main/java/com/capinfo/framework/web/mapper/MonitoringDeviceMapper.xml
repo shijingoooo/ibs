@@ -512,4 +512,63 @@ where id IN (select id from ibs_monitoring_device where dev_code='20170817000001
 			WHERE id IN (SELECT device_id FROM ibs_group_device_rele WHERE group_id=#{id})
 
 	</select>
+
+	<!--导出实时数据-->
+	<select id="findStatisticalData" resultType="java.util.Map">
+		SELECT * FROM ibs_monitoring_data_copy
+		<where>
+			<if test="startTime != null and startTime != ''">
+				create_time > #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				AND #{endTime} > create_time
+			</if>
+			<if test="ids!=null and ids.length!=0">
+				AND id IN
+				<foreach collection="ids" item="statisticsId" index="index"
+						 open="(" close=")" separator=",">
+					#{statisticsId}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	<!--导出小时数据-->
+	<select id="findMonitoringHourDate" resultType="java.util.Map">
+		SELECT * FROM ibs_data_hour
+		<where>
+			<if test="startTime != null and startTime != ''">
+				col_time > #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				AND #{endTime} > col_time
+			</if>
+			<if test="ids!=null and ids.length!=0">
+				AND id IN
+				<foreach collection="ids" item="statisticsId" index="index"
+						 open="(" close=")" separator=",">
+					#{statisticsId}
+				</foreach>
+			</if>
+
+		</where>
+	</select>
+	<!--导出天数据-->
+	<select id="findMonitoringDayDate" resultType="java.util.Map">
+		SELECT * FROM ibs_data_day
+		<where>
+			<if test="startTime != null and startTime != ''">
+				col_time > #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				AND #{endTime} > col_time
+			</if>
+			<if test="ids!=null and ids.length!=0">
+				AND id IN
+				<foreach collection="ids" item="statisticsId" index="index"
+						 open="(" close=")" separator=",">
+					#{statisticsId}
+				</foreach>
+			</if>
+		</where>
+	</select>
 </mapper>

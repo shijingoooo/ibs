@@ -6,19 +6,15 @@
 <script type="text/javascript" src="${ctx}/js/jquery.form.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#modelExportDeviceGroup").click(function () {
-            var dateIds = "";
-            $("input[name='deviceGroupIds']").each(function (index, item) {
-                if ($(item).prop("checked")) {
-                    dateIds += $(item).val() + ",";
-                }
-            });
-            if (dateIds == "") {
-                alert("请选择要导出的数据！");
-            } else {
-                var hrefVal = "${ctx}/monitoringDevice/downloadDeviceGroup.action";
-                location.href = hrefVal + "?deviceGroupIds=" + dateIds.substring(0, dateIds.length - 1) + "&rel=ibs_device_group2_page";
-            }
+        $("#dwz_export_a").hide();
+        $("#modelExportDevice0").click(function () {
+            exp();
+        });
+        $("#modelExportDevice1").click(function () {
+            exp();
+        });
+        $("#modelExportDevice2").click(function () {
+            exp();
         });
 
         $(".tabs").attr("currentindex",${currentIndex});
@@ -28,6 +24,25 @@
         });
 
     });
+
+    function exp() {
+        var currentIndex = $("#currentIndex").val();
+        var dateIds = "";
+        $("input[name='ruleIds']").each(function (index, item) {
+            if ($(item).prop("checked")) {
+                dateIds += $(item).val() + ",";
+            }
+        });
+        if (dateIds == "") {
+            alert("请选择要导出的数据！");
+        } else {
+            <%--var hrefVal = "${ctx}/monitoringDevice/downloadDeviceGroup.action";--%>
+            <%--location.href = hrefVal + "?deviceGroupIds=" + dateIds.substring(0, dateIds.length - 1) + "&rel=ibs_device_group2_page";--%>
+            //获取实时、小时、天的标识
+            $("#dwz_export_a").attr("href","${ctx}/monitoringDevice/goStatisticsExport.action?currentIndex="+currentIndex+"&deviceIds="+dateIds.substring(0,dateIds.length-1))
+            $("#dwz_export_a").click();
+        }
+    }
 
     function changeTab(index) {
         var $tabs = $(".tabs");
@@ -47,11 +62,13 @@
 <div class="pageContent">
 
     <div class="tabs" currentIndex="0" eventType="click">
+        <%--导出时，button点击该超链接--%>
+        <a id="dwz_export_a" class="button" href="" target="dialog" rel="dlg_page8" max="false" title="采集信息报表" width="455" height="420"></a>
         <form id="pagerForm" class="pagerForm" onsubmit="return navTabSearch(this);"
-              action="${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${device.id}" method="post">
+                     action="${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${device.id}" method="post">
             <input type="hidden" name="pageNum" value="1" />
             <input type="hidden" name="numPerPage" value="<c:out value="${numPerPage}"></c:out>" />
-            <input type="hidden" name="currentIndex" value="${currentIndex}">
+            <input type="hidden" id="currentIndex" name="currentIndex" value="${currentIndex}" />
         </form>
         <div class="tabsHeader">
             <div class="tabsHeaderContent">
@@ -77,7 +94,7 @@
                 </span>
                 <span class="heading">设备分组：${device.belongGroups}</span>
                 <span class="heading">设备厂商：${device.monitoringCompany.companyName}</span>
-                <button type="button" class="modelExportDevice" style="margin-left: 100px">导出数据</button>
+                <button type="button" id="modelExportDevice0" class="modelExportDevice" style="margin-left: 100px">导出数据</button>
                 <table class="table" width="100%" layoutH="112" rel="statistics_data_list">
                     <thead>
                     <tr>
@@ -136,7 +153,7 @@
                 </span>
                 <span class="heading">设备分组：${device.belongGroups}</span>
                 <span class="heading">设备厂商：${device.monitoringCompany.companyName}</span>
-                <button type="button" class="modelExportDevice" style="margin-left: 100px">导出数据</button>
+                <button type="button" id="modelExportDevice1" class="modelExportDevice" style="margin-left: 100px">导出数据</button>
                 <table class="table" width="100%" layoutH="112" rel="statistics_data_list">
                     <thead>
                     <tr>
@@ -193,7 +210,7 @@
                 </span>
                 <span class="heading">设备分组：${device.belongGroups}</span>
                 <span class="heading">设备厂商：${device.monitoringCompany.companyName}</span>
-                <button type="button" class="modelExportDevice" style="margin-left: 100px">导出数据</button>
+                <button type="button" id="modelExportDevice2" class="modelExportDevice" style="margin-left: 100px">导出数据</button>
                 <table class="table" width="100%" layoutH="112" rel="statistics_data_list">
                     <thead>
                     <tr>

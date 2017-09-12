@@ -83,7 +83,7 @@
             <th width="120">解决办法</th>
             <th width="50">责任人</th>
             <th width="100">备注</th>
-            <th width="50">操作</th>
+
         </tr>
         </thead>
         <tbody>
@@ -113,7 +113,7 @@
                 <td>${obj.solveMethod}</td>
                 <td>${obj.responsible}</td>
                 <td>${obj.remark}</td>
-                <td>操作</td>
+
             </tr>
         </c:forEach>
         </tbody>

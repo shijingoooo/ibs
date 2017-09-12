@@ -5,11 +5,20 @@ import com.capinfo.framework.web.mapper.MonitoringDeviceGroupMapper;
 import com.capinfo.framework.web.mapper.MonitoringDeviceMapper;
 import com.capinfo.framework.web.mapper.UserMapper;
 import com.capinfo.framework.web.pojo.*;
-import com.capinfo.framework.web.vo.*;
+import com.capinfo.framework.web.vo.MonitoringDataQueryBean;
+import com.capinfo.framework.web.vo.MonitoringDeviceQueryBean;
 import com.capinfo.modules.orm.Page;
+import com.mongodb.BasicDBObject;
+import com.mongodb.QueryOperators;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service(value="monitoringDeviceService")
@@ -102,14 +111,6 @@ public class MonitoringDeviceService {
 		System.out.println("size()----->"+deviceMapper.findStatisticalData(devId).size());
 		return deviceMapper.findStatisticalData(devId);
 	}*/
-	//统计数据--小时数据
-	public List<MonitoringHourData> findHourData(Integer devId) throws Exception {
-		return deviceMapper.findHourData(devId);
-	}
-	//统计数据--天数据
-	public List<MonitoringDayData> findDayData(Integer devId) throws Exception {
-		return deviceMapper.findDayData(devId);
-	}
 
 	public MonitoringDevice findMonitoringDeviceById(Integer id) throws Exception {
 
@@ -245,8 +246,100 @@ public class MonitoringDeviceService {
 		return deviceMapper.findMonitoringDeviceListByGID(groupDevice);
 	}
 
+	/**
+	 * @Author: Zhang Chuanjia
+	 * @Date: 2017/8/30 17:48
+	 * @Description: 导出设备组的的数据——mongodb
+	 */
+	public List<Map<String,Object>> exportMonitoringDataMongo(MongoCollection collection, Integer[] devIds, String startDate, String endDate) throws ParseException {
+		BasicDBObject queryObject = new BasicDBObject();
+		queryObject.put("device_id", new BasicDBObject(QueryOperators.IN,devIds));
+		if(startDate != null && !"".equals(startDate) && endDate != null && !"".equals(endDate)){
+			//格式化时间
+			Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(startDate);
+			Date endTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate);
+			//添加时间条件
+			queryObject.put("create_time",new BasicDBObject(new BasicDBObject(QueryOperators.GTE,startTime).append(QueryOperators.LTE,endTime)));
+
+		}
+		FindIterable findIterable = collection.find(queryObject);
+		MongoCursor<Document> mongoCursor = findIterable.iterator();
+
+		//存储最终返回的结果
+		List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map = null;
+		//FindIterable转换成Document
+		List<Document> mdList = new ArrayList<Document>();
+		while (mongoCursor.hasNext()) {
+			mdList.add(mongoCursor.next());
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		for (Document doc : mdList) {
+			map = new HashMap<String, Object>();
+
+			map.put("_id", doc.get("_id"));
+			map.put("actual_tsp", doc.get("actual_tsp"));
+			map.put("actual_two_pm", doc.get("actual_two_pm"));
+			map.put("actual_ten_pm", doc.get("actual_ten_pm"));
+			map.put("actual_noise", doc.get("actual_noise"));
+			map.put("actual_temperature", doc.get("actual_temperature"));
+			map.put("actual_humidity", doc.get("actual_humidity"));
+			map.put("actual_pressure", doc.get("actual_pressure"));
+			map.put("actual_wind_speed", doc.get("actual_wind_speed"));
+			map.put("actual_wind_direction", doc.get("actual_wind_direction"));
+			map.put("calibration_tsp", doc.get("calibration_tsp"));
+			map.put("calibration_two_pm", doc.get("calibration_two_pm"));
+			map.put("calibration_ten_pm", doc.get("calibration_ten_pm"));
+			map.put("calibration_noise", doc.get("calibration_noise"));
+			map.put("col_time", sdf.format(doc.get("col_time")));
+			map.put("create_time", sdf.format(doc.get("create_time")));
+			map.put("version", doc.get("version"));
+			map.put("device_id", doc.get("device_id"));
+
+			lists.add(map);
+		}
+		return lists;
+	}
 
 	/**
+	 * @Author: Zhang Chuanjia
+	 * @Date: 2017/8/30 17:45
+	 * @Description: 统计数据的导出
+	 */
+    public List<Map<String,Object>> exportStatistics(Integer[] ids, String currentIndex, String startDate,String endDate){
+
+    	//存储最终的返回结果
+    	List<Map<String,Object>> lists = new ArrayList<Map<String,Object>>();
+    	Map<String,Object> params = new HashMap<String, Object>();
+
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	Date startTime = null;
+		Date endTime = null;
+		try {
+			startTime = sdf.parse(startDate);
+			endTime = sdf.parse(endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		params.put("startTime",startTime);
+		params.put("endTime",endTime);
+		params.put("ids",ids);
+
+        if(Integer.parseInt(currentIndex) == 0){
+            //实时数据
+			return deviceMapper.findStatisticalData(params);
+        }else if(Integer.parseInt(currentIndex) == 1){
+            //小时数据
+			return deviceMapper.findMonitoringHourDate(params);
+        }else if(Integer.parseInt(currentIndex) == 2){
+            //天数据
+			return deviceMapper.findMonitoringDayDate(params);
+        }
+    	return null;
+    }
+
+
+    /**
 	 * 导入传感器数据
 	 * @param ids
 	 * @throws Exception

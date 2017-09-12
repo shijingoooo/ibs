@@ -48,14 +48,6 @@ public interface MonitoringDeviceMapper {
 	public MonitoringProject findMonitoringProjectById(Integer id) throws Exception;
 
 
-
-	/*	//统计数据--实时数据
-        public List<MonitoringData> findStatisticalData(Integer devId)throws Exception;*/
-	//统计数据--小时数据
-	public List<MonitoringHourData> findHourData(Integer devId)throws Exception;
-	//统计数据--天数据
-	public List<MonitoringDayData> findDayData(Integer devId)throws Exception;
-
 	//统计数据--实时数据
 	public Integer findMonitoringDataCount(MonitoringDataQueryBean dataQueryBean) throws Exception;
 	//统计数据--实时数据分页
@@ -70,5 +62,26 @@ public interface MonitoringDeviceMapper {
 	public Integer findMonitoringDayCount(MonitoringDataQueryBean dayQueryBean) throws Exception;
 	//统计数据--天数据分页
 	public List<MonitoringDayData> findMonitoringDayDatePage(Map<String, Object> map) throws Exception;
+
     List<MonitoringDevice> findMonitoringDeviceListByGID(GroupDevice groupDevice);
+
+    /**
+     * @Author: Zhang Chuanjia
+     * @Date: 2017/8/30 18:38
+     * @Description: 导出实时数据
+     */
+	List<Map<String,Object>> findStatisticalData(Map<String,Object> params);
+	/**
+	 * @Author: Zhang Chuanjia
+	 * @Date: 2017/8/30 18:57
+	 * @Description: 导出小时数据
+	 */
+	List<Map<String,Object>> findMonitoringHourDate(Map<String,Object> params);
+
+	/**
+	 * @Author: Zhang Chuanjia
+	 * @Date: 2017/8/30 18:58
+	 * @Description: 导出填数据
+	 */
+	List<Map<String,Object>> findMonitoringDayDate(Map<String,Object> params);
 }

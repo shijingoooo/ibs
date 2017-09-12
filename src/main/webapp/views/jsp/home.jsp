@@ -27,6 +27,10 @@
 	<script type="text/javascript" src="${ctx}/dwz_jui/chart/g.pie.js"></script>
 	<script type="text/javascript" src="${ctx}/dwz_jui/chart/g.dot.js"></script>
 	<script type="text/javascript" src="${ctx}/js/calendar/WdatePicker.js"></script>
+
+	<script src="https://open.ys7.com/sdk/js/1.1/ckplayer/ckplayer.js"></script>
+	<script src="https://open.ys7.com/sdk/js/1.1/ezuikit.js"></script>
+
 	<script type="text/javascript">
 		function checkBrowser()
 		{

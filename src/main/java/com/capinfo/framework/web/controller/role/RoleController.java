@@ -131,8 +131,8 @@ public class RoleController extends BaseController {
 	}
 
 
-	@RequestMapping(value = "/initMneuList", method = {RequestMethod.GET})
-	public String initMneuList(Model model, Integer roleId) throws Exception {
+	@RequestMapping(value = "/initMenuList", method = {RequestMethod.GET})
+	public String initMenuList(Model model, Integer roleId) throws Exception {
 		List<Menu> menuList = menuService.findMenuList( null);
         //查询初始化信息
         List<RoleMenuRele> menuByRoleList = roleMenuReleService.findRoleMenuReleListByRoleId(roleId);

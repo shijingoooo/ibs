@@ -3,7 +3,7 @@
 <script type="text/javascript" src="${ctx}/js/jquery.form.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#dwz_export_a").hide();
+        //删除按钮用来多条删除
         $(".delete").click(function(){
             var dateIds = "";
             $("input[name='deviceIds']").each(function(index, item) {
@@ -19,6 +19,7 @@
         });
 
         //数据导出
+        $("#dwz_export_a").hide();
         $("#modelExportDevice").click(function () {
             var dateIds = "";
             $("input[name='deviceIds']").each(function(index, item) {
@@ -33,10 +34,8 @@
                 //var hrefVal = "\${ctx}/monitoringDevice/downloadDevice.action";
                 //location.href = hrefVal+"?deviceIds="+dateIds.substring(0,dateIds.length-1)+"&rel=ibs_device_page";
                 /*button打开dwz的a标签*/
-                $("#dwz_export_a").attr("href","${ctx}/monitoringDevice/goExport.action?deviceIds="+dateIds.substring(0,dateIds.length-1))
+                $("#dwz_export_a").attr("href","${ctx}/monitoringDevice/goDeviceExport.action?deviceIds="+dateIds.substring(0,dateIds.length-1))
                 $("#dwz_export_a").click();
-
-
             }
         });
 
@@ -110,11 +109,7 @@
                                 <td>
 
                                     <button type="button" id="modelExportDevice">导出数据</button>
-                                    <a id="dwz_export_a" class="button" href="" target="dialog" rel="dlg_page8" max="false" title="采集信息报表" width="455" height="345"></a>
-                                    <%--<a id="dwz_export_a" class="button" href="../views/jsp/monitoringDevice/devExport.jsp" target="dialog" rel="dlg_page8"><span>打开窗口8</span></a>--%>
-                                    <%--<self:a code="ibs_device_data_export" name=""
-                                            parameter="" style="icon" target="dialog"
-                                            mask="true" rel="newdevice" width="500" height="400"></self:a >--%>
+                                    <a id="dwz_export_a" class="button" href="" target="dialog" rel="dlg_page8" max="false" title="采集信息报表" width="455" height="420"></a>
                                 </td>
                             </tr>
                         </table>
@@ -182,6 +177,7 @@
                                 mask="true" rel="newdevice" width="620" height="600"></self:a >
                     </c:if>
                 </td>
+                <%--dwz框架a标签内容与弹出框的标题相同，显示span标签隐藏a标签，点击span标签触发a标签，使列表中显示数字，弹出框显示“运维记录”--%>
                 <td class="maintainCount">
                     <a id="maintain" href="<c:out value='${ctx}/monitoringMaintain/listByPage.action?devId=${obj.id}'/>"
                        target="navTab" rel="<c:out value='ibs_device_maintain_page'/>" style="display: none">运维记录</a>
@@ -238,17 +234,14 @@
                     ${obj.monitoringProject.proName}
                 </td>
                 <td>
-                    <%--<a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
+                    <a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
                        target="navTab" rel="<c:out value='ibs_statistics_data_page'/>">统计数据</a>
-                    |--%>
-
-                        <a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
-                           target="navTab" rel="<c:out value='ibs_statistics_data_page'/>">统计数据</a>
-
+                    |
                     <a id="checkRule" href="<c:out value='${ctx}/monitoringDevice/devDataCalibrationListByPage.action?devId=${obj.id}'/>"
                        target="navTab" rel="<c:out value='ibs_data_calibration_page'/>">校准</a>
-
-                    <%--|控制--%>
+                    |
+                    <a id="" class="" target="dialog" mask="true" width="800" height="650" title="视频" href="${ctx}/monitoringDevice/liveVideo.action">
+                        视频</a>
                 </td>
 
                     <%--<td>

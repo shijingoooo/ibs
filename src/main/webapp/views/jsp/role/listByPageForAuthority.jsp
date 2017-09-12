@@ -53,7 +53,7 @@
 	<table class="table" width="100%" layoutH="112" >
 		<thead>
 			<tr>
-                <th width="120">&nbsp;角色名称</th>
+                <th width="120">角色名称</th>
 				<th width="120">角色描述</th>
 				<th width="120">创建时间</th>
 				<th width="120">操作</th>
@@ -62,11 +62,11 @@
 		<tbody>
 			<c:forEach var="obj" items="${page.result}" varStatus="index">
 				<tr target="tr_form" rel="${obj.id}">
-					<td>&nbsp;${obj.roleName}</td>
+					<td>${obj.roleName}</td>
 					<td>${obj.roleDesc}</td>
 					<td><fmt:formatDate value="${obj.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                     <td><a target="dialog" mask="true" title="设置角色权限"
-                           href="${ctx}/role/initMneuList.action?roleId=${obj.id}" width="620" height="500">
+                           href="${ctx}/role/initMenuList.action?roleId=${obj.id}" width="620" height="500">
                         设置角色权限
                     </a>
                         <%--<self:a code="ibs_data_page"

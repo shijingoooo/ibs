@@ -152,12 +152,13 @@
                 <td>${obj.groupDevType}</td>
                 <td>${obj.groupDevDescription}</td>
                 <td>${obj.devCount}</td>
+                <%--jsp中格式化时间--%>
                 <td><fmt:formatDate value="${obj.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                 <td>
                     <%--<a href="${ctx }/monitoringDevice/goGroupExport.action?deviceGroupId=${obj.id}">导出数据</a>--%>
                     <self:a code="ibs_device_group2_page_export" name="数据导出"
                             parameter="?deviceGroupId=${obj.id}" style="icon" target="dialog"
-                            mask="true" rel="newdeviceGroup" width="455" height="345"></self:a>
+                            mask="true" rel="newdeviceGroup" width="455" height="420"></self:a>
 
                 </td>
             </tr>

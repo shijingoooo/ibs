@@ -34,6 +34,11 @@ public class GroupDeviceService {
 
     }
 
+    /**
+     * @Author: Zhang Chuanjia
+     * @Date: 2017/8/30 17:50
+     * @Description: 导出设备组数据——mongodb
+     */
     public List<Map<String, Object>> exportMonitoringDataMongo(MongoCollection collection, Integer[] deviceIds, String startDate, String endDate) throws ParseException {
         BasicDBObject queryObject = new BasicDBObject();
         queryObject.put("device_id", new BasicDBObject(QueryOperators.IN,deviceIds));

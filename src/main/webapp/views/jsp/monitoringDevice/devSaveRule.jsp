@@ -14,6 +14,7 @@
         });
     });
 
+    //先使所有“-”按钮可用，再使第一个“-”按钮不可用
     function setDeleteRuleButton() {
         var $deleteRuleButton = $(".deleteRule");
         $deleteRuleButton.each(function () {
@@ -57,6 +58,8 @@
             }
         }
         //首先判断每一条规则的上限必须大于下限
+        //其次每两条规则比较，a.max < b.min 或者 a.min > b.max 用二重循环
+        //这里只能判断页面上新添加的规则，无法数据库中的rule。提交表单以后还要在后端继续与数据库中的rule判断
         var ruleCount = $(".addRule").size();
         for( var x = 0; x < ruleCount; x++){
             if(parseFloat($mins[x].value) >= parseFloat($maxs[x].value)) {

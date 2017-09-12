@@ -55,7 +55,13 @@
 				<%--<input name="NH3" type="checkbox" size="30" value="NH3" checked="checked"/>NH3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
 				<%--<input name="C2H6S" type="checkbox" size="30" value="C2H6S" checked="checked"/>C2H6S--%>
 			</p>
-			<div class="formBar">
+			<br>
+			<p style="text-align: center">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" onclick="devGroupExportData()">导出</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="close">取消</button>
+			</p>
+			<%--<div class="formBar">
 				<ul>
 					<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
 					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="devGroupExportData()">导出</button></div></div></li>
@@ -63,7 +69,7 @@
 						<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
 					</li>
 				</ul>
-			</div>
+			</div>--%>
 			<input type="hidden" name="deviceGroupId" value="${deviceGroupId}"></input>
 	</form>
 </div>
@@ -95,8 +101,6 @@
             alert("您选择的开始时间大于结束时间，请重新选择");
             return false;
         }
-        alert($("#devGroupExportFormId"));
 		$("#devGroupExportFormId").submit();
     }
-
 </script>

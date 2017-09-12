@@ -47,6 +47,7 @@
     }
     //初始化转发因子
     function initCheckBox() {
+        //根据设备类型切换显示不同的转发因子，使用jQuery show()、hide()方法。
         var devType = parseInt($("select[name='devType'] > option:selected").val());
         switch (devType){
             case 4:
@@ -71,7 +72,7 @@
                 $("#VOC").hide();
                 break;
         }
-        
+        //设置显示的checkbox标签状态，隐藏的不管
         var forwardType = new Array();
         forwardType = "${device.forwardType}".split(';');
         if("${device.forwardType}") {
@@ -142,6 +143,7 @@
         }
     }
     //提交表单时设置转发因子的值
+    //页面中插入隐藏input用来存放所选转发因子组成的字符串
     function setCheckBoxValue() {
         var forwardTypes = "";
         $(".forwardType:visible").each(function () {
@@ -181,6 +183,7 @@
         initCheckBox();
         initRadio();
         //initStatus();
+        //根据不同设备显示不同下拉列表
         $("#devType").change(function () {
             var t = parseInt($(this).children('option:selected').val());
             $("#video").hide();

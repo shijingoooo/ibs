@@ -16,6 +16,7 @@
             $(this).attr("href", hrefVal + "?recordIds=" + dateIds.substring(0, dateIds.length - 1) + "&rel=ibs_device_maintain_page");
         });
     });
+    //点击数字修改select标签的值再提交表单，实现按type检索
     function searchByType(node) {
         var $node = $(node);
         var text = $node.parent().prev().html();
@@ -240,6 +241,7 @@
 
                         </td>
                     </tr>
+                <%--不够20条补全--%>
                 </c:forEach>
                 <c:if test="${fn:length(page.result)<20}">
                     <c:forEach begin="${fn:length(page.result)}" end="19"

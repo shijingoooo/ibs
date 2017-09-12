@@ -2,7 +2,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
 <%@ include file="/common/taglibs.jsp" %>
 <div class="pageContent">
-	<form method="post" id="devExportFormId" action="${ctx}/monitoringDevice/exportDevExcel.action?rel=ibs_device_group2_page&callbackType=closeCurrent" class="pageForm required-validate">
+	<form method="post" id="statisticsExportFormId" action="${ctx}/monitoringDevice/exportStatisticsExcel.action?rel=ibs_device_group2_page&callbackType=closeCurrent" class="pageForm required-validate">
 		<div class="pageFormContent" layoutH="56">
 			<h2 style="text-align: center">导出数据选项</h2>
 			<p>
@@ -66,22 +66,15 @@
 
 			<p style="text-align: center">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="button" onclick="devExportData()">导出</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" onclick="statisticeExportData()">导出</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button type="button" class="close">取消</button>
 			</p>
-			<%--<div class="formBar">
-				<ul>
-					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="devExportData()">导出</button></div></div></li>
-					<li>
-						<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
-					</li>
-				</ul>
-			</div>--%>
-			<input type="hidden" name="deviceIds" value="${deviceIds}"></input>
+			<input type="hidden" name="deviceIds" value="${deviceIds}"/>
+			<input type="hidden" name="currentIndex" value="${currentIndex}">
 	</form>
 </div>
 <script type="text/javascript">
-    function devExportData() {
+    function statisticeExportData() {
         var startTimeStr = $("#startDa").val();
         var endTimeStr = $("#endDa").val();
         if (startTimeStr == null || startTimeStr == "" || endTimeStr == null || endTimeStr == "") {
@@ -99,7 +92,7 @@
             alert("您选择的开始时间大于结束时间，请重新选择");
             return false;
         }
-        $("#devExportFormId").submit();
+        $("#statisticsExportFormId").submit();
     }
 
 </script>
