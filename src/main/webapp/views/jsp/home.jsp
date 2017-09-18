@@ -175,7 +175,10 @@
 					</ul>
 					<div class="navTab-panel tabsPageContent layoutBox">
 						<div class="page unitBox">
-							<c:choose>
+							<div class="pageFormContent" layoutH="20" style="background: url('${ctx}/images/home_bg.jpg') no-repeat left top;background-size:cover;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='${ctx}/images/home_bg.jpg',sizingMethod='scale');">
+
+							</div>
+							<%--<c:choose>
 								<c:when test="${sessionScope.usertype!=4 }">
 									<div id="ibs_map_page">
 									</div>
@@ -185,7 +188,7 @@
 								
 									</div>
 								</c:otherwise>
-							</c:choose>
+							</c:choose>--%>
 						</div>
 					</div>
 				</div>
