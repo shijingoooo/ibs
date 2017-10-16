@@ -73,9 +73,10 @@
                 <div class="pageFormContent" layoutH="100">
                     <p class="nowrap">
                         <label style="width: 60px;">选择设备：</label>
-                        <input name="devCode" type="text" size="30" readonly="readonly"
-                               class="required" value="${maintain.deviceCode}" style="margin-left: 25px;">
+                        <input name="devName" type="text" size="30" readonly="readonly"
+                               class="required" value="${maintain.deviceName}" style="margin-left: 25px;">
                         <input name="devId" type="hidden" value="${maintain.deviceId}"/>
+                        <input name="devCode" type="hidden" value="${maintain.deviceCode}"/>
                         <a class="btnLook"
                            href="${ctx}/monitoringMaintain/devSelectListInMaintain.action"
                            lookupGroup="" mask="true" width="800" height="500">选择设备</a>

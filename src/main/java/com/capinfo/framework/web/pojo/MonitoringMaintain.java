@@ -9,6 +9,8 @@ public class MonitoringMaintain {
 
     private String deviceCode;
 
+    private String deviceName;
+
     private String troubleType;
 
     private String troubleDescription;
@@ -51,6 +53,14 @@ public class MonitoringMaintain {
 
     public void setDeviceId(Integer deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
     public String getTroubleType() {

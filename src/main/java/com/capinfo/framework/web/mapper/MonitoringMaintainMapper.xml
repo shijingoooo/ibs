@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="device_id" property="deviceId" jdbcType="INTEGER" />
     <result column="device_code" property="deviceCode" jdbcType="VARCHAR"/>
+    <result column="device_name" property="deviceName" jdbcType="VARCHAR"/>
     <result column="trouble_type" property="troubleType" jdbcType="VARCHAR" />
     <result column="trouble_description" property="troubleDescription" jdbcType="VARCHAR" />
     <result column="trouble_time" property="troubleTime" jdbcType="TIMESTAMP" />
@@ -81,7 +82,7 @@
 
   <!--查询根据id某一条记录-->
   <select id="findMonitoringMaintainById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    SELECT mm.id AS id,md.id AS device_id,md.dev_code AS device_code,trouble_type,trouble_description,trouble_time,responsible,solve_way,solve_method,solve_time,method_description,remark,mm.create_time AS create_time
+    SELECT mm.id AS id,md.id AS device_id,md.dev_code AS device_code,md.dev_name AS device_name,trouble_type,trouble_description,trouble_time,responsible,solve_way,solve_method,solve_time,method_description,remark,mm.create_time AS create_time
     FROM ibs_monitoring_device md,ibs_monitoring_maintain mm
     WHERE md.id = mm.device_id AND mm.id = #{recordId}
   </select>
