@@ -8,8 +8,6 @@
 
     function saveProject() {
         if(uniqueDevGroupName){
-            $("input[name='longitude']").val($("#lng").val());
-            $("input[name='latitude']").val($("#lat").val());
             $("#deviceGroupForm").submit();
         }
     }
@@ -17,7 +15,7 @@
         if ($("#devGroupName").val().length > 0) {
             $.getJSON("${ctx}/monitoringDevice/checkDevGroupName.action?devGroupName=" + $("#devGroupName").val(), function (data) {
                 if (data.gourpId != undefined) {
-                    $("#devGroupNameMsg").html("分组名称已使用");
+                    $("#devGroupNameMsg").html("分组名称重复");
                     uniqueDevGroupName = false;
                 } else {
                     $("#devGroupNameMsg").html("");

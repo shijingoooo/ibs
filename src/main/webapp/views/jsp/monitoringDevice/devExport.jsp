@@ -2,7 +2,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
 <%@ include file="/common/taglibs.jsp" %>
 <div class="pageContent">
-	<form method="post" id="devExportFormId" action="${ctx}/monitoringDevice/exportDevExcel.action?rel=ibs_device_group2_page&callbackType=closeCurrent" class="pageForm required-validate">
+	<form method="post" id="devExportFormId" action="${ctx}/monitoringDevice/exportDevExcel.action?rel=ibs_device_page&callbackType=closeCurrent" class="pageForm required-validate">
 		<div class="pageFormContent" layoutH="56">
 			<h2 style="text-align: center">导出数据选项</h2>
 			<p>
@@ -95,8 +95,13 @@
         var startDate = new Date(startTimeStrTemp);
         endTimeStrTemp = endTimeStrTemp.replace(/-/g, "/");
         var endDate = new Date(endTimeStrTemp);
+        var newDate = new Date();
         if (startDate > endDate) {
             alert("您选择的开始时间大于结束时间，请重新选择");
+            return false;
+        }
+        if(startDate > newDate){
+            alert("您选择的时间大于当前时间段，请重新选择");
             return false;
         }
         $("#devExportFormId").submit();

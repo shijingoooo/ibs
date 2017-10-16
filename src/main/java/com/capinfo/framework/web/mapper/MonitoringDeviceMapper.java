@@ -8,6 +8,8 @@ import com.capinfo.framework.web.pojo.MonitoringDevice;
 //import com.capinfo.framework.web.pojo.MonitoringDeviceXsl;
 import com.capinfo.framework.web.vo.MonitoringDataQueryBean;
 import com.capinfo.framework.web.vo.MonitoringDeviceQueryBean;
+import com.capinfo.framework.web.vo.MonitoringLEDQueryBean;
+import com.capinfo.framework.web.vo.MonitoringPowerQueryBean;
 
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,7 @@ public interface MonitoringDeviceMapper {
 	public void deleteMonitoringDeviceBatch(List<String> ids) throws Exception;
 	
 	public MonitoringDevice findMonitoringDeviceById(Integer id) throws Exception;
+	public MonitoringPower findPowerId(String ip) throws Exception;
 
 	public MonitoringDevice findMonitoringDeviceUnique(MonitoringDeviceQueryBean deviceQueryBean) throws Exception;
 
@@ -47,6 +50,27 @@ public interface MonitoringDeviceMapper {
 	//public void insertMonitoringDeviceList(List<MonitoringDeviceXsl> ids) throws Exception;
 	public MonitoringProject findMonitoringProjectById(Integer id) throws Exception;
 
+	//GPRS开关
+	public List<MonitoringPower> finddevicepowerPage(Map<String, Object> map) throws Exception;
+	public Integer findMonitoringpowerCount(MonitoringPowerQueryBean powerQueryBean) throws Exception;
+	public void devicepowerAdd(MonitoringPowerQueryBean powerQueryBean) throws Exception;
+	public void updateMonitoringDevicePower(MonitoringPowerQueryBean powerQueryBean) throws Exception;
+	public void updatePower(MonitoringPowerQueryBean powerQueryBean) throws Exception;
+	//批量删除
+	public void deleteDevicePower(List<String> ids) throws Exception;
+	public MonitoringPower findDevicePowerIP(MonitoringPowerQueryBean powerQueryBean) throws Exception;
+	//根据Ip获取某一GPRS信息
+	public MonitoringPower findPowerIP(String ip) throws Exception;
+	//LED屏
+	public void updateMonitoringDeviceLED(MonitoringLEDQueryBean monitoringLEDQueryBean) throws Exception;
+	public void deviceLedAdd(MonitoringLEDQueryBean monitoringLEDQueryBean) throws Exception;
+	public MonitoringLED findledidDev(Integer idDev) throws Exception;
+	public List<MonitoringLED> finddeviceLEDPage(Map<String, Object> map) throws Exception;
+
+	public Integer findMonitoringLEDCount(MonitoringLEDQueryBean ledQueryBean) throws Exception;
+	public MonitoringLED findcheckledidDev(MonitoringLEDQueryBean monitoringLEDQueryBean) throws Exception;
+	//删除LED屏
+	public void deleteDeviceLed(List<String> ids) throws Exception;
 
 	//统计数据--实时数据
 	public Integer findMonitoringDataCount(MonitoringDataQueryBean dataQueryBean) throws Exception;

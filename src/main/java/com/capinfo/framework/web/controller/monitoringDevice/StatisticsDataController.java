@@ -111,9 +111,9 @@ public class StatisticsDataController extends BaseController {
      * @Description: 跳转统计数据导出的页面
      */
     @RequestMapping(value = "/goStatisticsExport", method = {RequestMethod.GET,RequestMethod.POST})
-    public String goExport(String deviceIds, String currentIndex,HttpServletResponse response, HttpServletRequest request) throws Exception {
-        request.setAttribute("deviceIds",deviceIds);
+    public String goExport(String deviceType, String currentIndex,HttpServletResponse response, HttpServletRequest request) throws Exception {
         request.setAttribute("currentIndex",currentIndex);
+        request.setAttribute("deviceType",deviceType);
         return "monitoringDevice/statisticsExport";
     }
 
@@ -123,18 +123,13 @@ public class StatisticsDataController extends BaseController {
      * @Description: 统计数据的导出
      */
     @RequestMapping("/exportStatisticsExcel")
-    public void exportExcel(HttpServletRequest request, HttpServletResponse response, String deviceIds,
+    public void exportExcel(HttpServletRequest request, HttpServletResponse response,
                             String currentIndex, String startDate,String endDate,Model model, String PM10, String PM2_5,
                             String NO2, String O3, String CO, String NOISE, String WIND_S, String WIND_D, String HUMIDITY,
                             String T, String PA, String TSP, String H2S, String HCL, String SO2, String NH3,
                             String CH4S, String TVOC, String C2H6S, String callbackType, String rel) {
-        String[] devIds = deviceIds.split(",");
-        Integer[] ids = new Integer[devIds.length];
-        for (int i = 0; i < devIds.length; i++) {
-            ids[i] = Integer.parseInt(devIds[i]);
-        }
         //通过用户选择的设备的id查询每个设备下面的所有的数据
-        List<Map<String, Object>> dataList = monitoringDeviceService.exportStatistics(ids, currentIndex,startDate,endDate);
+        List<Map<String, Object>> dataList = monitoringDeviceService.exportStatistics(currentIndex,startDate,endDate);
         int a = 0;
         List size = new ArrayList();
         //为了找到选择要导出的个数，对应实时数据和校准数据
@@ -293,31 +288,23 @@ public class StatisticsDataController extends BaseController {
     }
 /*public String listByPage(Model model, MonitoringDeviceQueryBean deviceQueryBean, Page<MonitoringDevice> page, Integer pageNum,Integer devId) throws Exception {
         //MonitoringDeviceGroupQueryBean deviceGroupQueryBean = new MonitoringDeviceGroupQueryBean();
-
         MonitoringDeviceQueryBean monitoringDevice = new MonitoringDeviceQueryBean();
-
        // if(monitoringDevice.getDevCode() !=null && monitoringDevice.getDevCode() != "")
-
         System.out.println(devId);
         //System.out.println(deviceQueryBean.getDevCode());
         List<MonitoringDevice> list= monitoringDeviceService.findStatisticalData(devId);
-
-
-
         model.addAttribute("list",list);
      *//*   public ModelAndView listByPage(Model model, MonitoringDeviceQueryBean deviceQueryBean, Page<MonitoringDevice> page, Integer pageNum,Integer devId) throws Exception {
             ModelAndView mav = new ModelAndView(super.getMsg("goods.add.page")) ;
             mav.addAllObjects(this.goodsService.findStatisticalData()) ;
             return mav ;
         }*//*
-
         *//*if (page != null && pageNum != null) {
             page.setPageNo(pageNum);
         }
         monitoringDeviceService.findMonitoringDevicePage(page, deviceQueryBean);
         model.addAttribute("page", page);
         model.addAttribute("deviceQueryBean", deviceQueryBean);*//*
-
        return "monitoringDevice/statisticsDataDustyAndNoise";
        // return "monitoringDevice/statisticsDataAQI";
         //return "monitoringDevice/statisticsDataVOC";

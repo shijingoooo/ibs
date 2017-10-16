@@ -62,7 +62,16 @@
         //这里只能判断页面上新添加的规则，无法数据库中的rule。提交表单以后还要在后端继续与数据库中的rule判断
         var ruleCount = $(".addRule").size();
         for( var x = 0; x < ruleCount; x++){
-            if(parseFloat($mins[x].value) >= parseFloat($maxs[x].value)) {
+            //判断输入是否正数
+            var positive;
+            positive = /^\d+(\.\d+)?$/i;
+
+            if (!positive.test($mins[x].value) || !positive.test($maxs[x].value) || !positive.test($calibrationFactors[x].value)){
+                alert("输入错误！请输入正数！");
+                return ;
+            }
+
+            if( parseFloat($mins[x].value) >= parseFloat($maxs[x].value)) {
                 $msg.text("规则错误！");
                 return false;
             }

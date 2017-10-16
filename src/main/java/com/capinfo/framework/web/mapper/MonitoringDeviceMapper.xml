@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.capinfo.framework.web.mapper.MonitoringDeviceMapper" >
 
+
+	<resultMap id="MonitoringPower" type="com.capinfo.framework.web.pojo.MonitoringPower">
+		<id column="id" property="id"/>
+		<id column="dev_id" property="devId"/>
+		<id column="dev_name" property="devName"/>
+		<id column="addr" property="addr"/>
+		<id column="ip" property="ip"/>
+		<id column="port" property="port"/>
+		<id column="time" property="time"/>
+		<id column="device_id" property="deviceId"/>
+		<id column="status" property="status"/>
+	</resultMap>
+
+	<resultMap id="MonitoringLED" type="com.capinfo.framework.web.pojo.MonitoringLED">
+		<id column="id" property="id"></id>
+		<id column="id_dev" property="idDev"></id>
+		<id column="id_device" property="idDevice"></id>
+		<id column="ip_svr" property="ipSvr"></id>
+		<id column="port_svr" property="portSvr"></id>
+	</resultMap>
+
+
 	<resultMap id="MonitoringDataCopy" type="com.capinfo.framework.web.pojo.MonitoringData">
 		<id column="id" property="id"/>
 		<result column="actual_tsp" property="actualTsp"/>
@@ -131,8 +153,8 @@
     <!-- SAVE Monitoring Device -->
 	<insert id="saveMonitoringDevice" useGeneratedKeys="true" keyProperty="id" parameterType="com.capinfo.framework.web.vo.MonitoringDeviceQueryBean">
         INSERT INTO
-        ibs_monitoring_device(dev_code,pro_code,vendor_code,dev_name,dev_type,longitude,latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,company_id,platform_id,platform_mn,creater,create_time,camera_id,video_user,password,camera_index_code,phone_card,forward_type,forward_frequency)
-        VALUES(#{devCode},#{devCode},#{vendorCode},#{devName},#{devType},#{longitude},#{latitude},#{ipAddr},#{macAddr},#{devPort},#{devVersion},#{devStatus},#{videoUrl},#{monitoringCompany.id},#{companyIds},#{platformMN},#{creater},#{createTime},#{cameraId},#{videoUser},#{password},#{cameraIndexCode},#{phoneCard},#{forwardType},#{forwardFrequency})
+        ibs_monitoring_device(dev_code,pro_code,vendor_code,dev_name,dev_type,longitude,latitude,ip_addr,mac_addr,dev_port,dev_version,dev_status,video_url,company_id,platform_id,platform_mn,creater,create_time,camera_id,video_user,password,camera_index_code,phone_card,forward_type,forward_frequency,show_type)
+        VALUES(#{devCode},#{devCode},#{vendorCode},#{devName},#{devType},#{longitude},#{latitude},#{ipAddr},#{macAddr},#{devPort},#{devVersion},#{devStatus},#{videoUrl},#{monitoringCompany.id},#{companyIds},#{platformMN},#{creater},#{createTime},#{cameraId},#{videoUser},#{password},#{cameraIndexCode},#{phoneCard},#{forwardType},#{forwardFrequency},#{showType})
 	</insert>
 	<!-- DELETE Monitoring Device -->
 	<delete id="deleteMonitoringDevice" parameterType="java.lang.Integer">
@@ -161,6 +183,7 @@
 			<if test="cameraId != null">camera_id=#{cameraId},</if>
 			<if test="phoneCard != null">phone_card=#{phoneCard},</if>
 			<if test="forwardType != null">forward_type=#{forwardType},</if>
+			<if test="showType != null">show_type=#{showType},</if>
 			<if test="forwardFrequency != null">forward_frequency=#{forwardFrequency},</if>
 			<if test="videoUser != null">video_user=#{videoUser},</if>
 			<if test="password != null">password=#{password},</if>
@@ -250,6 +273,95 @@
 		ORDER BY md.create_time desc
 		LIMIT #{pageNum},#{pageSize}
 	</select>
+
+	<!-- GPRS开关分页数-->
+	<select id="finddevicepowerPage" parameterType="java.util.Map" resultMap="MonitoringPower">
+		SELECT *
+		FROM ibs_power
+		LIMIT #{pageNum},#{pageSize}
+	</select>
+	<!--新增GPRS开关 -->
+	<insert id="devicepowerAdd" useGeneratedKeys="true" keyProperty="id"
+			parameterType="com.capinfo.framework.web.vo.MonitoringPowerQueryBean">
+		INSERT INTO ibs_power(dev_id,dev_name,addr,ip,port,device_id,status)
+		VALUES(#{devId},#{devName},#{addr},#{ip},#{port},#{deviceId},#{status})
+	</insert>
+
+	<!-- 根据ID获取某一设备组信息 -->
+	<select id="findPowerIP" parameterType="java.lang.String"
+			resultMap="MonitoringPower">
+		SELECT * FROM ibs_power
+		<where>
+			ip =#{VALUE }
+		</where>
+	</select>
+	<!-- 根据ID获取某一设备组信息 -->
+	<select id="findledidDev" parameterType="java.lang.Integer"
+			resultMap="MonitoringLED">
+		SELECT * FROM ibs_led
+		<where>
+			id_dev =#{VALUE }
+		</where>
+	</select>
+	<!-- 根据IP验证名称唯一性 -->
+	<select id="findDevicePowerIP" parameterType="com.capinfo.framework.web.vo.MonitoringPowerQueryBean"
+			resultMap="MonitoringPower">
+		SELECT * FROM ibs_power
+		WHERE
+			ip =#{ip}
+		LIMIT 1
+	</select>
+	<!-- 根据idDev验证名称唯一性 -->
+	<select id="findcheckledidDev" parameterType="com.capinfo.framework.web.vo.MonitoringLEDQueryBean"
+			resultMap="MonitoringLED">
+		SELECT * FROM ibs_led
+		WHERE
+			id_dev =#{idDev}
+		LIMIT 1
+	</select>
+	<!-- 更新开关 -->
+	<update id="updateMonitoringDevicePower" parameterType="com.capinfo.framework.web.vo.MonitoringPowerQueryBean">
+		UPDATE ibs_power SET dev_id=#{devId},addr=#{addr},ip=#{ip},port=#{port},device_id=#{deviceId},status=#{status} WHERE id = #{id}
+	</update>
+
+	<!--修改开关状态 -->
+	<update id="updatePower" parameterType="com.capinfo.framework.web.vo.MonitoringPowerQueryBean">
+		UPDATE ibs_power SET status=#{status} WHERE id = #{id}
+	</update>
+
+	<!-- 批量删除GPRS开关-->
+	<delete id="deleteDevicePower" parameterType="java.util.List">
+		DELETE FROM ibs_power WHERE id IN
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+
+	<!-- LED屏分页数-->
+	<select id="finddeviceLEDPage" parameterType="java.util.Map" resultMap="MonitoringLED">
+		SELECT *
+		FROM ibs_led
+		LIMIT #{pageNum},#{pageSize}
+	</select>
+	<!--LED屏新增 -->
+	<insert id="deviceLedAdd" useGeneratedKeys="true" keyProperty="id"
+			parameterType="com.capinfo.framework.web.vo.MonitoringLEDQueryBean">
+		INSERT INTO ibs_led(id_dev,id_device,ip_svr,port_svr)
+		VALUES(#{idDev},#{idDevice},#{ipSvr},#{portSvr})
+	</insert>
+	<!-- LED信息更新 -->
+	<update id="updateMonitoringDeviceLED" parameterType="com.capinfo.framework.web.vo.MonitoringLEDQueryBean">
+		UPDATE ibs_led SET id_dev=#{idDev},id_device=#{idDevice},ip_svr=#{ipSvr},port_svr=#{portSvr} WHERE id=#{id}
+	</update>
+	<!-- 批量删除LED信息-->
+	<delete id="deleteDeviceLed" parameterType="java.util.List">
+		DELETE FROM ibs_led WHERE id IN
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
 <!--统计数据-实时数据-->
 	<select id="findStatisticalDataPage" parameterType="java.util.Map" resultMap="MonitoringDataCopy">
 	SELECT *
@@ -261,6 +373,8 @@
 	ORDER BY create_time desc
 	LIMIT #{pageNum},#{pageSize}
 </select>
+
+
 <!--统计数据-小时数据-->
 	<select id="findMonitoringHourDatePage" parameterType="java.util.Map" resultMap="MonitoringHourData">
 	SELECT * FROM ibs_data_hour
@@ -319,6 +433,23 @@
 			GROUP BY md.id)AS tempTable
 		)
 	</select>
+
+	<!--GPRS开关  -->
+	<select id="findMonitoringpowerCount" parameterType="com.capinfo.framework.web.vo.MonitoringPowerQueryBean" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ibs_power
+		<where>
+			<include refid="query_data_count_where"></include>
+		</where>
+
+	</select>
+	<!--GPRS开关  -->
+	<select id="findMonitoringLEDCount" parameterType="com.capinfo.framework.web.vo.MonitoringLEDQueryBean" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ibs_led
+
+	</select>
+
 	<sql id="query_data_count_where">
 		<if test="deviceId !=null">
 			AND device_id = #{deviceId}
@@ -523,13 +654,13 @@ where id IN (select id from ibs_monitoring_device where dev_code='20170817000001
 			<if test="endTime != null and endTime != ''">
 				AND #{endTime} > create_time
 			</if>
-			<if test="ids!=null and ids.length!=0">
+			<!--<if test="ids!=null and ids.length!=0">
 				AND id IN
 				<foreach collection="ids" item="statisticsId" index="index"
 						 open="(" close=")" separator=",">
 					#{statisticsId}
 				</foreach>
-			</if>
+			</if>-->
 		</where>
 	</select>
 	<!--导出小时数据-->
@@ -542,14 +673,6 @@ where id IN (select id from ibs_monitoring_device where dev_code='20170817000001
 			<if test="endTime != null and endTime != ''">
 				AND #{endTime} > col_time
 			</if>
-			<if test="ids!=null and ids.length!=0">
-				AND id IN
-				<foreach collection="ids" item="statisticsId" index="index"
-						 open="(" close=")" separator=",">
-					#{statisticsId}
-				</foreach>
-			</if>
-
 		</where>
 	</select>
 	<!--导出天数据-->
@@ -561,13 +684,6 @@ where id IN (select id from ibs_monitoring_device where dev_code='20170817000001
 			</if>
 			<if test="endTime != null and endTime != ''">
 				AND #{endTime} > col_time
-			</if>
-			<if test="ids!=null and ids.length!=0">
-				AND id IN
-				<foreach collection="ids" item="statisticsId" index="index"
-						 open="(" close=")" separator=",">
-					#{statisticsId}
-				</foreach>
 			</if>
 		</where>
 	</select>

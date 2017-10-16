@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <div>
     <video id="myPlayer" poster="" controls playsInline webkit-playsinline autoplay width="800" height="600">
-        <source src="rtmp://rtmp.open.ys7.com/openlive/d1feb006b05e42308a47d7792b114c82" type="" />
+        <source src="rtmp://rtmp.open.ys7.com/openlive/d1feb006b05e42308a47d7792b114c82"/>
     </video>
 </div>
 <script type="text/javascript">

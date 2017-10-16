@@ -97,8 +97,13 @@
         var startDate = new Date(startTimeStrTemp);
         endTimeStrTemp = endTimeStrTemp.replace(/-/g, "/");
         var endDate = new Date(endTimeStrTemp);
+        var newDate = new Date();
         if (startDate > endDate) {
             alert("您选择的开始时间大于结束时间，请重新选择");
+            return false;
+        }
+        if(startDate > newDate){
+            alert("您选择的时间大于当前时间段，请重新选择");
             return false;
         }
 		$("#devGroupExportFormId").submit();

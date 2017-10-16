@@ -5,8 +5,7 @@ import com.capinfo.framework.web.mapper.MonitoringDeviceGroupMapper;
 import com.capinfo.framework.web.mapper.MonitoringDeviceMapper;
 import com.capinfo.framework.web.mapper.UserMapper;
 import com.capinfo.framework.web.pojo.*;
-import com.capinfo.framework.web.vo.MonitoringDataQueryBean;
-import com.capinfo.framework.web.vo.MonitoringDeviceQueryBean;
+import com.capinfo.framework.web.vo.*;
 import com.capinfo.modules.orm.Page;
 import com.mongodb.BasicDBObject;
 import com.mongodb.QueryOperators;
@@ -65,6 +64,119 @@ public class MonitoringDeviceService {
 		page.setResult(datas);
 		page.setTotalCount(deviceMapper.findMonitoringDeviceCount(deviceQueryBean));
 	}
+	//GPRS远程控制开关
+	public void finddevicepower(Page<MonitoringPower> page, MonitoringPowerQueryBean powerQueryBean)
+			throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNo", page.getPageNo()-1);
+		map.put("pageSize", page.getPageSize());
+		map.put("query", powerQueryBean);
+		map.put("pageNum", (page.getPageNo()-1)*page.getPageSize());
+		List<MonitoringPower> datas = deviceMapper.finddevicepowerPage(map);
+		page.setResult(datas);
+		page.setTotalCount(deviceMapper.findMonitoringpowerCount(powerQueryBean));
+
+	}
+
+	//根据Ip获取一个开关信息
+	public MonitoringLEDQueryBean findledidDev(Integer idDev) throws Exception{
+		MonitoringLEDQueryBean ledQueryBean = new MonitoringLEDQueryBean();
+		if(idDev!=null && idDev!=0){
+			MonitoringLED led = deviceMapper.findledidDev(idDev);
+			ledQueryBean.setId(led.getId());
+			ledQueryBean.setIdDev(led.getIdDev());
+			ledQueryBean.setIdDevice(led.getIdDevice());
+			ledQueryBean.setIpSvr(led.getIpSvr());
+			ledQueryBean.setPortSvr(led.getPortSvr());
+			return ledQueryBean;
+		}
+		return null;
+
+	}
+	//根据Ip获取一个开关信息
+	public MonitoringPowerQueryBean findPowerIP(String ip) throws Exception{
+		MonitoringPowerQueryBean powerBean = new MonitoringPowerQueryBean();
+		if(ip!=null && ip.length()!=0){
+			MonitoringPower power = deviceMapper.findPowerIP(ip);
+			powerBean.setIp(power.getIp());
+			powerBean.setId(power.getId());
+			powerBean.setAddr(power.getAddr());
+			powerBean.setDevId(power.getDevId());
+			powerBean.setPort(power.getPort());
+			powerBean.setStatus(power.getStatus());
+			powerBean.setDeviceId(power.getDeviceId());
+			return powerBean;
+		}
+		return null;
+
+	}
+
+	//LED验证id_dev名称唯一
+	public MonitoringLEDQueryBean findcheckledidDev(MonitoringLEDQueryBean monitoringLEDQueryBean) throws Exception{
+		MonitoringLED monitoringLED = deviceMapper.findcheckledidDev(monitoringLEDQueryBean);
+		MonitoringPowerQueryBean monitoringPowerQueryBean = new MonitoringPowerQueryBean();
+		if (monitoringLED != null)
+			monitoringPowerQueryBean.setId(monitoringLED.getId());
+		else
+			monitoringPowerQueryBean.setId(null);
+		return monitoringLEDQueryBean;
+	}
+	//验证ip名称唯一
+	public MonitoringPowerQueryBean findDevicePowerIP(MonitoringPowerQueryBean powerQueryBean) throws Exception{
+		MonitoringPower monitoringPower = deviceMapper.findDevicePowerIP(powerQueryBean);
+		MonitoringPowerQueryBean monitoringPowerQueryBean = new MonitoringPowerQueryBean();
+		if (monitoringPower != null)
+			monitoringPowerQueryBean.setId(monitoringPower.getId());
+		else
+			monitoringPowerQueryBean.setId(null);
+		return monitoringPowerQueryBean;
+	}
+	//添加GPRS控制开关
+	public void devicepowerAdd(MonitoringPowerQueryBean powerQueryBean) throws Exception{
+		deviceMapper.devicepowerAdd(powerQueryBean);
+	}
+	//更新开关信息
+	public void updateMonitoringDevicePower(Integer id,MonitoringPowerQueryBean powerQueryBean) throws Exception{
+		powerQueryBean.setId(id);
+		deviceMapper.updateMonitoringDevicePower(powerQueryBean);
+	}
+	public void updatePower(Integer id,MonitoringPowerQueryBean powerQueryBean) throws Exception{
+		powerQueryBean.setId(id);
+		deviceMapper.updatePower(powerQueryBean);
+	}
+	//删除开关信息
+	public void deleteDevicePower(List<String> ids) throws Exception{
+		deviceMapper.deleteDevicePower(ids);
+	}
+	//添加LED信息
+	public void deviceLedAdd(MonitoringLEDQueryBean monitoringLEDQueryBean) throws Exception{
+		deviceMapper.deviceLedAdd(monitoringLEDQueryBean);
+	}
+	//更新LED信息
+	public void updateMonitoringDeviceLED(Integer id,MonitoringLEDQueryBean monitoringLEDQueryBean) throws Exception{
+		monitoringLEDQueryBean.setId(id);
+		deviceMapper.updateMonitoringDeviceLED(monitoringLEDQueryBean);
+	}
+	//删除LED信息
+	public void deleteDeviceLed(List<String> ids) throws Exception{
+		deviceMapper.deleteDeviceLed(ids);
+	}
+	//LED屏
+	public void finddeviceLED(Page<MonitoringLED> page, MonitoringLEDQueryBean ledQueryBean)
+			throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNo", page.getPageNo()-1);
+		map.put("pageSize", page.getPageSize());
+		map.put("query", ledQueryBean);
+		map.put("pageNum", (page.getPageNo()-1)*page.getPageSize());
+		List<MonitoringLED> datas = deviceMapper.finddeviceLEDPage(map);
+		page.setResult(datas);
+		page.setTotalCount(deviceMapper.findMonitoringLEDCount(ledQueryBean));
+	}
+
+
 	//统计实时数据分页
 	public void findStatisticalDataPage(Page<MonitoringData> page, MonitoringDataQueryBean dataQueryBean)
 			throws Exception {
@@ -306,7 +418,7 @@ public class MonitoringDeviceService {
 	 * @Date: 2017/8/30 17:45
 	 * @Description: 统计数据的导出
 	 */
-    public List<Map<String,Object>> exportStatistics(Integer[] ids, String currentIndex, String startDate,String endDate){
+    public List<Map<String,Object>> exportStatistics(String currentIndex, String startDate,String endDate){
 
     	//存储最终的返回结果
     	List<Map<String,Object>> lists = new ArrayList<Map<String,Object>>();
@@ -323,7 +435,7 @@ public class MonitoringDeviceService {
 		}
 		params.put("startTime",startTime);
 		params.put("endTime",endTime);
-		params.put("ids",ids);
+		//params.put("ids",ids);
 
         if(Integer.parseInt(currentIndex) == 0){
             //实时数据

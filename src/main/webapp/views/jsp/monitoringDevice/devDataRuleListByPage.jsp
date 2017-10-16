@@ -155,7 +155,7 @@
                 </a>
             </li>
             <li>
-                <a id="DataCalibrationRuleDelete" class="delete" target="ajaxTodo" title="您确定要删除设备信息吗?"
+                <a id="DataCalibrationRuleDelete" class="delete" target="ajaxTodo" title="您确定要删除规则信息吗?"
                    href="${ctx}/monitoringDevice/devDataCalibrationDelete.action">
                     <span>删除</span>
                 </a>
@@ -173,8 +173,8 @@
             <th width="120">设备编号</th>
             <th width="120">指标</th>
             <th width="120">单位</th>
-            <th width="120">下限</th>
-            <th width="120">上限</th>
+            <th width="120">下限>=</th>
+            <th width="120">上限<</th>
             <th width="120">校正系数</th>
             <th width="120">操作</th>
         </tr>

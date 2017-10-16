@@ -73,7 +73,7 @@
             <thead>
             <tr>
                 <th class="td_50"></th>
-                <th class="td_130">设备id</th>
+                <th class="td_130">设备编码</th>
                 <th class="td_130">设备名称</th>
                 <th class="td_130">是否在线</th>
                 <th class="td_130">传感器类型</th>
@@ -87,7 +87,7 @@
                             <input name="deviceId" type="radio" value="${obj.id}"/>
                         </div>
                     </td>
-                    <td class="td_130">${obj.id}</td>
+                    <td class="td_130">${obj.devCode}</td>
                     <td class="td_130">${obj.devName}</td>
                     <td class="td_130">
                         <c:choose>

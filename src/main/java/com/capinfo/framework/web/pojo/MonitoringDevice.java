@@ -94,6 +94,8 @@ public class MonitoringDevice {
 
 	protected String forwardType;
 
+	protected String showType;
+
 	protected Integer forwardFrequency;
 	//维护次数
 	protected Integer maintainCount;
@@ -415,6 +417,14 @@ public class MonitoringDevice {
 
 	public void setForwardType(String forwardType) {
 		this.forwardType = forwardType;
+	}
+
+	public String getShowType() {
+		return showType;
+	}
+
+	public void setShowType(String showType) {
+		this.showType = showType;
 	}
 
 	public Integer getForwardFrequency() {

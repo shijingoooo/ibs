@@ -1,7 +1,6 @@
 package com.capinfo.framework.web.vo;
 
 import com.capinfo.framework.web.pojo.MonitoringCompany;
-import org.opensaml.xmlsec.keyinfo.impl.StaticKeyInfoGenerator;
 
 import java.util.Date;
 
@@ -45,6 +44,8 @@ public class MonitoringDeviceQueryBean {
 	protected String platformMN;
 	//转发因子
 	protected String forwardType;
+	//显示因子
+	protected  String showType;
 	//转发频率
 	protected Integer forwardFrequency;
 	//经度
@@ -272,6 +273,14 @@ public class MonitoringDeviceQueryBean {
 
 	public void setForwardType(String forwardType) {
 		this.forwardType = forwardType;
+	}
+
+	public String getShowType() {
+		return showType;
+	}
+
+	public void setShowType(String showType) {
+		this.showType = showType;
 	}
 
 	public Integer getForwardFrequency() {

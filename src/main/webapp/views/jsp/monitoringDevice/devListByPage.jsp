@@ -19,7 +19,7 @@
         });
 
         //数据导出
-        $("#dwz_export_a").hide();
+        $("#devList_dwz_export_a").hide();
         $("#modelExportDevice").click(function () {
             var dateIds = "";
             $("input[name='deviceIds']").each(function(index, item) {
@@ -34,8 +34,8 @@
                 //var hrefVal = "\${ctx}/monitoringDevice/downloadDevice.action";
                 //location.href = hrefVal+"?deviceIds="+dateIds.substring(0,dateIds.length-1)+"&rel=ibs_device_page";
                 /*button打开dwz的a标签*/
-                $("#dwz_export_a").attr("href","${ctx}/monitoringDevice/goDeviceExport.action?deviceIds="+dateIds.substring(0,dateIds.length-1))
-                $("#dwz_export_a").click();
+                $("#devList_dwz_export_a").attr("href","${ctx}/monitoringDevice/goDeviceExport.action?deviceIds="+dateIds.substring(0,dateIds.length-1))
+                $("#devList_dwz_export_a").click();
             }
         });
 
@@ -82,6 +82,9 @@
         position: absolute;
         top:25%;
     }
+    #devList_dwz_export_a{
+        display: none;
+    }
 </style>
 <div class="pageHeader">
     <table>
@@ -103,13 +106,13 @@
                                                  value="<c:out value='${deviceQueryBean.devGroupNameForLike }'/>" onblur="valiStr(this)"/></td>
                                 <td>
                                     <label><input name="devStatus" type="checkbox" value="1" />在线 </label>
-                                    <label><input name="devStatus" type="checkbox" value="0" />离线 </label>
+                                    <label><input name="devStatus" type="checkbox" value="0" />下线 </label>
                                 </td>
                                 <td><button type="submit" id="modelSearchDevice">查询</button></td>
                                 <td>
 
                                     <button type="button" id="modelExportDevice">导出数据</button>
-                                    <a id="dwz_export_a" class="button" href="" target="dialog" rel="dlg_page8" max="false" title="采集信息报表" width="455" height="420"></a>
+                                    <a id="devList_dwz_export_a" class="button" href="" target="dialog" rel="dlg_page8" max="false" title="采集信息报表" width="455" height="420"></a>
                                 </td>
                             </tr>
                         </table>
@@ -149,18 +152,18 @@
     <table class="table" width="100%" layoutH="112" rel="device_list">
         <thead>
         <tr>
-            <th width="30" align="center">
+            <th width="" align="center">
                 <div title="" class="gridCol">
                     <input class="checkboxCtrl" type="checkbox" group="deviceIds">
                 </div></th>
-            <th width="100">设备编号</th>
-            <th width="80">维护次数</th>
-            <th width="100">是否在线</th>
-            <th width="120">设备组</th>
-            <th width="100">传感器类型</th>
-            <th width="140">厂商</th>
-            <th width="180">站点</th>
-            <th width="100">操作</th>
+            <th width="">设备编号</th>
+            <th width="">维护次数</th>
+            <th width="">是否在线</th>
+            <th width="">设备组</th>
+            <th width="">传感器类型</th>
+            <th width="">厂商</th>
+            <th width="">站点</th>
+            <th width="160">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -234,14 +237,14 @@
                     ${obj.monitoringProject.proName}
                 </td>
                 <td>
-                    <a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
-                       target="navTab" rel="<c:out value='ibs_statistics_data_page'/>">统计数据</a>
-                    |
-                    <a id="checkRule" href="<c:out value='${ctx}/monitoringDevice/devDataCalibrationListByPage.action?devId=${obj.id}'/>"
-                       target="navTab" rel="<c:out value='ibs_data_calibration_page'/>">校准</a>
-                    |
                     <a id="" class="" target="dialog" mask="true" width="800" height="650" title="视频" href="${ctx}/monitoringDevice/liveVideo.action">
                         视频</a>
+                    |
+                    <a id="statistics" href="<c:out value='${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${obj.id}'/>"
+                    target="navTab" rel="<c:out value='ibs_statistics_data_page'/>">统计数据</a>
+                    |
+                    <a id="checkRule" href="<c:out value='${ctx}/monitoringDevice/devDataCalibrationListByPage.action?devId=${obj.id}'/>"
+                    target="navTab" rel="<c:out value='ibs_data_calibration_page'/>">校准</a>
                 </td>
 
                     <%--<td>

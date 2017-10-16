@@ -6,7 +6,7 @@
 <script type="text/javascript" src="${ctx}/js/jquery.form.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#dwz_export_a").hide();
+//        $("#dustyAndNoise_dwz_export_a").hide();
         $("#modelExportDevice0").click(function () {
             exp();
         });
@@ -27,21 +27,10 @@
 
     function exp() {
         var currentIndex = $("#currentIndex").val();
-        var dateIds = "";
-        $("input[name='ruleIds']").each(function (index, item) {
-            if ($(item).prop("checked")) {
-                dateIds += $(item).val() + ",";
-            }
-        });
-        if (dateIds == "") {
-            alert("请选择要导出的数据！");
-        } else {
-            <%--var hrefVal = "${ctx}/monitoringDevice/downloadDeviceGroup.action";--%>
-            <%--location.href = hrefVal + "?deviceGroupIds=" + dateIds.substring(0, dateIds.length - 1) + "&rel=ibs_device_group2_page";--%>
+        var deviceType = $("#deviceType").val();
             //获取实时、小时、天的标识
-            $("#dwz_export_a").attr("href","${ctx}/monitoringDevice/goStatisticsExport.action?currentIndex="+currentIndex+"&deviceIds="+dateIds.substring(0,dateIds.length-1))
-            $("#dwz_export_a").click();
-        }
+            $("#dustyAndNoise_dwz_export_a").attr("href","${ctx}/monitoringDevice/goStatisticsExport.action?deviceType="+deviceType+"&currentIndex="+currentIndex);
+            $("#dustyAndNoise_dwz_export_a").click();
     }
 
     function changeTab(index) {
@@ -58,17 +47,21 @@
         color: #00f;
         text-decoration: underline;
     }
+    #dustyAndNoise_dwz_export_a{
+        display: none;
+    }
 </style>
 <div class="pageContent">
 
     <div class="tabs" currentIndex="0" eventType="click">
         <%--导出时，button点击该超链接--%>
-        <a id="dwz_export_a" class="button" href="" target="dialog" rel="dlg_page8" max="false" title="采集信息报表" width="455" height="420"></a>
+        <a id="dustyAndNoise_dwz_export_a" class="button" href="" target="dialog" rel="dlg_page8" max="false" title="${device.devCode}" width="455" height="420"></a>
         <form id="pagerForm" class="pagerForm" onsubmit="return navTabSearch(this);"
                      action="${ctx}/monitoringDevice/devStatisticsDataListByPage.action?devId=${device.id}" method="post">
             <input type="hidden" name="pageNum" value="1" />
             <input type="hidden" name="numPerPage" value="<c:out value="${numPerPage}"></c:out>" />
             <input type="hidden" id="currentIndex" name="currentIndex" value="${currentIndex}" />
+            <input type="hidden" id="deviceType" name="deviceType" value="${device.devType}"/>
         </form>
         <div class="tabsHeader">
             <div class="tabsHeaderContent">

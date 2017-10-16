@@ -54,22 +54,35 @@
                 $("#dustyNoise").show();
                 $("#AQI").hide();
                 $("#VOC").hide();
+                $("#dustyNoise1").show();
+                $("#AQI1").hide();
+                $("#VOC1").hide();
                 break;
             case 5:
                 $("#dustyNoise").hide();
                 $("#AQI").show();
                 $("#VOC").hide();
+                $("#dustyNoise1").hide();
+                $("#AQI1").show();
+                $("#VOC1").hide();
                 break;
             case 6:
                 $("#common").hide();
                 $("#dustyNoise").hide();
                 $("#AQI").hide();
                 $("#VOC").show();
+                $("#common1").hide();
+                $("#dustyNoise1").hide();
+                $("#AQI1").hide();
+                $("#VOC1").show();
                 break;
             case 7:
                 $("#dustyNoise").show();
                 $("#AQI").hide();
                 $("#VOC").hide();
+                $("#dustyNoise1").show();
+                $("#AQI1").hide();
+                $("#VOC1").hide();
                 break;
         }
         //设置显示的checkbox标签状态，隐藏的不管
@@ -83,9 +96,25 @@
                     }
                 });
             }
-        }
-        else{
+        }else{
             $(".forwardType:visible").each(function () {
+                $(this).attr("checked", true);
+            });
+        }
+
+        //设置显示因子显示的checkbox标签状态，隐藏的不管
+        var showType = new Array();
+        showType = "${device.showType}".split(';');
+        if("${device.showType}") {
+            for (var i = 0; i < showType.length; i++) {
+                $(".showType:visible").each(function () {
+                    if ($(this).val() == showType[i]) {
+                        $(this).attr("checked", true);
+                    }
+                });
+            }
+        }else{
+            $(".showType:visible").each(function () {
                 $(this).attr("checked", true);
             });
         }
@@ -155,6 +184,19 @@
         forwardTypes = forwardTypes.substring(index+1);
         $("input[name='forwardType']").attr("value",forwardTypes);
     }
+    //提交表单时设置显示因子的值
+    //页面中插入隐藏input用来存放所选转发因子组成的字符串
+    function setCheckBoxValue1() {
+        var showTypes = "";
+        $(".showType:visible").each(function () {
+            if($(this).attr("checked")) {
+                showTypes = showTypes+";" + $(this).val();
+            }
+        });
+        var index = showTypes.indexOf(';');
+        showTypes = showTypes.substring(index+1);
+        $("input[name='showType']").attr("value",showTypes);
+    }
     //提交表单时设置转发频率的值
     function setRadioValue(){
         var $node = $(".forwardFrequency:visible:checked");
@@ -172,6 +214,7 @@
             $("input[name='longitude']").val($("#lng").val());
             $("input[name='latitude']").val($("#lat").val());
             setCheckBoxValue();
+            setCheckBoxValue1();
             setRadioValue();
             $("#deviceForm").submit();
         } else {
@@ -451,6 +494,45 @@
                                 <label style="width: 30px;"><input class="forwardType" type="checkbox" value="CH4S" />CH4S </label>
                                 <label style="width: 30px;"><input class="forwardType" type="checkbox" value="TVOC" />TVOC </label>
                                 <label style="width: 30px;"><input class="forwardType" type="checkbox" value="HCL" />HCL </label>
+                            </span>
+                        </p>
+                        <p class="nowrap">
+                            <label style="width: 60px;">显示因子</label>
+                            <input name="showType" type="hidden" value="${device.showType}">
+
+                            <span class="show" id="dustyNoise1" style="display: none;">
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_two_pm" />PM2.5 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_ten_pm" />PM10 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_tsp" />TSP </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_noise" />噪声 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="actual_wind_speed" />风速 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="actual_wind_direction" />风向 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="actual_temperature" />温度 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="humidity" />湿度 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="pressure" />气压 </label>
+                            </span>
+                            <span class="show" id="AQI1" style="display: none">
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_ten_pm" />PM10 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_two_pm" />PM2.5 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_02" />SO2 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_NO2" />NO2 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_03" />O3 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_04" />CO </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="calibration_noise" />噪声 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="actual_wind_speed" />风速 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="actual_wind_direction" />风向 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="actual_temperature" />温度 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="humidity" />湿度 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="pressure" />气压 </label>
+
+                            </span>
+                            <span class="show" id="VOC1" style="display: none">
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="H2S" />H2S </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="NH3" />NH3 </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="C2H6S" />C2H6S </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="CH4S" />CH4S </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="TVOC" />TVOC </label>
+                                <label style="width: 30px;"><input class="showType" type="checkbox" value="HCL" />HCL </label>
                             </span>
                         </p>
                         <p class="nowrap">
