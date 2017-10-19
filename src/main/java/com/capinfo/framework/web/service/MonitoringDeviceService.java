@@ -79,7 +79,7 @@ public class MonitoringDeviceService {
 
 	}
 
-	//根据Ip获取一个开关信息
+	//根据Ip获取一个LED信息
 	public MonitoringLEDQueryBean findledidDev(Integer idDev) throws Exception{
 		MonitoringLEDQueryBean ledQueryBean = new MonitoringLEDQueryBean();
 		if(idDev!=null && idDev!=0){
@@ -109,6 +109,18 @@ public class MonitoringDeviceService {
 			return powerBean;
 		}
 		return null;
+
+	}
+
+	//根据Ip获取一个开关信息
+	public MonitoringPower findPowerId(int id) throws Exception{
+		//MonitoringPowerQueryBean powerBean = new MonitoringPowerQueryBean();
+		if(id!=0){
+			MonitoringPower data = deviceMapper.findPowerId(id);
+			return data;
+		}
+		return null;
+
 
 	}
 

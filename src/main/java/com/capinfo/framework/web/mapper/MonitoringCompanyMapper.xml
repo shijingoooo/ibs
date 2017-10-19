@@ -63,6 +63,12 @@
 		<if test="companyNameForLike!=null and companyNameForLike!=''">
 			AND company_name LIKE "%"#{companyNameForLike}"%" 
 		</if>
+		<if test=' type == "0" '>
+			AND ibs_monitoring_company.type=0
+		</if>
+		<if test=' type == "1,2" '>
+			AND ibs_monitoring_company.type!=0
+		</if>
 	</sql>
 	<select id="findMonitoringCompanyList" parameterType="com.capinfo.framework.web.vo.MonitoringCompanyQueryBean" resultMap="MonitoringCompanyResult">
     	SELECT * FROM ibs_monitoring_company 

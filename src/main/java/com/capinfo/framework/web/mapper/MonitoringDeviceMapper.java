@@ -27,7 +27,7 @@ public interface MonitoringDeviceMapper {
 	public void deleteMonitoringDeviceBatch(List<String> ids) throws Exception;
 	
 	public MonitoringDevice findMonitoringDeviceById(Integer id) throws Exception;
-	public MonitoringPower findPowerId(String ip) throws Exception;
+	//public MonitoringPower findPowerId(String ip) throws Exception;
 
 	public MonitoringDevice findMonitoringDeviceUnique(MonitoringDeviceQueryBean deviceQueryBean) throws Exception;
 
@@ -61,6 +61,7 @@ public interface MonitoringDeviceMapper {
 	public MonitoringPower findDevicePowerIP(MonitoringPowerQueryBean powerQueryBean) throws Exception;
 	//根据Ip获取某一GPRS信息
 	public MonitoringPower findPowerIP(String ip) throws Exception;
+	public MonitoringPower findPowerId(int id) throws Exception;
 	//LED屏
 	public void updateMonitoringDeviceLED(MonitoringLEDQueryBean monitoringLEDQueryBean) throws Exception;
 	public void deviceLedAdd(MonitoringLEDQueryBean monitoringLEDQueryBean) throws Exception;

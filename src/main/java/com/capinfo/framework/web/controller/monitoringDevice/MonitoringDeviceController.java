@@ -29,6 +29,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -73,11 +75,9 @@ public class MonitoringDeviceController extends BaseController {
         if (page != null && pageNum != null) {
             page.setPageNo(pageNum);
         }
-        //devStatus使用字符串保存页面传递过来的值，同时选中在线和下线，此值为"1,0"，无法进行查询
-        //所以设置为null
-        if( deviceQueryBean.getDevStatus() != null && deviceQueryBean.getDevStatus().length() != 1){
+        //同时勾选上线下线则devStatus:'1,0'
+        if(deviceQueryBean.getDevStatus()!=null && deviceQueryBean.getDevStatus().length() > 1)
             deviceQueryBean.setDevStatus("");
-        }
         monitoringDeviceService.findMonitoringDevicePage(page, deviceQueryBean);
         model.addAttribute("page", page);
         model.addAttribute("deviceQueryBean", deviceQueryBean);
@@ -91,8 +91,8 @@ public class MonitoringDeviceController extends BaseController {
 
         if(currentIndex == null) currentIndex=0;
 
-          Page<MonitoringPower> page = new Page<>();
-          Page<MonitoringLED> ledPage = new Page<>();
+        Page<MonitoringPower> page = new Page<>();
+        Page<MonitoringLED> ledPage = new Page<>();
         if (page != null && pageNum != null) {
             page.setPageNo(pageNum);
             ledPage.setPageNo(pageNum);
@@ -161,10 +161,47 @@ public class MonitoringDeviceController extends BaseController {
 
 
     }
-    //保存或修改
+    //改变开关的状态
+    @RequestMapping(value = "/devPower", method = {RequestMethod.POST})
+    public void updatePower(Model model,Integer id,Integer status,HttpServletRequest request, HttpServletResponse response, HttpSession session, MonitoringPowerQueryBean powerQueryBean, String deviceIds, String navTabId, String callbackType, String rel) throws Exception {
+
+        String controller = "GuangZhouLiXiang";
+        //根据id在数据库获取一条完整信息。
+        MonitoringPower power = monitoringDeviceService.findPowerId(id);
+        //连接nettty
+        //1.建立TCP连接
+        String ip="127.0.0.1";   //服务器端ip地址
+        int port=4001;        //端口号
+        Socket sck=new Socket(ip,port);
+        //2.传输内容
+        int st = 2;
+        String content="";
+        if (power.getStatus() == 0) {
+            powerQueryBean.setStatus(1);
+            String str = "{\"deviceId\":\""+power.getDeviceId()+"\",\"controller\":\""+controller+"\",\"id\":\""+power.getId()+"\",\"status\":\""+1+"\",\"ip\":\""+power.getIp()+"\",\"port\":\""+power.getPort()+"\"}";
+
+            st = 1;
+            byte[] bstream=str.getBytes("GBK");//转化为字节流
+            OutputStream os=sck.getOutputStream();   //输出流
+            os.write(bstream);
+        } else {
+            powerQueryBean.setStatus(0);
+            String str = "{\"deviceId\":\""+power.getDeviceId()+"\",\"controller\":\""+controller+"\",\"id\":\""+power.getId()+"\",\"status\":\""+0+"\",\"ip\":\""+power.getIp()+"\",\"port\":\""+power.getPort()+"\"}";
+            st = 0;
+            byte[] bstream=str.getBytes("GBK");  //转化为字节流
+            OutputStream os=sck.getOutputStream();   //输出流
+            os.write(bstream);
+        }
+        //3.关闭连接
+        sck.close();
+        monitoringDeviceService.updatePower(powerQueryBean.getId(), powerQueryBean);
+        model.addAttribute("model",powerQueryBean);
+        response.getWriter().write(st+",更改成功");
+
+    }
     @RequestMapping(value = "/devSavePower", method = {RequestMethod.POST})
-       public void devSavePower(Model model,HttpServletRequest request, HttpServletResponse response, HttpSession session, MonitoringPowerQueryBean powerQueryBean, String deviceIds, String navTabId, String callbackType, String rel) throws Exception {
-       if (powerQueryBean.getId() != null && powerQueryBean.getId() != 0) {
+    public void devSavePower(Model model,HttpServletRequest request, HttpServletResponse response, HttpSession session, MonitoringPowerQueryBean powerQueryBean, String deviceIds, String navTabId, String callbackType, String rel) throws Exception {
+        if (powerQueryBean.getId() != null && powerQueryBean.getId() != 0) {
             //更新
 
             monitoringDeviceService.updateMonitoringDevicePower(powerQueryBean.getId(),powerQueryBean);
@@ -185,8 +222,8 @@ public class MonitoringDeviceController extends BaseController {
     }
     //LED保存或修改
     @RequestMapping(value = "/devSaveLed", method = {RequestMethod.POST})
-       public void devSaveLed(Model model,String id, HttpServletResponse response, HttpSession session, MonitoringLEDQueryBean monitoringLEDQueryBean, String deviceIds, String navTabId, String callbackType, String rel) throws Exception {
-       if (monitoringLEDQueryBean.getId() != null && monitoringLEDQueryBean.getId() != 0) {
+    public void devSaveLed(Model model,String id, HttpServletResponse response, HttpSession session, MonitoringLEDQueryBean monitoringLEDQueryBean, String deviceIds, String navTabId, String callbackType, String rel) throws Exception {
+        if (monitoringLEDQueryBean.getId() != null && monitoringLEDQueryBean.getId() != 0) {
             //更新
             monitoringDeviceService.updateMonitoringDeviceLED(monitoringLEDQueryBean.getId(), monitoringLEDQueryBean);
         } else {
@@ -257,26 +294,26 @@ public class MonitoringDeviceController extends BaseController {
     //点击跳转到添加和修改页面
     @RequestMapping(value = "/savePage", method = {RequestMethod.GET})
     public String savePage(Model model, Integer deviceId) throws Exception {
-     try{
-         MonitoringDevice device = monitoringDeviceService.findMonitoringDeviceById(deviceId);
-         model.addAttribute("device", device);
-         if (device != null && (device.getPlatformId() != null || device.getPlatformId() != "0")) {
-             String companyIds[] = device.getPlatformId().split(",");
-             List<MonitoringCompany> companys = companyService.findCompanyListByIds(companyIds);
-             StringBuffer ids = new StringBuffer();
-             StringBuffer names = new StringBuffer();
-             for (MonitoringCompany company : companys) {
-                 ids.append(company.getId()).append(",");
-                 names.append(company.getCompanyName()).append(",");
-             }
-             if (companys.size() > 0) {
-                 model.addAttribute("companyIds", ids.substring(0, ids.length() - 1));
-                 model.addAttribute("companyNames", names.substring(0, names.length() - 1));
-             }
-         }
-     }catch(Exception e){
-         e.printStackTrace();
-     }
+        try{
+            MonitoringDevice device = monitoringDeviceService.findMonitoringDeviceById(deviceId);
+            model.addAttribute("device", device);
+            if (device != null && (device.getPlatformId() != null || device.getPlatformId() != "0")) {
+                String companyIds[] = device.getPlatformId().split(",");
+                List<MonitoringCompany> companys = companyService.findCompanyListByIds(companyIds);
+                StringBuffer ids = new StringBuffer();
+                StringBuffer names = new StringBuffer();
+                for (MonitoringCompany company : companys) {
+                    ids.append(company.getId()).append(",");
+                    names.append(company.getCompanyName()).append(",");
+                }
+                if (companys.size() > 0) {
+                    model.addAttribute("companyIds", ids.substring(0, ids.length() - 1));
+                    model.addAttribute("companyNames", names.substring(0, names.length() - 1));
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         return "monitoringDevice/devSave";
     }
     //保存数据
@@ -572,4 +609,22 @@ public class MonitoringDeviceController extends BaseController {
         ExportExcel ee = new ExportExcel();
         ee.exportExcel(header, subHeader, "设备组数据" + fileName, dataArr, dataList, response);
     }
+    //导出数据
+   /* @RequestMapping(value = "/downloadDevice", method = {RequestMethod.GET})
+    public void downloadDevice(String deviceIds, HttpServletResponse response) throws Exception {
+        String[] header = {"id", "传感器编号", "报建号", "vendor_code", "传感器名称", "经度", "纬度", "IP地址", "MAC地址", "端口",
+                "设备版本", "设备状态", "视频地址", "开始时间", "结束时间", "安装时间", "创建时间", "修改时间", "创建人", "修改人",
+                "版本号", "工地主键", "厂商ID", "设备杆ID", "传感器类型", "云端控制参数串", "serial"};
+        String[] subHeader = {"id", "dev_code", "pro_code", "vendor_code", "dev_name", "longitude", "latitude", "ip_addr",
+                "mac_addr", "dev_port", "dev_version", "dev_status", "video_url", "start_time", "end_time", "install_time",
+                "create_time", "update_time", "creater", "updater", "version", "project_id", "company_id", "device_group_id",
+                "dev_type", "paramstr", "serial"};
+        Object[] dataArr = {"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+        List<String> ids = new ArrayList<String>();
+        ids.addAll(Arrays.asList(deviceIds.split(",")));
+        List<Map<String, Object>> dataList = monitoringDeviceService.downloadMonitoringDeviceList(ids);
+        ExcelUtil excelUtil = new ExcelUtil();
+        excelUtil.downLoadModel(header, subHeader, dataArr, "传感器表", dataList, response);
+    }*/
 }
+//保存或修改

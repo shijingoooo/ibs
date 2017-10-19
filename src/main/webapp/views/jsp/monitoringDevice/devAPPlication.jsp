@@ -34,31 +34,22 @@
         $(".tabs").attr("currentindex",${currentIndex});
     });
 function powerSwitch(status,id){
-    alert(status);
-    alert(id);
     var status1 = $("#status").val();
     var id1 = $("#id").val();
-    alert("status1"+status1);
-    alert("id1"+id1);
     $.ajax({
             type:"post",
-
             async:false,
             data:{"status":status1,"id":id1},
             url:"${ctx}/monitoringDevice/devPower.action",
             success:function(msg){
              var st =  msg.substring(0,1);
-             alert("st"+st);
              var msgStr = msg.substring(2);
-             alert("msgStr"+msgStr);
             if(msgStr="更改成功") {
                 if(st==1){
-                    alert("kai");
                     $("#"+id+"").val("开")
                     $("#status").val(1);
                 }
                 if(st==0){
-                    alert("guan");
                     $("#"+id+"").val("关")
                     $("#status").val(0);
                 }
@@ -130,6 +121,19 @@ function powerSwitch(status,id){
                                 <span>删除</span>
                             </a>
                         </li>
+                       <%-- <select id="status" name="status"style="margin-left: 25px;">
+                            <c:choose>
+                                <c:when test="${obj.mode == 0}">
+                                    <option value="1">手动</option>
+                                    <option value="0"selected>自动</option>
+                                </c:when>
+                                <c:when test="${obj.mode == 1}" >
+                                    <option value="1" selected>手动</option>
+                                    <option value="0">自动</option>
+                                </c:when>
+                            </c:choose>
+                        </select>--%>
+
                         <li>
                             <label><input name="devStatus" type="checkbox" value="1" />手动 </label>
                         </li>

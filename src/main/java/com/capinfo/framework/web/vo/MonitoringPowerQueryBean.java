@@ -28,8 +28,8 @@ public class MonitoringPowerQueryBean {
 
 	// GPRS开关状态
 	protected Integer status;
-
-	protected Integer idDevice;
+	//GPRS开关控制方式
+	protected Integer mode;
 
 	public Integer getId() {
 		return id;
@@ -101,5 +101,13 @@ public class MonitoringPowerQueryBean {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getMode() {
+		return mode;
+	}
+
+	public void setMode(Integer mode) {
+		this.mode = mode;
 	}
 }

@@ -13,6 +13,7 @@
 		<id column="time" property="time"/>
 		<id column="device_id" property="deviceId"/>
 		<id column="status" property="status"/>
+		<id column="mode" property="mode"/>
 	</resultMap>
 
 	<resultMap id="MonitoringLED" type="com.capinfo.framework.web.pojo.MonitoringLED">
@@ -287,12 +288,20 @@
 		VALUES(#{devId},#{devName},#{addr},#{ip},#{port},#{deviceId},#{status})
 	</insert>
 
-	<!-- 根据ID获取某一设备组信息 -->
+	<!-- 根据IP获取某一设备组信息 -->
 	<select id="findPowerIP" parameterType="java.lang.String"
 			resultMap="MonitoringPower">
 		SELECT * FROM ibs_power
 		<where>
 			ip =#{VALUE }
+		</where>
+	</select>
+	<!-- 根据ID获取某一设备组信息 -->
+	<select id="findPowerId" parameterType="java.lang.Integer"
+			resultMap="MonitoringPower">
+		SELECT * FROM ibs_power
+		<where>
+			id =#{VALUE }
 		</where>
 	</select>
 	<!-- 根据ID获取某一设备组信息 -->

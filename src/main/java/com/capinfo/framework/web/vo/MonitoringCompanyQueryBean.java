@@ -7,6 +7,9 @@ public class MonitoringCompanyQueryBean {
 	
 	protected String companyNameForLike;
 
+	//厂商类型
+	protected String type;
+
 	// 厂商编号
 	protected String companyCode;
 
@@ -25,7 +28,13 @@ public class MonitoringCompanyQueryBean {
 
     protected String companyId;
 
+	public String getType() {
+		return type;
+	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public String getCompanyName() {
 		return companyName;

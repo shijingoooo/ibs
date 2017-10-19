@@ -44,6 +44,12 @@
 
     });
     function saveProject() {
+        var $startTime = $("input[name='troubleTime']");
+        var $endTime = $("input[name='solveTime']");
+        if($endTime.val() < $startTime.val()){
+            alert("开始时间必须大于结束时间");
+            return;
+        }
         $("#maintainRecordForm").submit();
     }
 </script>
@@ -83,7 +89,7 @@
                     </p>
                     <p class="nowrap">
                         <label style="width: 60px;">故障时间：</label>
-                        <input type="text" name="troubleTime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;"
+                        <input type="text" name="troubleTime" class="date required" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" style="margin-left: 25px;"
                                value="<fmt:formatDate value="${maintain.troubleTime}" pattern="yyyy-MM-dd HH:mm:ss" />"/>
                         <a class="inputDateButton" href="javascript:;" style="display: none">选择</a>
                     </p>

@@ -19,6 +19,7 @@ public class MonitoringPower {
     private Integer deviceId;
 
     private Integer status;
+    private Integer mode;
 
     public Integer getId() {
         return id;
@@ -90,5 +91,13 @@ public class MonitoringPower {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getMode() {
+        return mode;
+    }
+
+    public void setMode(Integer mode) {
+        this.mode = mode;
     }
 }

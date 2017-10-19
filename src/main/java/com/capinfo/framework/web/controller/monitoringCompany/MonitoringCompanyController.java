@@ -54,7 +54,8 @@ public class MonitoringCompanyController extends BaseController {
 
     @RequestMapping(value = "/selectlist", method = {RequestMethod.POST, RequestMethod.GET})
     public String selectlist(Model model, MonitoringCompanyQueryBean companyQueryBean, Integer comId) throws Exception {
-
+        //获得设备供应商
+        companyQueryBean.setType("0");
         List<MonitoringCompany> companys = monitoringCompanyService.findMonitoringCompanyList(companyQueryBean);
         model.addAttribute("companys", companys);
         model.addAttribute("companyQueryBean", companyQueryBean);
@@ -65,7 +66,8 @@ public class MonitoringCompanyController extends BaseController {
 
     @RequestMapping(value = "/selectplatformlist", method = {RequestMethod.POST, RequestMethod.GET})
     public String selectplatformlist(Model model, MonitoringCompanyQueryBean companyQueryBean, String companyIds, String companyNames) throws Exception {
-
+        //获得转发平台
+        companyQueryBean.setType("1,2");
         List<MonitoringCompany> companys = monitoringCompanyService.findMonitoringCompanyList(companyQueryBean);
         model.addAttribute("companys", companys);
         model.addAttribute("companyQueryBean", companyQueryBean);
